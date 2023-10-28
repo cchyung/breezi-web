@@ -1,0 +1,5 @@
+export const AWS_ACCOUNT_ID = ""
+export const STREAMS_BUCKET = ""
+export const ASSETS_BUCKET = ""
+export const STREAMS_CLOUDFRONT_HOST = ""
+export const ASSETS_CLOUDFRONT_HOST = ""
