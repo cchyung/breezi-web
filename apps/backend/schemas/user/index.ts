@@ -37,6 +37,7 @@ export const User = objectType({
     t.string("email");
     t.string("imageURL");
     t.field("createdAt", { type: "DateTime" });
+    t.field("updatedAt", { type: "DateTime" });
   },
 });
 
@@ -66,10 +67,20 @@ export const GetUser = queryField("user", {
   },
   resolve: async (_, { authToken }, ctx) => {
     if (authToken) {
-      return userService.getAuthenticatedUser(authToken);
+      const user = await userService.getAuthenticatedUser(authToken);
+      if (!user) {
+        throw new Error("User not found");
+      }
+      return user;
     } else if (ctx.user) {
       const userId = ctx.user._id.toString();
-      return userService.getUser({ id: userId });
+      const user = await userService.getUser({ id: userId });
+      if (!user) {
+        throw new Error("User not found");
+      }
+      return user;
+    } else {
+      throw new Error("Must provide auth token or be logged in");
     }
   },
 });
@@ -81,7 +92,6 @@ export const LoginUser = queryField("loginUser", {
   args: {
     phone: nonNull(stringArg()),
     verificationCode: nonNull(stringArg()),
-    referralCode: stringArg(),
   },
   resolve: async (_, { phone, verificationCode }, __) => {
     let valid: boolean = false;

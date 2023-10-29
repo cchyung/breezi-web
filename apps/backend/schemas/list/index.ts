@@ -1,0 +1,114 @@
+import {
+  objectType,
+  enumType,
+  mutationField,
+  queryField,
+  arg,
+  nonNull,
+  stringArg,
+  list,
+  inputObjectType,
+} from "nexus";
+import { ListState as ListStateEnum } from "models/list";
+import { AuthenticationError, SystemError } from "@/lib/errors";
+import { ListService } from "@/services";
+import { db } from "@/models";
+
+const listService = ListService(db);
+
+export const ListState = enumType({
+  name: "ListState",
+  members: ListStateEnum,
+});
+
+export const List = objectType({
+  name: "List",
+  definition(t) {
+    t.nonNull.string("_id");
+    t.nonNull.string("title");
+    t.field("state", { type: ListState });
+    t.nonNull.list.field("items", { type: ListItem });
+  },
+});
+
+export const ListItem = objectType({
+  name: "ListItem",
+  definition(t) {
+    t.nonNull.string("_id");
+    t.nonNull.string("text");
+    t.string("parent");
+    t.string("imageURL");
+  },
+});
+
+export const ListInput = inputObjectType({
+  name: "ListInput",
+  definition(t) {
+    t.nonNull.string("title");
+    t.field("state", { type: ListState });
+    t.nonNull.list.field("items", { type: nonNull(ListItemInput) });
+  },
+});
+
+export const ListItemInput = inputObjectType({
+  name: "ListItemInput",
+  definition(t) {
+    t.nonNull.string("text");
+    t.string("parent");
+    t.string("imageURL");
+  },
+});
+
+export const CreateList = mutationField("createList", {
+  type: List,
+  args: {
+    list: nonNull(ListInput),
+  },
+  resolve: async (_, { list }, { user }) => {
+    if (!user) throw new AuthenticationError("user is not logged in");
+    return await listService.createList({
+      title: list.title,
+      items: list.items,
+      author: user._id,
+      state: list.state,
+    });
+  },
+});
+
+export const GetList = queryField("list", {
+  type: List,
+  args: {
+    id: nonNull(stringArg()),
+  },
+  resolve: async (_, { id }, ctx) => {
+    const list = await listService.getList({ id });
+    if (!list) {
+      throw new SystemError("list not found");
+    }
+
+    // if list is in draft, make sure it's only being requested by the author
+    if (list.state === ListStateEnum.draft) {
+      if (ctx.user?._id !== list?.author?._id) {
+        throw new AuthenticationError("user is not logged in");
+      }
+    }
+
+    return list;
+  },
+});
+
+export const GetUserLists = queryField("userLists", {
+  type: list(List),
+  args: {
+    userId: stringArg(),
+  },
+  resolve: async (_, { userId }, ctx) => {
+    if (userId) {
+      const lists = await listService.getUserLists({ userId });
+      return lists;
+    } else {
+      const lists = await listService.getUserLists({ userId: ctx.user._id });
+      return lists;
+    }
+  },
+});

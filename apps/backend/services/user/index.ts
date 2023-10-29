@@ -92,7 +92,6 @@ export const UserService = (db: Database) => {
     phone,
   }: {
     phone: string;
-    referralCode?: string;
   }) {
     const existingUser = await getUser({ phone });
     if (existingUser) {
