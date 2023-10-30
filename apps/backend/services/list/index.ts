@@ -32,8 +32,6 @@ export const ListService = (db: Database) => {
     items: ListItemInput[];
     state?: ListState | null;
   }) => {
-    console.log("===> state", state)
-
     const list = new db.List({
       author,
       title,

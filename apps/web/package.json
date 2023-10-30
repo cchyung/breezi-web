@@ -3,12 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "concurrently \"next dev\" \"npm run gql:typegen:watch\"",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "gql:typegen": "graphql-codegen --config codegen.yml",
+    "gql:typegen:watch": "graphql-codegen --config codegen.yml --watch"
   },
   "dependencies": {
+    "@graphql-codegen/cli": "^5.0.0",
+    "@parcel/watcher": "^2.3.0",
     "axios": "^1.5.1",
     "next": "13.5.4",
     "react": "^18",
