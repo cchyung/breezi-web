@@ -8,6 +8,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      borderWidth: {
+        DEFAULT: "1px",
+        1: "1px",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -15,6 +19,12 @@ const config: Config = {
       },
       transitionProperty: {
         height: "height",
+      },
+      colors: {
+        primary: "var(--color-primary)",
+        gray: "var(--color-gray)",
+        "gray-secondary": "var(--color-gray-secondary)",
+        black: "var(--color-black)",
       },
     },
   },

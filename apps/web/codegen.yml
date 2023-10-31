@@ -6,12 +6,12 @@ generates:
     config:
       clientPath: ./web
       asyncQuery: true
-    documents: './src/**/api/**/*.ts'
+    documents: "./src/lib/api/**/*.ts"
     plugins:
       - typescript
       - typescript-operations
       - add:
           content:
-            - '/* This file was automatically generated.  Do not edit. */'
+            - "/* This file was automatically generated.  Do not edit. */"
             - /* prettier-ignore */
             - /* eslint-disable */
