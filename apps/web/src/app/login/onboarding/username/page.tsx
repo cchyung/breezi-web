@@ -1,6 +1,9 @@
 "use client";
 
 import { Button, Input } from "@/app/components/ui";
+import { UpdateUserMutation, UpdateUserMutationVariables } from "@/lib/api";
+import { UPDATE_USER } from "@/lib/api/user/queries";
+import { useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -8,10 +11,18 @@ export const Username = () => {
   const router = useRouter();
 
   const [username, setUsername] = useState("");
+  const [updateUser] = useMutation<
+    UpdateUserMutation,
+    UpdateUserMutationVariables
+  >(UPDATE_USER);
 
-  const onSubmit = (username: string) => {
+  const onSubmit = async (username: string) => {
     // validate username
     // update user's username in backend and update local storage
+    await updateUser({
+      
+    })
+
     // navigate to home
     router.push(`/`);
   };

@@ -11,6 +11,7 @@
     "gql:typegen:watch": "graphql-codegen --config codegen.yml --watch"
   },
   "dependencies": {
+    "@apollo/client": "^3.8.6",
     "@graphql-codegen/add": "^5.0.0",
     "@graphql-codegen/cli": "^5.0.0",
     "@graphql-codegen/typescript": "^4.0.1",

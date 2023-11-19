@@ -4,10 +4,17 @@ import CodeInput from "./components/CodeInput";
 import { useEffect, useState } from "react";
 import { UserData, getUserFromLocalStorage } from "@/app/lib/auth";
 import { useRouter } from "next/navigation";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import { LoginUserQuery, LoginUserQueryVariables } from "@/lib/api";
+import { LOGIN_USER } from "@/lib/api/user/queries";
 
 const Verify = () => {
   const [userData, setUserData] = useState<Partial<UserData>>();
   const router = useRouter();
+  const [loginUser, { data }] = useLazyQuery<
+    LoginUserQuery,
+    LoginUserQueryVariables
+  >(LOGIN_USER);
 
   useEffect(() => {
     const _userData = getUserFromLocalStorage();
@@ -16,11 +23,25 @@ const Verify = () => {
     }
   }, []);
 
-  const submitVerificationCode = (code: string) => {
+  const submitVerificationCode = async (code: string) => {
+    console.log("submitting code", code)
+    console.log(userData)
     // call out to server
-    // check if user is registered.  If not, show username screens
-    router.push("/login/onboarding/username");
-    // otherwise, go to home page
+    if (userData?.phone) {
+      const response = await loginUser({
+        variables: {
+          phone: userData.phone,
+          verificationCode: code,
+        },
+      });
+
+      response.data?.loginUser && console.log(response.data?.loginUser);
+      localStorage.setItem("token", response.data?.loginUser?.authToken || "");
+
+      // check if user is registered.  If not, show username screens
+      router.push("/login/onboarding/username");
+      // otherwise, go to home page
+    }
   };
 
   return (

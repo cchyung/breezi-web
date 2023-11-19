@@ -10,6 +10,8 @@ const Login = () => {
   const [phone, setPhone] = useState<string>("");
 
   const onSubmit = (phone: string) => {
+    // request verification sms
+
     // write phone to user local storage
     writeUserToLocalStorage({ phone });
     router.push(`/login/verify`);

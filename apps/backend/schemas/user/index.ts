@@ -4,6 +4,7 @@ import {
   stringArg,
   inputObjectType,
   nonNull,
+  mutationField,
 } from "nexus";
 import { db } from "models";
 import { UserService } from "services";
@@ -139,3 +140,33 @@ export const verifySMSVerificationToken = queryField(
     },
   }
 );
+
+export const UpdateUserInput = inputObjectType({
+  name: "UpdateUserInput",
+  definition(t) {
+    t.string("username");
+    t.string("about");
+    t.string("email");
+    t.string("imageURL");
+  },
+});
+
+export const updateUser = mutationField("updateUser", {
+  type: User,
+  args: {
+    id: nonNull(stringArg()),
+    user: nonNull(UpdateUserInput),
+  },
+  resolve: async (_, { id, user }, ctx) => {
+    if (!ctx.user) {
+      throw new Error("Must be logged in to update user");
+    }
+
+    if (ctx.user._id.toString() !== id) {
+      throw new Error("Must be logged in as the user you are trying to update");
+    }
+    
+    const updatedUser = await userService.updateUser({ id: id, ...user });
+    return updatedUser;
+  },
+});

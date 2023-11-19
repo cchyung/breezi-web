@@ -66,11 +66,18 @@ export type LoginObject = {
 export type Mutation = {
   __typename?: 'Mutation';
   createList?: Maybe<List>;
+  updateUser?: Maybe<User>;
 };
 
 
 export type MutationCreateListArgs = {
   list: ListInput;
+};
+
+
+export type MutationUpdateUserArgs = {
+  id: Scalars['String']['input'];
+  user: UpdateUserInput;
 };
 
 export type Ok = {
@@ -122,6 +129,13 @@ export type QueryVerifySmsVerificationTokenArgs = {
   phone: Scalars['String']['input'];
 };
 
+export type UpdateUserInput = {
+  about?: InputMaybe<Scalars['String']['input']>;
+  email?: InputMaybe<Scalars['String']['input']>;
+  imageURL?: InputMaybe<Scalars['String']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type User = {
   __typename?: 'User';
   _id: Scalars['String']['output'];
@@ -146,3 +160,26 @@ export type GetUserQueryVariables = Exact<{
 
 
 export type GetUserQuery = { __typename?: 'Query', user?: { __typename?: 'User', _id: string } | null };
+
+export type SendSmsVerificationTokenQueryVariables = Exact<{
+  phone: Scalars['String']['input'];
+}>;
+
+
+export type SendSmsVerificationTokenQuery = { __typename?: 'Query', sendSMSVerificationToken?: { __typename?: 'Ok', ok?: boolean | null, message?: string | null } | null };
+
+export type LoginUserQueryVariables = Exact<{
+  phone: Scalars['String']['input'];
+  verificationCode: Scalars['String']['input'];
+}>;
+
+
+export type LoginUserQuery = { __typename?: 'Query', loginUser?: { __typename?: 'LoginObject', authToken?: string | null, user?: { __typename?: 'User', _id: string, phone: string } | null } | null };
+
+export type UpdateUserMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  user: UpdateUserInput;
+}>;
+
+
+export type UpdateUserMutation = { __typename?: 'Mutation', updateUser?: { __typename?: 'User', _id: string } | null };

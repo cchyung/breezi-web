@@ -1,3 +1,4 @@
+import { ApolloWrapper } from "@/lib/api/apolloProvider";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
@@ -15,7 +16,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className}`}>{children}</body>
+      <ApolloWrapper>
+        <body className={`${inter.className}`}>{children}</body>
+      </ApolloWrapper>
     </html>
   );
 }

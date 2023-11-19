@@ -57,6 +57,12 @@ export interface NexusGenInputs {
     parent?: string | null; // String
     text: string; // String!
   }
+  UpdateUserInput: { // input type
+    about?: string | null; // String
+    email?: string | null; // String
+    imageURL?: string | null; // String
+    username?: string | null; // String
+  }
   UserInput: { // input type
     _id?: string | null; // String
     phone?: string | null; // String
@@ -125,6 +131,7 @@ export interface NexusGenFieldTypes {
   }
   Mutation: { // field return type
     createList: NexusGenRootTypes['List'] | null; // List
+    updateUser: NexusGenRootTypes['User'] | null; // User
   }
   Ok: { // field return type
     message: string | null; // String
@@ -169,6 +176,7 @@ export interface NexusGenFieldTypeNames {
   }
   Mutation: { // field return type name
     createList: 'List'
+    updateUser: 'User'
   }
   Ok: { // field return type name
     message: 'String'
@@ -198,6 +206,10 @@ export interface NexusGenArgTypes {
   Mutation: {
     createList: { // args
       list: NexusGenInputs['ListInput']; // ListInput!
+    }
+    updateUser: { // args
+      id: string; // String!
+      user: NexusGenInputs['UpdateUserInput']; // UpdateUserInput!
     }
   }
   Query: {
