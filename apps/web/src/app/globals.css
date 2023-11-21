@@ -9,9 +9,15 @@
   --background-rgb: 0, 0, 0;
 
   --color-primary: #ffc72c;
+  --color-secondary: #fff4d5;
+  --color-orchid: #d9b5fe;
+  --color-pale-blue: #d2eaff;
+
   --color-gray: #f1f4f7;
   --color-gray-secondary: #e5ebf0;
   --color-black: #030d1b;
+
+  --color-snow: #f9f9f9;
 }
 
 @layer utilities {
@@ -39,4 +45,9 @@ body {
   background: var(--color-gray);
   font-size: 16px;
   color: var(--color-black);
+}
+
+h2 { 
+  font-size: 22px;
+  font-weight: 700;
 }

@@ -10,8 +10,10 @@ export interface List {
   _id: Schema.Types.ObjectId;
   author: string | User | null;
   title: string;
+  description?: string;
   state: ListState;
   items: ListItem[];
+  coverImageURL?: string;
 }
 
 export interface PopulatedList extends List {
@@ -52,6 +54,14 @@ export const ListSchema = new Schema(
     title: {
       type: String,
       required: true,
+    },
+    description: {
+      type: String,
+      required: false,
+    },
+    coverImageURL: {
+      type: String,
+      required: false,
     },
     state: {
       type: String,

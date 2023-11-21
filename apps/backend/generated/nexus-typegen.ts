@@ -48,6 +48,8 @@ declare global {
 
 export interface NexusGenInputs {
   ListInput: { // input type
+    coverImageURL?: string | null; // String
+    description?: string | null; // String
     items: NexusGenInputs['ListItemInput'][]; // [ListItemInput!]!
     state?: NexusGenEnums['ListState'] | null; // ListState
     title: string; // String!
@@ -115,6 +117,9 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnu
 export interface NexusGenFieldTypes {
   List: { // field return type
     _id: string; // String!
+    author: NexusGenRootTypes['User']; // User!
+    coverImageURL: string | null; // String
+    description: string | null; // String
     items: Array<NexusGenRootTypes['ListItem'] | null>; // [ListItem]!
     state: NexusGenEnums['ListState'] | null; // ListState
     title: string; // String!
@@ -151,7 +156,7 @@ export interface NexusGenFieldTypes {
     createdAt: NexusGenScalars['DateTime'] | null; // DateTime
     email: string | null; // String
     imageURL: string | null; // String
-    phone: string; // String!
+    phone: string | null; // String
     updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
     username: string; // String!
   }
@@ -160,6 +165,9 @@ export interface NexusGenFieldTypes {
 export interface NexusGenFieldTypeNames {
   List: { // field return type name
     _id: 'String'
+    author: 'User'
+    coverImageURL: 'String'
+    description: 'String'
     items: 'ListItem'
     state: 'ListState'
     title: 'String'

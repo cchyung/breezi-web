@@ -32,7 +32,7 @@ export const User = objectType({
   name: "User",
   definition(t) {
     t.nonNull.string("_id");
-    t.nonNull.string("phone");
+    t.string("phone");
     t.nonNull.string("username");
     t.string("about");
     t.string("email");

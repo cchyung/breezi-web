@@ -119,7 +119,7 @@ export const UserService = (db: Database) => {
     registered,
     isBrowserStreamer,
   }: {
-    id?: string | Schema.Types.ObjectId;
+    id: string | Schema.Types.ObjectId;
     address?: string;
     username?: string;
     about?: string;

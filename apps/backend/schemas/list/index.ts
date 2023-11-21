@@ -13,6 +13,7 @@ import { ListState as ListStateEnum } from "models/list";
 import { AuthenticationError, SystemError } from "@/lib/errors";
 import { ListService } from "@/services";
 import { db } from "@/models";
+import { User } from "../user";
 
 const listService = ListService(db);
 
@@ -28,6 +29,9 @@ export const List = objectType({
     t.nonNull.string("title");
     t.field("state", { type: ListState });
     t.nonNull.list.field("items", { type: ListItem });
+    t.string("description");
+    t.string("coverImageURL");
+    t.nonNull.field("author", { type: User });
   },
 });
 
@@ -47,6 +51,8 @@ export const ListInput = inputObjectType({
     t.nonNull.string("title");
     t.field("state", { type: ListState });
     t.nonNull.list.field("items", { type: nonNull(ListItemInput) });
+    t.string("description");
+    t.string("coverImageURL");
   },
 });
 
@@ -71,6 +77,8 @@ export const CreateList = mutationField("createList", {
       items: list.items,
       author: user._id,
       state: list.state,
+      coverImageURL: list.coverImageURL,
+      description: list.description ? list.description : undefined,
     });
   },
 });

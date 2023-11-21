@@ -16,12 +16,17 @@ scalar JSON
 
 type List {
   _id: String!
+  author: User!
+  coverImageURL: String
+  description: String
   items: [ListItem]!
   state: ListState
   title: String!
 }
 
 input ListInput {
+  coverImageURL: String
+  description: String
   items: [ListItemInput!]!
   state: ListState
   title: String!
@@ -91,7 +96,7 @@ type User {
   createdAt: DateTime
   email: String
   imageURL: String
-  phone: String!
+  phone: String
   updatedAt: DateTime
   username: String!
 }

@@ -1,5 +1,5 @@
 import { Database } from "@/models";
-import { ListItem, ListState, PopulatedList } from "@/models/list";
+import { List, ListItem, ListState, PopulatedList } from "@/models/list";
 import { Schema } from "mongoose";
 
 export interface ListItemInput {
@@ -26,17 +26,23 @@ export const ListService = (db: Database) => {
     title,
     items,
     state,
+    description,
+    coverImageURL,
   }: {
     author: string | Schema.Types.ObjectId;
     title: string;
     items: ListItemInput[];
     state?: ListState | null;
+    description?: string | null;
+    coverImageURL?: string | null;
   }) => {
     const list = new db.List({
       author,
       title,
       items,
       state,
+      description,
+      coverImageURL,
     });
     return (await list.save()).populate<PopulatedList>("author");
   };
@@ -50,16 +56,22 @@ export const ListService = (db: Database) => {
     title,
     items,
     state,
+    description,
+    coverImageURL,
   }: {
     id: string;
     title?: string;
     items?: ListItem[];
     state?: ListState;
+    description?: string;
+    coverImageURL?: string;
   }) => {
-    const update: any = {};
+    const update: Partial<List> = {};
     if (title) update.title = title;
     if (items) update.items = items;
     if (state) update.state = state;
+    if (description) update.description = description;
+    if (coverImageURL) update.coverImageURL = coverImageURL;
     return await db.List.findByIdAndUpdate(id, update)
       .populate<PopulatedList>("author")
       .exec();

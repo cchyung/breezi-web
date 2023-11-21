@@ -27,12 +27,17 @@ export type Scalars = {
 export type List = {
   __typename?: 'List';
   _id: Scalars['String']['output'];
+  author: User;
+  coverImageURL?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
   items: Array<Maybe<ListItem>>;
   state?: Maybe<ListState>;
   title: Scalars['String']['output'];
 };
 
 export type ListInput = {
+  coverImageURL?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   items: Array<ListItemInput>;
   state?: InputMaybe<ListState>;
   title: Scalars['String']['input'];
@@ -143,7 +148,7 @@ export type User = {
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   email?: Maybe<Scalars['String']['output']>;
   imageURL?: Maybe<Scalars['String']['output']>;
-  phone: Scalars['String']['output'];
+  phone?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   username: Scalars['String']['output'];
 };
@@ -174,7 +179,7 @@ export type LoginUserQueryVariables = Exact<{
 }>;
 
 
-export type LoginUserQuery = { __typename?: 'Query', loginUser?: { __typename?: 'LoginObject', authToken?: string | null, user?: { __typename?: 'User', _id: string, phone: string } | null } | null };
+export type LoginUserQuery = { __typename?: 'Query', loginUser?: { __typename?: 'LoginObject', authToken?: string | null, user?: { __typename?: 'User', _id: string, phone?: string | null } | null } | null };
 
 export type UpdateUserMutationVariables = Exact<{
   id: Scalars['String']['input'];
