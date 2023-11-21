@@ -21,13 +21,12 @@ const ListCard = ({ list }: { list: List }) => {
 
         <h2>{list.title}</h2>
         <p>{list.description}</p>
-        <div className="flex flex-col gap-4">
-          <ul className="list-disc list-inside">
-            {list.items.map((item) => (
-              <li>{item?.text}</li>
-            ))}
-          </ul>
-        </div>
+
+        <ul className="flex flex-col gap-3 list-disc list-inside">
+          {list.items.map((item, index) => (
+            <li key={index}>{item?.text}</li>
+          ))}
+        </ul>
       </div>
     </Card>
   );
