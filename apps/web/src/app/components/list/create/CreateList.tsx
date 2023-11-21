@@ -13,6 +13,8 @@ const CreateList = ({ list, create }: { list?: List; create?: boolean }) => {
 
   const [coverImageURL, setCoverImageURL] = useState(list?.coverImageURL);
 
+  const [activeItemIndex, setActiveItemIndex] = useState(-1);
+
   useEffect(() => {
     if (create) {
       setItems([
@@ -68,6 +70,31 @@ const CreateList = ({ list, create }: { list?: List; create?: boolean }) => {
                         ...prev.slice(index + 1),
                       ];
                     });
+                  }}
+                  onFocus={() => {
+                    setActiveItemIndex(index);
+                  }}
+                  onBlur={() => {
+                    setActiveItemIndex(-1);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      setItems((prev) => {
+                        return [
+                          ...prev.slice(0, index + 1),
+                          { text: "", _id: "" },
+                          ...prev.slice(index + 1),
+                        ];
+                      });
+                    } else if (
+                      items[index].text === "" &&
+                      e.key === "Backspace"
+                    ) {
+                      setItems((prev) => {
+                        prev.splice(index);
+                        return prev
+                      });
+                    }
                   }}
                 />
               </li>
