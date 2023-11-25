@@ -19,8 +19,8 @@ const ListCard = ({ list }: { list: List }) => {
           />
         )}
 
-        <h2>{list.title}</h2>
-        <p>{list.description}</p>
+        <h3 className="font-bold">{list.title}</h3>
+        {list.description && <p>{list.description}</p>}
 
         <ul className="flex flex-col gap-3 list-disc list-inside">
           {list.items.map((item, index) => (

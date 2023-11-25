@@ -8,13 +8,16 @@
   --background-end-rgb: 255, 255, 255;
   --background-rgb: 0, 0, 0;
 
+  --background-color: #f1f4f7;
+
   --color-primary: #ffc72c;
   --color-secondary: #fff4d5;
   --color-orchid: #d9b5fe;
   --color-pale-blue: #d2eaff;
 
-  --color-gray: #f1f4f7;
+  --color-gray-tertiary: #f1f4f7;
   --color-gray-secondary: #e5ebf0;
+  --color-gray: #7b839a7;
   --color-black: #030d1b;
 
   --color-snow: #f9f9f9;
@@ -42,12 +45,31 @@ h1 {
 
 body {
   font-family: "Inter", sans-serif;
-  background: var(--color-gray);
+  background: var(--background-color);
   font-size: 16px;
   color: var(--color-black);
 }
 
-h2 { 
+h2 {
   font-size: 22px;
   font-weight: 700;
+}
+
+.username-lg {
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.username-sm {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.caption {
+  font-size: 14px;
+}
+
+.caption-light {
+  font-size: 14px;
+  color: var(--color-gray);
 }

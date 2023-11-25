@@ -24,6 +24,7 @@ const config: Config = {
         primary: "var(--color-primary)",
         gray: "var(--color-gray)",
         "gray-secondary": "var(--color-gray-secondary)",
+        "gray-tertiary": "var(--color-gray-tertiary)",
         black: "var(--color-black)",
         secondary: "var(--color-secondary)",
         orchid: "var(--color-orchid)",
@@ -32,6 +33,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("@headlessui/tailwindcss")],
 };
 export default config;

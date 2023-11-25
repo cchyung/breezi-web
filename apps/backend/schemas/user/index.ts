@@ -65,9 +65,12 @@ export const GetUser = queryField("user", {
   type: User,
   args: {
     authToken: stringArg(),
+    id: stringArg(),
   },
-  resolve: async (_, { authToken }, ctx) => {
-    if (authToken) {
+  resolve: async (_, { authToken, id }, ctx) => {
+    if (id) {
+      return await userService.getUser({ id });
+    } else if (authToken) {
       const user = await userService.getAuthenticatedUser(authToken);
       if (!user) {
         throw new Error("User not found");
@@ -165,7 +168,7 @@ export const updateUser = mutationField("updateUser", {
     if (ctx.user._id.toString() !== id) {
       throw new Error("Must be logged in as the user you are trying to update");
     }
-    
+
     const updatedUser = await userService.updateUser({ id: id, ...user });
     return updatedUser;
   },

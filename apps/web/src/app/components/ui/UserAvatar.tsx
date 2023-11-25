@@ -2,7 +2,7 @@ import { User } from "@/lib/api";
 
 const UserAvatar = ({
   user,
-  size,
+  size = "md",
 }: {
   user: User;
   size: "sm" | "md" | "lg";

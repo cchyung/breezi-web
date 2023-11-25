@@ -75,7 +75,7 @@ export const CreateList = mutationField("createList", {
     return await listService.createList({
       title: list.title,
       items: list.items,
-      author: user._id,
+      author: user._id.toString(),
       state: list.state,
       coverImageURL: list.coverImageURL,
       description: list.description ? list.description : undefined,

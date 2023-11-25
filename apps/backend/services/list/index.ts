@@ -8,9 +8,20 @@ export interface ListItemInput {
   imageURL?: string | null;
 }
 
+export interface CreateListInput {
+  author: string;
+  title: string;
+  items: ListItemInput[];
+  state?: ListState | null;
+  description?: string | null;
+  coverImageURL?: string | null;
+}
+
 export const ListService = (db: Database) => {
   const getList = async ({ id }: { id: string }) => {
-    return await db.List.findById(id).populate<PopulatedList>("author").exec();
+    return await db.List.findById(id)
+      .populate<PopulatedList>({ path: "author" })
+      .exec();
   };
 
   const getUserLists = async ({
@@ -18,7 +29,9 @@ export const ListService = (db: Database) => {
   }: {
     userId: string | Schema.Types.ObjectId;
   }) => {
-    return await db.List.find({ author: userId }).exec();
+    return await db.List.find({ author: userId })
+      .populate<PopulatedList>({ path: "author" })
+      .exec();
   };
 
   const createList = async ({
@@ -28,14 +41,7 @@ export const ListService = (db: Database) => {
     state,
     description,
     coverImageURL,
-  }: {
-    author: string | Schema.Types.ObjectId;
-    title: string;
-    items: ListItemInput[];
-    state?: ListState | null;
-    description?: string | null;
-    coverImageURL?: string | null;
-  }) => {
+  }: CreateListInput) => {
     const list = new db.List({
       author,
       title,
@@ -44,7 +50,7 @@ export const ListService = (db: Database) => {
       description,
       coverImageURL,
     });
-    return (await list.save()).populate<PopulatedList>("author");
+    return (await list.save()).populate<PopulatedList>({ path: "author" });
   };
 
   const deleteList = async ({ id }: { id: string }) => {
@@ -73,7 +79,7 @@ export const ListService = (db: Database) => {
     if (description) update.description = description;
     if (coverImageURL) update.coverImageURL = coverImageURL;
     return await db.List.findByIdAndUpdate(id, update)
-      .populate<PopulatedList>("author")
+      .populate<PopulatedList>({ path: "author" })
       .exec();
   };
 

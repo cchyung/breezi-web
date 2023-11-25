@@ -3,6 +3,7 @@ import { writeToLocalStorage } from "../utils/localStorage";
 export interface UserData {
   phone: string;
   username?: string;
+  imageURL?: string;
   authToken: string;
 }
 

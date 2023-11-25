@@ -121,6 +121,7 @@ export type QuerySendSmsVerificationTokenArgs = {
 
 export type QueryUserArgs = {
   authToken?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -159,12 +160,20 @@ export type UserInput = {
   username?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type GetUserQueryVariables = Exact<{
-  authToken: Scalars['String']['input'];
+export type GetUserListsQueryVariables = Exact<{
+  userId?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type GetUserQuery = { __typename?: 'Query', user?: { __typename?: 'User', _id: string } | null };
+export type GetUserListsQuery = { __typename?: 'Query', userLists?: Array<{ __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, author: { __typename?: 'User', _id: string, username: string, imageURL?: string | null } } | null> | null };
+
+export type GetUserQueryVariables = Exact<{
+  authToken?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type GetUserQuery = { __typename?: 'Query', user?: { __typename?: 'User', _id: string, username: string, imageURL?: string | null, about?: string | null } | null };
 
 export type SendSmsVerificationTokenQueryVariables = Exact<{
   phone: Scalars['String']['input'];

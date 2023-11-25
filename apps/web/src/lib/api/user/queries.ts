@@ -1,9 +1,12 @@
 import gql from "graphql-tag";
 
 export const GET_USER = gql`
-  query GetUser($authToken: String!) {
-    user(authToken: $authToken) {
+  query GetUser($authToken: String, $id: String) {
+    user(authToken: $authToken, id: $id) {
       _id
+      username
+      imageURL
+      about
     }
   }
 `;

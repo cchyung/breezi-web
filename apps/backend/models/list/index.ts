@@ -47,7 +47,7 @@ export const ListItemSchema = new Schema(
 export const ListSchema = new Schema(
   {
     author: {
-      type: Schema.Types.ObjectId,
+      type: String,
       ref: "User",
       required: true,
     },

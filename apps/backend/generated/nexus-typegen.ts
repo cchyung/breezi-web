@@ -233,6 +233,7 @@ export interface NexusGenArgTypes {
     }
     user: { // args
       authToken?: string | null; // String
+      id?: string | null; // String
     }
     userLists: { // args
       userId?: string | null; // String

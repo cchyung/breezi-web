@@ -73,7 +73,7 @@ type Query {
   """
   loginUser(phone: String!, verificationCode: String!): LoginObject
   sendSMSVerificationToken(phone: String!): Ok
-  user(authToken: String): User
+  user(authToken: String, id: String): User
   userLists(userId: String): [List]
   verifySMSVerificationToken(code: String!, phone: String!): Ok
 }
