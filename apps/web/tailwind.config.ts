@@ -22,10 +22,6 @@ const config: Config = {
       },
       colors: {
         primary: "var(--color-primary)",
-        gray: "var(--color-gray)",
-        "gray-secondary": "var(--color-gray-secondary)",
-        "gray-tertiary": "var(--color-gray-tertiary)",
-        black: "var(--color-black)",
         secondary: "var(--color-secondary)",
         orchid: "var(--color-orchid)",
         "pale-blue": "var(--color-pale-blue)",

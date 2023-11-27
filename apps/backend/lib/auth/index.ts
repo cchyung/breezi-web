@@ -20,30 +20,6 @@ export const decodeJWTAuthToken = (token: string) => {
 
 const userService = UserService(db);
 
-// handles authentication
-export const authTokenMiddleware: RequestHandler = async (
-  req,
-  _: Response,
-  next: NextFunction
-): Promise<void> => {
-  try {
-    const authHeader = req.headers.authorization;
-    if (authHeader) {
-      const token = authHeader.split(" ")[1];
-      if (verifyJWTAuthToken(token)) {
-        const phone = decodeJWTAuthToken(token).phone;
-        const user = await userService.getUser({ phone });
-        if (user) {
-          req.user = user;
-        }
-      }
-    }
-    next();
-  } catch (error) {
-    next(error);
-  }
-};
-
 export const isOwner = ({
   user,
   _id,
@@ -69,6 +45,7 @@ export const verifyAuthToken = async (
   authToken: string
 ): Promise<User | null> => {
   try {
+    // @ts-ignore
     const decodedToken = jwt.verify(authToken, process.env.JWT_SECRET, {
       complete: true,
     }) as AuthJWT;

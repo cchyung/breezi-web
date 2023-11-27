@@ -1,4 +1,6 @@
-import { ListCard } from "@/app/components/list";
+"use client";
+
+import { CreateListButton } from "@/app/components/list";
 import UserAvatar from "@/app/components/ui/UserAvatar";
 import { UserProfileContent } from "@/app/components/user";
 import {
@@ -8,44 +10,31 @@ import {
   GetUserQueryVariables,
   List,
 } from "@/lib/api";
-import { getClient } from "@/lib/api/client";
 import { GET_USER_LISTS } from "@/lib/api/list/queries";
 import { GET_USER } from "@/lib/api/user/queries";
+import { useQuery } from "@apollo/client";
 
-const getUser = async (userId: string) => {
-  const client = getClient();
-
-  const query = await client.query<GetUserQuery, GetUserQueryVariables>({
-    query: GET_USER,
-    variables: {
-      id: userId,
-    },
-  });
-  return query.data.user;
-};
-
-const getUserLists = async (userId: string) => {
-  const client = getClient();
-
-  const query = await client.query<
+const UserPage = ({ params }: { params: { id: string } }) => {
+  const { loading, data, refetch } = useQuery<
     GetUserListsQuery,
     GetUserListsQueryVariables
-  >({
-    query: GET_USER_LISTS,
+  >(GET_USER_LISTS, {
     variables: {
-      userId,
+      userId: params.id,
     },
   });
 
-  return query.data.userLists;
-};
+  const { loading: userLoading, data: userData } = useQuery<
+    GetUserQuery,
+    GetUserQueryVariables
+  >(GET_USER, {
+    variables: {
+      id: params.id,
+    },
+  });
 
-const UserPage = async ({ params }: { params: { id: string } }) => {
-  const user = await getUser(params.id);
-
-  const lists = await getUserLists(params.id);
-
-  if (!user) {
+  if (userLoading) return <p>Loading...</p>;
+  else if (!userData?.user) {
     return (
       <>
         <p>User not found</p>
@@ -56,11 +45,13 @@ const UserPage = async ({ params }: { params: { id: string } }) => {
       <>
         <div className="flex flex-col mt-10 gap-4">
           <div className="w-full flex flex-col items-center gap-4">
-            <UserAvatar user={user} size="lg" />
+            <UserAvatar user={userData.user} size="lg" />
 
-            <h3 className="username-lg">@{user.username}</h3>
+            <h3 className="username-lg">@{userData.user.username}</h3>
 
-            {user.about && <p className="caption">{user.about}</p>}
+            {userData.user.about && (
+              <p className="caption">{userData.user.about}</p>
+            )}
 
             <div className="flex flex-row items-center justify-between">
               <div className="flex flex-col gap-2 items-center px-4">
@@ -76,9 +67,12 @@ const UserPage = async ({ params }: { params: { id: string } }) => {
                 <p className="text-gray-400 caption">Likes</p>
               </div>
             </div>
-
-            <UserProfileContent lists={lists as List[]} />
+            {!loading && data && (
+              <UserProfileContent lists={data?.userLists as List[]} />
+            )}
           </div>
+
+          <CreateListButton onCreation={refetch} />
         </div>
       </>
     );

@@ -29,7 +29,11 @@ export const ListService = (db: Database) => {
   }: {
     userId: string | Schema.Types.ObjectId;
   }) => {
-    return await db.List.find({ author: userId })
+    return await db.List.find(
+      { author: userId },
+      {},
+      { sort: { createdAt: -1 } }
+    )
       .populate<PopulatedList>({ path: "author" })
       .exec();
   };

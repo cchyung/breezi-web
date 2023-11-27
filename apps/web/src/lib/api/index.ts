@@ -167,6 +167,13 @@ export type GetUserListsQueryVariables = Exact<{
 
 export type GetUserListsQuery = { __typename?: 'Query', userLists?: Array<{ __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, author: { __typename?: 'User', _id: string, username: string, imageURL?: string | null } } | null> | null };
 
+export type CreateListMutationVariables = Exact<{
+  list: ListInput;
+}>;
+
+
+export type CreateListMutation = { __typename?: 'Mutation', createList?: { __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, author: { __typename?: 'User', _id: string, username: string, imageURL?: string | null } } | null };
+
 export type GetUserQueryVariables = Exact<{
   authToken?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;

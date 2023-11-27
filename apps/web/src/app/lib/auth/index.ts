@@ -1,6 +1,7 @@
 import { writeToLocalStorage } from "../utils/localStorage";
 
 export interface UserData {
+  _id: string;
   phone: string;
   username?: string;
   imageURL?: string;

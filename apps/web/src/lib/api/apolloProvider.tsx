@@ -35,7 +35,7 @@ function makeClient() {
   let link: ApolloLink;
 
   // if in browser use authLink
-  if (typeof window === "undefined") {
+  if (typeof window !== "undefined") {
     authLink = setContext((_, { headers }) => {
       // get the authentication token from local storage if it exists
       const token = localStorage.getItem("token");
@@ -47,6 +47,7 @@ function makeClient() {
         },
       };
     });
+
     link = authLink.concat(httpLink);
   } else {
     link = httpLink;

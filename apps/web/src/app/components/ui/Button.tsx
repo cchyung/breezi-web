@@ -6,12 +6,14 @@ const Button = ({
   size = "md",
   color = "primary",
   disabled = false,
+  className = "",
 }: {
   children: React.ReactNode;
   onClick?: MouseEventHandler<HTMLButtonElement>;
   size?: "sm" | "md" | "lg";
-  color?: "primary";
+  color?: "primary" | "gray";
   disabled?: boolean;
+  className?: string;
 }) => {
   const sizeStyles = {
     sm: "py-2 px-4 text-sm",
@@ -22,16 +24,16 @@ const Button = ({
   const sizeStyle = sizeStyles[size];
 
   const colorStyles = {
-    primary:
-      "bg-primary text-white disabled:bg-gray-400 disabled:text-gray-800",
+    primary: "bg-primary text-white disabled:bg-gray-300 disabled:text-white",
+    gray: "bg-gray-400 text-white disabled:bg-gray-300 disabled:text-white",
   };
 
   const colorStyle = colorStyles[color];
-
   return (
     <>
       <button
-        className={`${sizeStyle} ${colorStyle} disabled:cursor-not-allowed border-2 border-white rounded-2xl w-full`}
+        className={`${className} ${sizeStyle} ${colorStyle} disabled:cursor-not-allowed border-2 border-white rounded-2xl
+        transition-colors`}
         onClick={onClick}
         disabled={disabled}
       >

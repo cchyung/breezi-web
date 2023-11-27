@@ -1,6 +1,7 @@
 "use client";
 
 import { Button, Input } from "@/app/components/ui";
+import { getUserFromLocalStorage } from "@/app/lib/auth";
 import { UpdateUserMutation, UpdateUserMutationVariables } from "@/lib/api";
 import { UPDATE_USER } from "@/lib/api/user/queries";
 import { useMutation } from "@apollo/client";
@@ -20,11 +21,16 @@ export const Username = () => {
     // validate username
     // update user's username in backend and update local storage
     await updateUser({
-      
-    })
+      variables: {
+        id: getUserFromLocalStorage()?._id as string,
+        user: {
+          username: username,
+        },
+      },
+    });
 
     // navigate to home
-    router.push(`/`);
+    router.push(`/user/`);
   };
 
   return (

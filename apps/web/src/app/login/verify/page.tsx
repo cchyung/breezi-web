@@ -2,7 +2,11 @@
 import { Button, Input } from "@/app/components/ui";
 import CodeInput from "./components/CodeInput";
 import { useEffect, useState } from "react";
-import { UserData, getUserFromLocalStorage } from "@/app/lib/auth";
+import {
+  UserData,
+  getUserFromLocalStorage,
+  writeUserToLocalStorage,
+} from "@/app/lib/auth";
 import { useRouter } from "next/navigation";
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { LoginUserQuery, LoginUserQueryVariables } from "@/lib/api";
@@ -24,8 +28,6 @@ const Verify = () => {
   }, []);
 
   const submitVerificationCode = async (code: string) => {
-    console.log("submitting code", code)
-    console.log(userData)
     // call out to server
     if (userData?.phone) {
       const response = await loginUser({
@@ -36,11 +38,17 @@ const Verify = () => {
       });
 
       response.data?.loginUser && console.log(response.data?.loginUser);
-      localStorage.setItem("token", response.data?.loginUser?.authToken || "");
+      writeUserToLocalStorage({
+        _id: response.data?.loginUser?.user?._id,
+        phone: response.data?.loginUser?.user?.phone as string,
+        authToken: response.data?.loginUser?.authToken as string,
+      });
 
       // check if user is registered.  If not, show username screens
       router.push("/login/onboarding/username");
+
       // otherwise, go to home page
+      router.push("/user/" + response.data?.loginUser?.user?._id);
     }
   };
 

@@ -35,6 +35,7 @@ const Login = () => {
               onClick={() => {
                 onSubmit(phone);
               }}
+              className="w-full"
             >
               Submit
             </Button>

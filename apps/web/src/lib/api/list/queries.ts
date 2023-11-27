@@ -21,3 +21,25 @@ export const GET_USER_LISTS = gql`
     }
   }
 `;
+
+export const CREATE_LIST = gql`
+  mutation CreateList($list: ListInput!) {
+    createList(list: $list) {
+      _id
+      title
+      description
+      coverImageURL
+      state
+      items {
+        _id
+        text
+        imageURL
+      }
+      author {
+        _id
+        username
+        imageURL
+      }
+    }
+  }
+`;

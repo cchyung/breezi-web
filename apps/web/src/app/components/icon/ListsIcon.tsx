@@ -8,7 +8,7 @@ const ListsIcon = ({ className }: { className: string }) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_3677_3823)">
+      <g clipPath="url(#clip0_3677_3823)">
         <rect
           x="1.99976"
           y="1.99981"
@@ -20,20 +20,20 @@ const ListsIcon = ({ className }: { className: string }) => {
         <path
           d="M12 2.06236V22.0624"
           stroke="white"
-          stroke-width="1.5"
-          stroke-linecap="round"
+          strokeWidth="1.5"
+          strokeLinecap="round"
         />
         <path
           d="M21.9995 9.24976H11.9995"
           stroke="white"
-          stroke-width="1.5"
-          stroke-linecap="round"
+          strokeWidth="1.5"
+          strokeLinecap="round"
         />
         <path
           d="M12 14.2499L2 14.2499"
           stroke="white"
-          stroke-width="1.5"
-          stroke-linecap="round"
+          strokeWidth="1.5"
+          strokeLinecap="round"
         />
       </g>
       <defs>
