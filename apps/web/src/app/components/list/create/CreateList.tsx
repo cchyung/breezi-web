@@ -109,7 +109,10 @@ const CreateList = ({
             size="sm"
             color="primary"
             disabled={
-              !items || items.filter((item) => item.text !== "").length === 0
+              !title ||
+              title.length == 0 ||
+              !items ||
+              items.filter((item) => item.text !== "").length === 0
             }
             onClick={() => onSubmit(true)}
           >
@@ -193,7 +196,7 @@ const CreateList = ({
                           return prev;
                         }
                       });
-                      
+
                       if (index - 1 >= 0) {
                         listItemInputRefs[index - 1]?.current?.focus();
                       }

@@ -10,12 +10,24 @@ export interface UserData {
 
 export const writeUserToLocalStorage = (user: Partial<UserData>) => {
   writeToLocalStorage("user", JSON.stringify(user));
+  writeToLocalStorage("token", user.authToken);
 };
 
 export const getUserFromLocalStorage = () => {
-  const user = localStorage.getItem("user");
-  if (user) {
-    return JSON.parse(user) as Partial<UserData>;
+  if (localStorage) {
+    const user = localStorage.getItem("user");
+    if (user) {
+      return JSON.parse(user) as Partial<UserData>;
+    }
   }
+
   return null;
 };
+
+export const getTokenFromLocalStorage = () => {
+  if (localStorage) {
+    return localStorage.getItem("token");
+  }
+
+  return null;
+}

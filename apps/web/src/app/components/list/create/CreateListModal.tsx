@@ -15,7 +15,6 @@ const CreateListModal = ({
   setIsOpen: (_: boolean) => void;
   onCreation?: () => void;
 }) => {
-  
   return (
     <Dialog
       className="z-50 relative"
@@ -26,8 +25,8 @@ const CreateListModal = ({
     >
       <div className="fixed inset-0 flex w-screen justify-center items-center">
         <Dialog.Panel className="relative md:max-w-md md:h-auto h-screen w-full">
-          <div className="w-full h-full flex">
-            <Card>
+          <div className="w-full h-full">
+            <Card className="h-full">
               <CreateList
                 create={create}
                 onCreation={() => {

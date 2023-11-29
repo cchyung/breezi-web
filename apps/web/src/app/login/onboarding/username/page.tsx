@@ -30,7 +30,7 @@ export const Username = () => {
     });
 
     // navigate to home
-    router.push(`/user/`);
+    router.push(`/user/${getUserFromLocalStorage()?._id}`);
   };
 
   return (

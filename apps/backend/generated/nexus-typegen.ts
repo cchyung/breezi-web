@@ -158,7 +158,7 @@ export interface NexusGenFieldTypes {
     imageURL: string | null; // String
     phone: string | null; // String
     updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
-    username: string; // String!
+    username: string | null; // String
   }
 }
 

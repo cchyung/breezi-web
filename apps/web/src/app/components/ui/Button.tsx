@@ -17,7 +17,7 @@ const Button = ({
 }) => {
   const sizeStyles = {
     sm: "py-2 px-4 text-sm",
-    md: "py-3 px-6 text-base",
+    md: "py-3 px-6 text-md",
     lg: "py-4 px-8 text-lg",
   };
 
@@ -32,7 +32,7 @@ const Button = ({
   return (
     <>
       <button
-        className={`${className} ${sizeStyle} ${colorStyle} disabled:cursor-not-allowed border-2 border-white rounded-2xl
+        className={`${className} ${sizeStyle} ${colorStyle} disabled:cursor-not-allowed rounded-2xl
         transition-colors`}
         onClick={onClick}
         disabled={disabled}

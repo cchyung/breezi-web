@@ -73,3 +73,7 @@ h2 {
   font-size: 14px;
   color: var(--color-gray);
 }
+
+input:focus {
+  outline: none;
+}

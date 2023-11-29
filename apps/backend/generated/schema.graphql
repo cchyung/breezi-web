@@ -98,7 +98,7 @@ type User {
   imageURL: String
   phone: String
   updatedAt: DateTime
-  username: String!
+  username: String
 }
 
 input UserInput {

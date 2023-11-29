@@ -1,6 +1,10 @@
 import { PropsWithChildren } from "react";
 
-const Card = ({ color, children }: PropsWithChildren<{ color?: "white" }>) => {
+const Card = ({
+  color,
+  children,
+  className,
+}: PropsWithChildren<{ color?: "white"; className?: string }>) => {
   const bgStyles = {
     white: "bg-white",
   };
@@ -8,7 +12,9 @@ const Card = ({ color, children }: PropsWithChildren<{ color?: "white" }>) => {
   const bgStyle = color ? bgStyles[color] : bgStyles["white"];
 
   return (
-    <div className={`flex flex-col rounded-2xl p-5 ${bgStyle}`}>{children}</div>
+    <div className={`flex flex-col rounded-2xl p-5 ${bgStyle} ${className}`}>
+      {children}
+    </div>
   );
 };
 

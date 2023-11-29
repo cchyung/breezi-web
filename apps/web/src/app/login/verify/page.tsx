@@ -44,11 +44,13 @@ const Verify = () => {
         authToken: response.data?.loginUser?.authToken as string,
       });
 
-      // check if user is registered.  If not, show username screens
-      router.push("/login/onboarding/username");
-
-      // otherwise, go to home page
-      router.push("/user/" + response.data?.loginUser?.user?._id);
+      if (userData.username) {
+        // otherwise, go to home page
+        router.push("/user/" + response.data?.loginUser?.user?._id);
+      } else {
+        // check if user is registered.  If not, show username screens
+        router.push("/login/onboarding/username");
+      }
     }
   };
 

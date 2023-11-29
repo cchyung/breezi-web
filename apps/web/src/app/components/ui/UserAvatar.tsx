@@ -24,7 +24,7 @@ const UserAvatar = ({
           alt="user profile"
         ></img>
       ) : (
-        <div className={`bg-blue rounded-full ${sizeStyle}`} />
+        <div className={`bg-blue-400 rounded-full ${sizeStyle}`} />
       )}
     </>
   );
