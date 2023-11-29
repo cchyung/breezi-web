@@ -24,6 +24,22 @@ export const ListService = (db: Database) => {
       .exec();
   };
 
+  const getLists = async ({
+    cursor = 0,
+    pageSize = 10,
+  }: {
+    cursor?: number;
+    pageSize?: number;
+  }) => {
+    return await db.List.find(
+      {},
+      {},
+      { skip: cursor, limit: pageSize, sort: { createdAt: -1 } }
+    )
+      .populate<PopulatedList>({ path: "author" })
+      .exec();
+  };
+
   const getUserLists = async ({
     userId,
   }: {
@@ -45,7 +61,7 @@ export const ListService = (db: Database) => {
     state,
     description,
     coverImageURL,
-  }: CreateListInput) => {
+  }: CreateListInput): Promise<PopulatedList> => {
     const list = new db.List({
       author,
       title,
@@ -89,6 +105,7 @@ export const ListService = (db: Database) => {
 
   return {
     getList,
+    getLists,
     getUserLists,
     createList,
     updateList,

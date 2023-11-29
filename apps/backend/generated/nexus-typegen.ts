@@ -144,6 +144,7 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     list: NexusGenRootTypes['List'] | null; // List
+    lists: Array<NexusGenRootTypes['List'] | null> | null; // [List]
     loginUser: NexusGenRootTypes['LoginObject'] | null; // LoginObject
     sendSMSVerificationToken: NexusGenRootTypes['Ok'] | null; // Ok
     user: NexusGenRootTypes['User'] | null; // User
@@ -192,6 +193,7 @@ export interface NexusGenFieldTypeNames {
   }
   Query: { // field return type name
     list: 'List'
+    lists: 'List'
     loginUser: 'LoginObject'
     sendSMSVerificationToken: 'Ok'
     user: 'User'
@@ -223,6 +225,10 @@ export interface NexusGenArgTypes {
   Query: {
     list: { // args
       id: string; // String!
+    }
+    lists: { // args
+      cursor?: number | null; // Int
+      pageSize?: number | null; // Int
     }
     loginUser: { // args
       phone: string; // String!

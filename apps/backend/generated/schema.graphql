@@ -67,6 +67,7 @@ type Ok {
 
 type Query {
   list(id: String!): List
+  lists(cursor: Int, pageSize: Int): [List]
 
   """
   Logs in the user based on the supplied number and verification code.  If the user doesn't exist, a new user will be created

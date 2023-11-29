@@ -1,5 +1,6 @@
 import { Schema } from "mongoose";
 import { User } from "../user";
+import paginate from 'mongoose-paginate-v2';
 
 export enum ListState {
   draft = "draft",
@@ -77,3 +78,5 @@ export const ListSchema = new Schema(
   },
   { timestamps: {} }
 );
+
+ListSchema.plugin(paginate)

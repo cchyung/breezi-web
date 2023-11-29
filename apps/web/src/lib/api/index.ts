@@ -94,6 +94,7 @@ export type Ok = {
 export type Query = {
   __typename?: 'Query';
   list?: Maybe<List>;
+  lists?: Maybe<Array<Maybe<List>>>;
   /** Logs in the user based on the supplied number and verification code.  If the user doesn't exist, a new user will be created */
   loginUser?: Maybe<LoginObject>;
   sendSMSVerificationToken?: Maybe<Ok>;
@@ -105,6 +106,12 @@ export type Query = {
 
 export type QueryListArgs = {
   id: Scalars['String']['input'];
+};
+
+
+export type QueryListsArgs = {
+  cursor?: InputMaybe<Scalars['Int']['input']>;
+  pageSize?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -159,6 +166,14 @@ export type UserInput = {
   phone?: InputMaybe<Scalars['String']['input']>;
   username?: InputMaybe<Scalars['String']['input']>;
 };
+
+export type GetListsQueryVariables = Exact<{
+  cursor?: InputMaybe<Scalars['Int']['input']>;
+  pageSize?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type GetListsQuery = { __typename?: 'Query', lists?: Array<{ __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null } } | null> | null };
 
 export type GetUserListsQueryVariables = Exact<{
   userId?: InputMaybe<Scalars['String']['input']>;

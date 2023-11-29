@@ -1,7 +1,7 @@
-import { model, Model } from "mongoose";
-
+import mongoose, { model, Model } from "mongoose";
 import { User, UserSchema } from "models/user";
 import { List, ListSchema } from "models/list";
+import paginate from "mongoose-paginate-v2";
 
 export interface Database {
   User: Model<User>;

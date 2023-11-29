@@ -8,6 +8,7 @@ import {
   stringArg,
   list,
   inputObjectType,
+  intArg,
 } from "nexus";
 import { ListState as ListStateEnum } from "models/list";
 import { AuthenticationError, SystemError } from "@/lib/errors";
@@ -102,6 +103,22 @@ export const GetList = queryField("list", {
     }
 
     return list;
+  },
+});
+
+export const GetLists = queryField("lists", {
+  type: list(List),
+  args: {
+    cursor: intArg(),
+    pageSize: intArg(),
+  },
+  resolve: async (_, { cursor, pageSize }, __) => {
+    const lists = listService.getLists({
+      cursor: cursor as number | undefined,
+      pageSize: pageSize as number | undefined,
+    });
+
+    return lists;
   },
 });
 
