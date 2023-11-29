@@ -10,7 +10,15 @@ import {
   ListItemInput,
   ListState,
 } from "@/lib/api";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  ReactElement,
+  RefObject,
+  createRef,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { ImageIcon } from "@/app/components/icon";
 import { CREATE_LIST } from "@/lib/api/list/queries";
 import { useApolloClient } from "@apollo/client";
@@ -33,6 +41,10 @@ const CreateList = ({
   const [coverImageURL, setCoverImageURL] = useState(list?.coverImageURL);
   const [activeItemIndex, setActiveItemIndex] = useState(-1);
   const client = useApolloClient();
+
+  const listItemInputRefs = useMemo<RefObject<HTMLInputElement>[]>(() => {
+    return items.map(() => createRef<HTMLInputElement>());
+  }, [items]);
 
   const onSubmit = useCallback(
     async (publish?: boolean) => {
@@ -136,6 +148,7 @@ const CreateList = ({
             return (
               <li key={index}>
                 <input
+                  ref={listItemInputRefs[index]}
                   value={item.text}
                   placeholder={`Item ${index + 1}`}
                   onChange={(e) => {
@@ -162,6 +175,8 @@ const CreateList = ({
                           ...prev.slice(index + 1),
                         ];
                       });
+
+                      listItemInputRefs[index + 1]?.current?.focus();
                     } else if (
                       items[index].text === "" &&
                       e.key === "Backspace" &&
@@ -178,6 +193,18 @@ const CreateList = ({
                           return prev;
                         }
                       });
+                      
+                      if (index - 1 >= 0) {
+                        listItemInputRefs[index - 1]?.current?.focus();
+                      }
+                    } else if (e.key === "ArrowUp") {
+                      if (index - 1 >= 0) {
+                        listItemInputRefs[index - 1]?.current?.focus();
+                      }
+                    } else if (e.key === "ArrowDown") {
+                      if (index + 1 < items.length) {
+                        listItemInputRefs[index + 1]?.current?.focus();
+                      }
                     }
                   }}
                 />
