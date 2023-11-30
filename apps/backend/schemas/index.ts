@@ -7,9 +7,13 @@ import fs from "fs";
 import { AccessError } from "lib/errors";
 
 // ==================== Scalars ====================
-export const GQLDate = asNexusMethod(GraphQLDate, "date"); // @ts-ignore
-export const GQLTime = asNexusMethod(GraphQLTime, "time"); // @ts-ignore
-export const GQLDateTime = asNexusMethod(GraphQLDateTime, "datetime"); // @ts-ignore
+ // @ts-ignore
+export const GQLDate = asNexusMethod(GraphQLDate, "date");
+// @ts-ignore
+export const GQLTime = asNexusMethod(GraphQLTime, "time"); 
+// @ts-ignore
+export const GQLDateTime = asNexusMethod(GraphQLDateTime, "datetime"); 
+
 export const JSONScalar = new GraphQLScalarType({
   name: "JSON",
   serialize: (data: any) => data,

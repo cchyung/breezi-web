@@ -18,10 +18,12 @@ type List {
   _id: String!
   author: User!
   coverImageURL: String
+  createdAt: Date
   description: String
   items: [ListItem]!
   state: ListState
   title: String!
+  updatedAt: Date
 }
 
 input ListInput {
@@ -45,6 +47,12 @@ input ListItemInput {
   text: String!
 }
 
+type ListLike {
+  _id: String
+  list: String
+  user: String
+}
+
 enum ListState {
   draft
   published
@@ -57,6 +65,8 @@ type LoginObject {
 
 type Mutation {
   createList(list: ListInput!): List
+  likeList(listId: String!): ListLike
+  unlikeList(listId: String!): Boolean
   updateUser(id: String!, user: UpdateUserInput!): User
 }
 
@@ -67,6 +77,7 @@ type Ok {
 
 type Query {
   list(id: String!): List
+  listLikes(listId: String!): [ListLike]
   lists(cursor: Int, pageSize: Int): [List]
 
   """
@@ -75,6 +86,7 @@ type Query {
   loginUser(phone: String!, verificationCode: String!): LoginObject
   sendSMSVerificationToken(phone: String!): Ok
   user(authToken: String, id: String): User
+  userLikes(userId: String): [ListLike]
   userLists(userId: String): [List]
   verifySMSVerificationToken(code: String!, phone: String!): Ok
 }

@@ -32,7 +32,11 @@ export const List = objectType({
     t.nonNull.list.field("items", { type: ListItem });
     t.string("description");
     t.string("coverImageURL");
+    // @ts-ignore
+    // TODO: Fix this
     t.nonNull.field("author", { type: User });
+    t.date("createdAt");
+    t.date("updatedAt");
   },
 });
 

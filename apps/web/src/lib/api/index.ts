@@ -29,10 +29,12 @@ export type List = {
   _id: Scalars['String']['output'];
   author: User;
   coverImageURL?: Maybe<Scalars['String']['output']>;
+  createdAt?: Maybe<Scalars['Date']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   items: Array<Maybe<ListItem>>;
   state?: Maybe<ListState>;
   title: Scalars['String']['output'];
+  updatedAt?: Maybe<Scalars['Date']['output']>;
 };
 
 export type ListInput = {
@@ -57,6 +59,13 @@ export type ListItemInput = {
   text: Scalars['String']['input'];
 };
 
+export type ListLike = {
+  __typename?: 'ListLike';
+  _id?: Maybe<Scalars['String']['output']>;
+  list?: Maybe<Scalars['String']['output']>;
+  user?: Maybe<Scalars['String']['output']>;
+};
+
 export enum ListState {
   Draft = 'draft',
   Published = 'published'
@@ -71,12 +80,24 @@ export type LoginObject = {
 export type Mutation = {
   __typename?: 'Mutation';
   createList?: Maybe<List>;
+  likeList?: Maybe<ListLike>;
+  unlikeList?: Maybe<Scalars['Boolean']['output']>;
   updateUser?: Maybe<User>;
 };
 
 
 export type MutationCreateListArgs = {
   list: ListInput;
+};
+
+
+export type MutationLikeListArgs = {
+  listId: Scalars['String']['input'];
+};
+
+
+export type MutationUnlikeListArgs = {
+  listId: Scalars['String']['input'];
 };
 
 
@@ -94,11 +115,13 @@ export type Ok = {
 export type Query = {
   __typename?: 'Query';
   list?: Maybe<List>;
+  listLikes?: Maybe<Array<Maybe<ListLike>>>;
   lists?: Maybe<Array<Maybe<List>>>;
   /** Logs in the user based on the supplied number and verification code.  If the user doesn't exist, a new user will be created */
   loginUser?: Maybe<LoginObject>;
   sendSMSVerificationToken?: Maybe<Ok>;
   user?: Maybe<User>;
+  userLikes?: Maybe<Array<Maybe<ListLike>>>;
   userLists?: Maybe<Array<Maybe<List>>>;
   verifySMSVerificationToken?: Maybe<Ok>;
 };
@@ -106,6 +129,11 @@ export type Query = {
 
 export type QueryListArgs = {
   id: Scalars['String']['input'];
+};
+
+
+export type QueryListLikesArgs = {
+  listId: Scalars['String']['input'];
 };
 
 
@@ -129,6 +157,11 @@ export type QuerySendSmsVerificationTokenArgs = {
 export type QueryUserArgs = {
   authToken?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryUserLikesArgs = {
+  userId?: InputMaybe<Scalars['String']['input']>;
 };
 
 

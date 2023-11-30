@@ -4,6 +4,7 @@
  */
 
 import type * as List from "./../models/list/index"
+import type * as ListLike from "./../models/listLike/index"
 import type * as User from "./../models/user/index"
 import type { AuthenticatedContext } from "./../lib/context/index"
 import type { FieldAuthorizeResolver } from "nexus/dist/plugins/fieldAuthorizePlugin"
@@ -91,6 +92,7 @@ export interface NexusGenScalars {
 export interface NexusGenObjects {
   List: List.List;
   ListItem: List.ListItem;
+  ListLike: ListLike.ListLike;
   LoginObject: { // root type
     authToken?: string | null; // String
     user?: NexusGenRootTypes['User'] | null; // User
@@ -119,10 +121,12 @@ export interface NexusGenFieldTypes {
     _id: string; // String!
     author: NexusGenRootTypes['User']; // User!
     coverImageURL: string | null; // String
+    createdAt: NexusGenScalars['Date'] | null; // Date
     description: string | null; // String
     items: Array<NexusGenRootTypes['ListItem'] | null>; // [ListItem]!
     state: NexusGenEnums['ListState'] | null; // ListState
     title: string; // String!
+    updatedAt: NexusGenScalars['Date'] | null; // Date
   }
   ListItem: { // field return type
     _id: string; // String!
@@ -130,12 +134,19 @@ export interface NexusGenFieldTypes {
     parent: string | null; // String
     text: string; // String!
   }
+  ListLike: { // field return type
+    _id: string | null; // String
+    list: string | null; // String
+    user: string | null; // String
+  }
   LoginObject: { // field return type
     authToken: string | null; // String
     user: NexusGenRootTypes['User'] | null; // User
   }
   Mutation: { // field return type
     createList: NexusGenRootTypes['List'] | null; // List
+    likeList: NexusGenRootTypes['ListLike'] | null; // ListLike
+    unlikeList: boolean | null; // Boolean
     updateUser: NexusGenRootTypes['User'] | null; // User
   }
   Ok: { // field return type
@@ -144,10 +155,12 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     list: NexusGenRootTypes['List'] | null; // List
+    listLikes: Array<NexusGenRootTypes['ListLike'] | null> | null; // [ListLike]
     lists: Array<NexusGenRootTypes['List'] | null> | null; // [List]
     loginUser: NexusGenRootTypes['LoginObject'] | null; // LoginObject
     sendSMSVerificationToken: NexusGenRootTypes['Ok'] | null; // Ok
     user: NexusGenRootTypes['User'] | null; // User
+    userLikes: Array<NexusGenRootTypes['ListLike'] | null> | null; // [ListLike]
     userLists: Array<NexusGenRootTypes['List'] | null> | null; // [List]
     verifySMSVerificationToken: NexusGenRootTypes['Ok'] | null; // Ok
   }
@@ -168,10 +181,12 @@ export interface NexusGenFieldTypeNames {
     _id: 'String'
     author: 'User'
     coverImageURL: 'String'
+    createdAt: 'Date'
     description: 'String'
     items: 'ListItem'
     state: 'ListState'
     title: 'String'
+    updatedAt: 'Date'
   }
   ListItem: { // field return type name
     _id: 'String'
@@ -179,12 +194,19 @@ export interface NexusGenFieldTypeNames {
     parent: 'String'
     text: 'String'
   }
+  ListLike: { // field return type name
+    _id: 'String'
+    list: 'String'
+    user: 'String'
+  }
   LoginObject: { // field return type name
     authToken: 'String'
     user: 'User'
   }
   Mutation: { // field return type name
     createList: 'List'
+    likeList: 'ListLike'
+    unlikeList: 'Boolean'
     updateUser: 'User'
   }
   Ok: { // field return type name
@@ -193,10 +215,12 @@ export interface NexusGenFieldTypeNames {
   }
   Query: { // field return type name
     list: 'List'
+    listLikes: 'ListLike'
     lists: 'List'
     loginUser: 'LoginObject'
     sendSMSVerificationToken: 'Ok'
     user: 'User'
+    userLikes: 'ListLike'
     userLists: 'List'
     verifySMSVerificationToken: 'Ok'
   }
@@ -217,6 +241,12 @@ export interface NexusGenArgTypes {
     createList: { // args
       list: NexusGenInputs['ListInput']; // ListInput!
     }
+    likeList: { // args
+      listId: string; // String!
+    }
+    unlikeList: { // args
+      listId: string; // String!
+    }
     updateUser: { // args
       id: string; // String!
       user: NexusGenInputs['UpdateUserInput']; // UpdateUserInput!
@@ -225,6 +255,9 @@ export interface NexusGenArgTypes {
   Query: {
     list: { // args
       id: string; // String!
+    }
+    listLikes: { // args
+      listId: string; // String!
     }
     lists: { // args
       cursor?: number | null; // Int
@@ -240,6 +273,9 @@ export interface NexusGenArgTypes {
     user: { // args
       authToken?: string | null; // String
       id?: string | null; // String
+    }
+    userLikes: { // args
+      userId?: string | null; // String
     }
     userLists: { // args
       userId?: string | null; // String
