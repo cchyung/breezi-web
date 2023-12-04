@@ -6,7 +6,7 @@ import { UpdateUserMutation, UpdateUserMutationVariables } from "@/lib/api";
 import { UPDATE_USER } from "@/lib/api/user/queries";
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";
-import { useContext, useState } from "react";
+import { useCallback, useContext, useMemo, useState } from "react";
 
 const Username = () => {
   const router = useRouter();
@@ -18,25 +18,31 @@ const Username = () => {
     UpdateUserMutationVariables
   >(UPDATE_USER);
 
-  const onSubmit = async (username: string) => {
-    if (!user) {
-      console.error("No user logged in");
-      return;
-    }
-    // validate username
-    // update user's username in backend and update local storage
-    await updateUser({
-      variables: {
-        id: user._id as string,
-        user: {
-          username: username,
-        },
-      },
-    });
+  const onSubmit = useCallback(
+    async (username: string) => {
 
-    // navigate to home
-    router.push(`/user/${user._id}`);
-  };
+      console.log(user)
+      console.log(username)
+      if (!user) {
+        console.error("No user logged in");
+        return;
+      }
+      // validate username
+      // update user's username in backend and update local storage
+      await updateUser({
+        variables: {
+          id: user._id as string,
+          user: {
+            username: username,
+          },
+        },
+      });
+
+      // navigate to home
+      router.push(`/user/${user._id}`);
+    },
+    [user]
+  );
 
   return (
     <>

@@ -2,18 +2,17 @@
 
 import { Button, Input } from "@/app/components/ui";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { writeUserToLocalStorage } from "../lib/auth";
+import { useContext, useState } from "react";
+import { UserContext } from "../components/user";
 
 const Login = () => {
   const router = useRouter();
   const [phone, setPhone] = useState<string>("");
+  const { updateUser } = useContext(UserContext);
 
   const onSubmit = (phone: string) => {
-    // request verification sms
-
     // write phone to user local storage
-    writeUserToLocalStorage({ phone });
+    updateUser({ phone });
     router.push(`/login/verify`);
   };
 

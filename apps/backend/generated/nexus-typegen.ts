@@ -85,7 +85,6 @@ export interface NexusGenScalars {
   ID: string
   Date: any
   DateTime: any
-  JSON: any
   Time: any
 }
 

@@ -16,13 +16,14 @@ const Verify = () => {
     LoginUserQueryVariables
   >(LOGIN_USER);
 
-  const { user } = useContext(UserContext);
+  const { user, updateUser } = useContext(UserContext);
 
   useEffect(() => {
     if (user) {
+      console.log(user);
       setUserData(user as Partial<UserData>);
     }
-  }, []);
+  }, [user]);
 
   const submitVerificationCode = async (code: string) => {
     // call out to server
@@ -35,7 +36,7 @@ const Verify = () => {
       });
 
       response.data?.loginUser && console.log(response.data?.loginUser);
-      writeUserToLocalStorage({
+      updateUser({
         _id: response.data?.loginUser?.user?._id,
         phone: response.data?.loginUser?.user?.phone as string,
         authToken: response.data?.loginUser?.authToken as string,
