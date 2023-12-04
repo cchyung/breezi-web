@@ -8,7 +8,7 @@ import { useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export const Username = () => {
+const Username = () => {
   const router = useRouter();
 
   const [username, setUsername] = useState("");
