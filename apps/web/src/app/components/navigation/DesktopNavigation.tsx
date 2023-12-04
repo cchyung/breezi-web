@@ -1,5 +1,4 @@
 "use client";
-import { getUserFromLocalStorage } from "@/app/lib/auth";
 import UserAvatar from "../ui/UserAvatar";
 import { Button } from "../ui";
 import { useRouter } from "next/navigation";

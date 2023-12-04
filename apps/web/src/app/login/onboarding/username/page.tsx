@@ -1,15 +1,16 @@
 "use client";
 
 import { Button, Input } from "@/app/components/ui";
-import { getUserFromLocalStorage } from "@/app/lib/auth";
+import { UserContext } from "@/app/components/user";
 import { UpdateUserMutation, UpdateUserMutationVariables } from "@/lib/api";
 import { UPDATE_USER } from "@/lib/api/user/queries";
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 const Username = () => {
   const router = useRouter();
+  const { user } = useContext(UserContext);
 
   const [username, setUsername] = useState("");
   const [updateUser] = useMutation<
@@ -18,11 +19,15 @@ const Username = () => {
   >(UPDATE_USER);
 
   const onSubmit = async (username: string) => {
+    if (!user) {
+      console.error("No user logged in");
+      return;
+    }
     // validate username
     // update user's username in backend and update local storage
     await updateUser({
       variables: {
-        id: getUserFromLocalStorage()?._id as string,
+        id: user._id as string,
         user: {
           username: username,
         },
@@ -30,7 +35,7 @@ const Username = () => {
     });
 
     // navigate to home
-    router.push(`/user/${getUserFromLocalStorage()?._id}`);
+    router.push(`/user/${user._id}`);
   };
 
   return (

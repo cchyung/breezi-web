@@ -1,17 +1,18 @@
 "use client";
 import { CreateList } from "@/app/components/list";
-import { getUserFromLocalStorage } from "@/app/lib/auth";
+import { UserContext } from "@/app/components/user";
 import { useRouter } from "next/navigation";
+import { useContext } from "react";
 
 const CreateListPage = () => {
   const router = useRouter();
-  const userData = getUserFromLocalStorage();
+  const { user } = useContext(UserContext);
 
   return (
     <div className="h-screen w-screen bg-white py-4 px-2">
       <CreateList
         onCreation={() => {
-          router.push(`/user/${userData?._id}`);
+          router.push(`/user/${user?._id}`);
         }}
         create={true}
       />

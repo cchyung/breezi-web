@@ -99,6 +99,11 @@ export const CREATE_LIST = gql`
         username
         imageURL
       }
+      likeCount
+      likes {
+        _id
+        user
+      }
     }
   }
 `;

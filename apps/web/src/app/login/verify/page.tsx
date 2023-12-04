@@ -1,16 +1,12 @@
 "use client";
-import { Button, Input } from "@/app/components/ui";
 import CodeInput from "./components/CodeInput";
-import { useEffect, useState } from "react";
-import {
-  UserData,
-  getUserFromLocalStorage,
-  writeUserToLocalStorage,
-} from "@/app/lib/auth";
+import { useContext, useEffect, useState } from "react";
+import { UserData, writeUserToLocalStorage } from "@/app/lib/auth";
 import { useRouter } from "next/navigation";
-import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import { LoginUserQuery, LoginUserQueryVariables } from "@/lib/api";
 import { LOGIN_USER } from "@/lib/api/user/queries";
+import { UserContext } from "@/app/components/user";
 
 const Verify = () => {
   const [userData, setUserData] = useState<Partial<UserData>>();
@@ -20,10 +16,11 @@ const Verify = () => {
     LoginUserQueryVariables
   >(LOGIN_USER);
 
+  const { user } = useContext(UserContext);
+
   useEffect(() => {
-    const _userData = getUserFromLocalStorage();
-    if (_userData) {
-      setUserData(_userData);
+    if (user) {
+      setUserData(user as Partial<UserData>);
     }
   }, []);
 

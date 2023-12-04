@@ -1,3 +1,4 @@
+"use client";
 import { Card } from "@/app/components/ui";
 import { GetListQuery, GetListQueryVariables, List, ListLike } from "@/lib/api";
 import { UserAvatar } from "@/app/components/ui";
