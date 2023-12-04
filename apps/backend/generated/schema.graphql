@@ -21,6 +21,8 @@ type List {
   createdAt: Date
   description: String
   items: [ListItem]!
+  likeCount: Int!
+  likes: [ListLike]!
   state: ListState
   title: String!
   updatedAt: Date
@@ -77,8 +79,9 @@ type Ok {
 
 type Query {
   list(id: String!): List
+  listLikeCount(listId: String!): Int
   listLikes(listId: String!): [ListLike]
-  lists(cursor: Int, pageSize: Int): [List]
+  lists(cursor: Int, pageSize: Int, state: ListState): [List]
 
   """
   Logs in the user based on the supplied number and verification code.  If the user doesn't exist, a new user will be created

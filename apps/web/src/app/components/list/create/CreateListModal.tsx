@@ -26,7 +26,7 @@ const CreateListModal = ({
       <div className="fixed inset-0 flex w-screen justify-center items-center">
         <Dialog.Panel className="relative md:max-w-md md:h-auto h-screen w-full">
           <div className="w-full h-full">
-            <Card className="h-full">
+            <Card className="h-full shadow-xl">
               <CreateList
                 create={create}
                 onCreation={() => {

@@ -1,6 +1,6 @@
 import { Card } from "@/app/components/ui";
 import { List } from "@/lib/api";
-import ListCard from "./list/ListCard";
+import ListCard from "./list/listCard/ListCard";
 import { CreateList } from "./list";
 
 const demoList: List = {
@@ -39,7 +39,7 @@ const Components = () => {
       </Card>
 
       <ListCard list={demoList} />
-
+      
       <div className="w-full">
         <CreateList create={true} />
       </div>

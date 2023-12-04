@@ -14,20 +14,12 @@ export const writeUserToLocalStorage = (user: Partial<UserData>) => {
 };
 
 export const getUserFromLocalStorage = () => {
-  if (localStorage) {
-    const user = localStorage.getItem("user");
-    if (user) {
-      return JSON.parse(user) as Partial<UserData>;
-    }
+  const user = localStorage.getItem("user");
+  if (user) {
+    return JSON.parse(user) as Partial<UserData>;
   }
-
-  return null;
 };
 
 export const getTokenFromLocalStorage = () => {
-  if (localStorage) {
-    return localStorage.getItem("token");
-  }
-
-  return null;
-}
+  return localStorage.getItem("token");
+};

@@ -3,9 +3,11 @@ import { getUserFromLocalStorage } from "@/app/lib/auth";
 import UserAvatar from "../ui/UserAvatar";
 import { Button } from "../ui";
 import { useRouter } from "next/navigation";
+import { useContext } from "react";
+import { UserContext } from "../user";
 
 const DesktopNavigation = () => {
-  const userData = getUserFromLocalStorage();
+  const { user } = useContext(UserContext);
   const router = useRouter();
 
   return (
@@ -19,12 +21,12 @@ const DesktopNavigation = () => {
           />
         </a>
 
-        {userData && userData._id ? (
+        {user && user._id ? (
           <UserAvatar
             user={{
-              imageURL: userData?.imageURL,
-              username: userData?.username,
-              _id: userData?._id!,
+              imageURL: user?.imageURL,
+              username: user?.username,
+              _id: user?._id!,
             }}
             size="md"
           />

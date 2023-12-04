@@ -124,6 +124,8 @@ export interface NexusGenFieldTypes {
     createdAt: NexusGenScalars['Date'] | null; // Date
     description: string | null; // String
     items: Array<NexusGenRootTypes['ListItem'] | null>; // [ListItem]!
+    likeCount: number; // Int!
+    likes: Array<NexusGenRootTypes['ListLike'] | null>; // [ListLike]!
     state: NexusGenEnums['ListState'] | null; // ListState
     title: string; // String!
     updatedAt: NexusGenScalars['Date'] | null; // Date
@@ -155,6 +157,7 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     list: NexusGenRootTypes['List'] | null; // List
+    listLikeCount: number | null; // Int
     listLikes: Array<NexusGenRootTypes['ListLike'] | null> | null; // [ListLike]
     lists: Array<NexusGenRootTypes['List'] | null> | null; // [List]
     loginUser: NexusGenRootTypes['LoginObject'] | null; // LoginObject
@@ -184,6 +187,8 @@ export interface NexusGenFieldTypeNames {
     createdAt: 'Date'
     description: 'String'
     items: 'ListItem'
+    likeCount: 'Int'
+    likes: 'ListLike'
     state: 'ListState'
     title: 'String'
     updatedAt: 'Date'
@@ -215,6 +220,7 @@ export interface NexusGenFieldTypeNames {
   }
   Query: { // field return type name
     list: 'List'
+    listLikeCount: 'Int'
     listLikes: 'ListLike'
     lists: 'List'
     loginUser: 'LoginObject'
@@ -256,12 +262,16 @@ export interface NexusGenArgTypes {
     list: { // args
       id: string; // String!
     }
+    listLikeCount: { // args
+      listId: string; // String!
+    }
     listLikes: { // args
       listId: string; // String!
     }
     lists: { // args
       cursor?: number | null; // Int
       pageSize?: number | null; // Int
+      state?: NexusGenEnums['ListState'] | null; // ListState
     }
     loginUser: { // args
       phone: string; // String!

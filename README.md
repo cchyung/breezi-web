@@ -8,7 +8,6 @@ TWILIO_ACCOUNT_SID=
 JWT_SECRET=test123
 
 MONGO_DB_URL="mongodb://localhost:27017"
-MONGO_DB_NAME="lookbook"
 
 LOOKBOOK_GENERATOR_URL="http://localhost:5000/api"
 ```

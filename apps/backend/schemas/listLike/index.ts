@@ -15,7 +15,19 @@ const listLikeService = ListLikeService(db);
 export const ListLike = objectType({
   name: "ListLike",
   definition(t) {
-    t.string("_id"), t.string("user"), t.string("list");
+    t.string("_id");
+    t.string("user");
+    t.string("list");
+  },
+});
+
+export const GetListLikeCount = queryField("listLikeCount", {
+  type: "Int",
+  args: {
+    listId: nonNull(stringArg()),
+  },
+  resolve: async (_, { listId }, __) => {
+    return listLikeService.getListLikeCount({ listId });
   },
 });
 
@@ -55,11 +67,12 @@ export const UnlikeList = mutationField("unlikeList", {
     if (!ctx.user) {
       throw new Error("user must be signed in to like this list");
     } else {
-      await listLikeService.deleteListLike({
+      const result = await listLikeService.deleteListLike({
         listId,
         userId: ctx.user._id.toString(),
       });
-      return true;
+
+      return result?.deletedCount === 1;
     }
   },
 });

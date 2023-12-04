@@ -27,12 +27,16 @@ const UserProfileContent = ({ lists }: { lists: List[] }) => {
         <Tab.Panels>
           <Tab.Panel className="mx-auto max-w-6xl p-3">
             <ListGallery
-              lists={lists.filter((list) => list.state === ListState.Published)}
+              initialLists={lists.filter(
+                (list) => list.state === ListState.Published
+              )}
             />
           </Tab.Panel>
           <Tab.Panel className="mx-auto max-w-6xl p-3">
             <ListGallery
-              lists={lists.filter((list) => list.state === ListState.Draft)}
+              initialLists={lists.filter(
+                (list) => list.state === ListState.Draft
+              )}
             />
           </Tab.Panel>
           <Tab.Panel className="mx-auto max-w-6xl p-3">

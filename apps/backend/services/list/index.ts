@@ -27,12 +27,16 @@ export const ListService = (db: Database) => {
   const getLists = async ({
     cursor = 0,
     pageSize = 10,
+    state,
   }: {
     cursor?: number;
     pageSize?: number;
+    state?: ListState;
   }) => {
     return await db.List.find(
-      {},
+      {
+        ...(state && { state }),
+      },
       {},
       { skip: cursor, limit: pageSize, sort: { createdAt: -1 } }
     )

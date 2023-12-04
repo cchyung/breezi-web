@@ -4,11 +4,12 @@ import { usePathname, useRouter } from "next/navigation";
 import AddIcon from "../icon/AddIcon";
 import HomeIcon from "../icon/HomeIcon";
 import ProfileIcon from "../icon/ProfileIcon";
-import { getUserFromLocalStorage } from "@/app/lib/auth";
+import { UserContext } from "../user";
+import { useContext } from "react";
 
 const MobileNavigation = () => {
   const router = useRouter();
-  const userData = getUserFromLocalStorage();
+  const { user: userData } = useContext(UserContext);
   const pathname = usePathname();
 
   if (pathname.includes("/login")) return null;

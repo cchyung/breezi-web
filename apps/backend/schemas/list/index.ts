@@ -3,20 +3,23 @@ import {
   enumType,
   mutationField,
   queryField,
-  arg,
   nonNull,
   stringArg,
   list,
   inputObjectType,
   intArg,
+  extendType,
+  arg,
 } from "nexus";
 import { ListState as ListStateEnum } from "models/list";
 import { AuthenticationError, SystemError } from "@/lib/errors";
 import { ListService } from "@/services";
 import { db } from "@/models";
 import { User } from "../user";
+import { ListLikeService } from "@/services/list/like";
 
 const listService = ListService(db);
+const listLikeService = ListLikeService(db);
 
 export const ListState = enumType({
   name: "ListState",
@@ -37,6 +40,27 @@ export const List = objectType({
     t.nonNull.field("author", { type: User });
     t.date("createdAt");
     t.date("updatedAt");
+  },
+});
+
+export const ListWithLikes = extendType({
+  type: "List",
+  definition(t) {
+    t.nonNull.int("likeCount", {
+      resolve: async (parent, _, ctx) => {
+        return await listLikeService.getListLikeCount({
+          listId: parent._id.toString(),
+        });
+      },
+    });
+    t.nonNull.field("likes", {
+      type: list("ListLike"),
+      resolve: async (parent, _, ctx) => {
+        return await listLikeService.getListLikes({
+          listId: parent._id.toString(),
+        });
+      },
+    });
   },
 });
 
@@ -113,11 +137,13 @@ export const GetList = queryField("list", {
 export const GetLists = queryField("lists", {
   type: list(List),
   args: {
+    state: arg({ type: ListState }),
     cursor: intArg(),
     pageSize: intArg(),
   },
-  resolve: async (_, { cursor, pageSize }, __) => {
+  resolve: async (_, { cursor, pageSize, state }, __) => {
     const lists = listService.getLists({
+      state: state as ListStateEnum | undefined,
       cursor: cursor as number | undefined,
       pageSize: pageSize as number | undefined,
     });
