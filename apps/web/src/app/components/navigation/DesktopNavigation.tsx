@@ -4,6 +4,7 @@ import { Button } from "../ui";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { UserContext } from "../user";
+import UserAvatarDropdown from "./UserAvatarDropdown";
 
 const DesktopNavigation = () => {
   const { user } = useContext(UserContext);
@@ -21,13 +22,12 @@ const DesktopNavigation = () => {
         </a>
 
         {user && user._id ? (
-          <UserAvatar
+          <UserAvatarDropdown
             user={{
               imageURL: user?.imageURL,
               username: user?.username,
-              _id: user?._id!,
+              _id: user?._id,
             }}
-            size="md"
           />
         ) : (
           <Button onClick={() => router.push("/login")}>Login</Button>
