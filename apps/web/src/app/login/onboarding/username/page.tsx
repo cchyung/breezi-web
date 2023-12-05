@@ -6,7 +6,7 @@ import { UpdateUserMutation, UpdateUserMutationVariables } from "@/lib/api";
 import { UPDATE_USER } from "@/lib/api/user/queries";
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";
-import { useCallback, useContext, useMemo, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 
 const Username = () => {
   const router = useRouter();
