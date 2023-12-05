@@ -23,6 +23,7 @@ type List {
   likes: [ListLike]!
   state: ListState
   title: String!
+  type: ListType!
   updatedAt: Date
 }
 
@@ -32,6 +33,7 @@ input ListInput {
   items: [ListItemInput!]!
   state: ListState
   title: String!
+  type: ListType
 }
 
 type ListItem {
@@ -56,6 +58,11 @@ type ListLike {
 enum ListState {
   draft
   published
+}
+
+enum ListType {
+  bulleted
+  numbered
 }
 
 type LoginObject {

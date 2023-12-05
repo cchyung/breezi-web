@@ -35,6 +35,7 @@ export type List = {
   likes: Array<Maybe<ListLike>>;
   state?: Maybe<ListState>;
   title: Scalars['String']['output'];
+  type: ListType;
   updatedAt?: Maybe<Scalars['Date']['output']>;
 };
 
@@ -44,6 +45,7 @@ export type ListInput = {
   items: Array<ListItemInput>;
   state?: InputMaybe<ListState>;
   title: Scalars['String']['input'];
+  type?: InputMaybe<ListType>;
 };
 
 export type ListItem = {
@@ -70,6 +72,11 @@ export type ListLike = {
 export enum ListState {
   Draft = 'draft',
   Published = 'published'
+}
+
+export enum ListType {
+  Bulleted = 'bulleted',
+  Numbered = 'numbered'
 }
 
 export type LoginObject = {
@@ -208,12 +215,14 @@ export type UserInput = {
   username?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type ListFragment = { __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null> };
+
 export type GetListQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type GetListQuery = { __typename?: 'Query', list?: { __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, likeCount: number, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null> } | null };
+export type GetListQuery = { __typename?: 'Query', list?: { __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null> } | null };
 
 export type GetListsQueryVariables = Exact<{
   cursor?: InputMaybe<Scalars['Int']['input']>;
@@ -222,21 +231,21 @@ export type GetListsQueryVariables = Exact<{
 }>;
 
 
-export type GetListsQuery = { __typename?: 'Query', lists?: Array<{ __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, likeCount: number, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null> } | null> | null };
+export type GetListsQuery = { __typename?: 'Query', lists?: Array<{ __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null> } | null> | null };
 
 export type GetUserListsQueryVariables = Exact<{
   userId?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type GetUserListsQuery = { __typename?: 'Query', userLists?: Array<{ __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, likeCount: number, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null> } | null> | null };
+export type GetUserListsQuery = { __typename?: 'Query', userLists?: Array<{ __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null> } | null> | null };
 
 export type CreateListMutationVariables = Exact<{
   list: ListInput;
 }>;
 
 
-export type CreateListMutation = { __typename?: 'Mutation', createList?: { __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, likeCount: number, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null> } | null };
+export type CreateListMutation = { __typename?: 'Mutation', createList?: { __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null> } | null };
 
 export type GetLikeCountQueryVariables = Exact<{
   listId: Scalars['String']['input'];

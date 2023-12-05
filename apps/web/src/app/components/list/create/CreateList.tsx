@@ -8,10 +8,9 @@ import {
   ListInput,
   ListItemInput,
   ListState,
+  ListType,
 } from "@/lib/api";
 import {
-  FormEvent,
-  FormEventHandler,
   RefObject,
   createRef,
   useCallback,
@@ -19,7 +18,12 @@ import {
   useMemo,
   useState,
 } from "react";
-import { ImageIcon } from "@/app/components/icon";
+import {
+  ImageIcon,
+  DraftsIcon,
+  BulletedListIcon,
+  NumberedListIcon,
+} from "@/app/components/icon";
 import { CREATE_LIST } from "@/lib/api/list/queries";
 import { useApolloClient } from "@apollo/client";
 
@@ -37,6 +41,7 @@ const CreateList = ({
   const [items, setItems] = useState<ListItemInput[]>(
     list?.items ? (list.items as ListItemInput[]) : []
   );
+  const [type, setType] = useState<ListType>(list?.type ?? ListType.Bulleted);
 
   const [coverImageURL, setCoverImageURL] = useState(list?.coverImageURL);
   const [activeItemIndex, setActiveItemIndex] = useState(-1);
@@ -61,6 +66,7 @@ const CreateList = ({
           items: items.filter((item) => item.text !== ""),
           coverImageURL,
           state: publish ? ListState.Published : ListState.Draft,
+          type,
         };
         const mutation = await client.mutate<
           CreateListMutation,
@@ -100,16 +106,35 @@ const CreateList = ({
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
         <div className="ml-auto flex items-center gap-2">
-          <Button
-            size="sm"
-            color="gray"
+          <button
+            className="mr-4"
+            onClick={() =>
+              setType((type) => {
+                return type === ListType.Bulleted
+                  ? ListType.Numbered
+                  : ListType.Bulleted;
+              })
+            }
+          >
+            {type === ListType.Bulleted ? (
+              <BulletedListIcon className="w-8" />
+            ) : (
+              <NumberedListIcon className="w-8" />
+            )}
+          </button>
+
+          <button
             disabled={
-              !items || items.filter((item) => item.text !== "").length === 0
+              !title ||
+              title.length == 0 ||
+              !items ||
+              items.filter((item) => item.text !== "").length === 0
             }
             onClick={() => onSubmit(false)}
+            className="disabled:text-gray-300 text-black"
           >
-            Save Draft
-          </Button>
+            <DraftsIcon />
+          </button>
 
           <Button
             size="sm"
@@ -152,7 +177,11 @@ const CreateList = ({
           }}
         ></input>
 
-        <ul className="flex flex-col gap-3 list-disc list-inside">
+        <ul
+          className={`flex flex-col gap-1 list-inside ${
+            type === ListType.Bulleted ? "list-disc" : "list-decimal"
+          }`}
+        >
           {items.map((item, index) => {
             return (
               <li key={index}>

@@ -1,4 +1,4 @@
-const DraftsIcon = ({ className }: { className: string }) => {
+const DraftsIcon = ({ className }: { className?: string }) => {
   return (
     <svg
       className={className}

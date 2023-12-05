@@ -11,7 +11,10 @@ import {
   extendType,
   arg,
 } from "nexus";
-import { ListState as ListStateEnum } from "models/list";
+import {
+  ListState as ListStateEnum,
+  ListType as ListTypeEnum,
+} from "models/list";
 import { AuthenticationError, SystemError } from "@/lib/errors";
 import { ListService } from "@/services";
 import { db } from "@/models";
@@ -26,12 +29,18 @@ export const ListState = enumType({
   members: ListStateEnum,
 });
 
+export const ListType = enumType({
+  name: "ListType",
+  members: ListTypeEnum,
+});
+
 export const List = objectType({
   name: "List",
   definition(t) {
     t.nonNull.string("_id");
     t.nonNull.string("title");
     t.field("state", { type: ListState });
+    t.nonNull.field("type", { type: ListType });
     t.nonNull.list.field("items", { type: ListItem });
     t.string("description");
     t.string("coverImageURL");
@@ -82,6 +91,7 @@ export const ListInput = inputObjectType({
     t.nonNull.list.field("items", { type: nonNull(ListItemInput) });
     t.string("description");
     t.string("coverImageURL");
+    t.field("type", { type: ListType });
   },
 });
 
@@ -108,6 +118,7 @@ export const CreateList = mutationField("createList", {
       state: list.state,
       coverImageURL: list.coverImageURL,
       description: list.description ? list.description : undefined,
+      type: list.type,
     });
   },
 });

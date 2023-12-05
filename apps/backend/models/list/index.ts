@@ -7,6 +7,10 @@ export enum ListState {
   published = "published",
 }
 
+export enum ListType {
+  numbered = "numbered",
+  bulleted = "bulleted",
+}
 export interface List {
   _id: Schema.Types.ObjectId;
   author: string | User | null;
@@ -14,6 +18,7 @@ export interface List {
   description?: string;
   state: ListState;
   items: ListItem[];
+  type: ListType;
   coverImageURL?: string;
 }
 
@@ -75,6 +80,12 @@ export const ListSchema = new Schema(
         type: ListItemSchema,
       },
     ],
+    type: {
+      type: String,
+      required: true,
+      enum: Object.values(ListType),
+      default: ListType.bulleted,
+    },
   },
   { timestamps: {} }
 );

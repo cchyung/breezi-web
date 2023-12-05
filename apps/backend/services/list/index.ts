@@ -1,5 +1,11 @@
 import { Database } from "@/models";
-import { List, ListItem, ListState, PopulatedList } from "@/models/list";
+import {
+  List,
+  ListItem,
+  ListState,
+  ListType,
+  PopulatedList,
+} from "@/models/list";
 import { Schema } from "mongoose";
 
 export interface ListItemInput {
@@ -12,6 +18,7 @@ export interface CreateListInput {
   author: string;
   title: string;
   items: ListItemInput[];
+  type?: ListType | null;
   state?: ListState | null;
   description?: string | null;
   coverImageURL?: string | null;
@@ -64,6 +71,7 @@ export const ListService = (db: Database) => {
     items,
     state,
     description,
+    type = ListType.bulleted,
     coverImageURL,
   }: CreateListInput): Promise<PopulatedList> => {
     const list = new db.List({
@@ -72,6 +80,7 @@ export const ListService = (db: Database) => {
       items,
       state,
       description,
+      type,
       coverImageURL,
     });
     return (await list.save()).populate<PopulatedList>({ path: "author" });
@@ -88,6 +97,7 @@ export const ListService = (db: Database) => {
     state,
     description,
     coverImageURL,
+    type,
   }: {
     id: string;
     title?: string;
@@ -95,6 +105,7 @@ export const ListService = (db: Database) => {
     state?: ListState;
     description?: string;
     coverImageURL?: string;
+    type?: ListType;
   }) => {
     const update: Partial<List> = {};
     if (title) update.title = title;
@@ -102,6 +113,7 @@ export const ListService = (db: Database) => {
     if (state) update.state = state;
     if (description) update.description = description;
     if (coverImageURL) update.coverImageURL = coverImageURL;
+    if (type) update.type = type;
     return await db.List.findByIdAndUpdate(id, update)
       .populate<PopulatedList>({ path: "author" })
       .exec();

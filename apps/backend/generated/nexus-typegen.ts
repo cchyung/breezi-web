@@ -54,6 +54,7 @@ export interface NexusGenInputs {
     items: NexusGenInputs['ListItemInput'][]; // [ListItemInput!]!
     state?: NexusGenEnums['ListState'] | null; // ListState
     title: string; // String!
+    type?: NexusGenEnums['ListType'] | null; // ListType
   }
   ListItemInput: { // input type
     imageURL?: string | null; // String
@@ -75,6 +76,7 @@ export interface NexusGenInputs {
 
 export interface NexusGenEnums {
   ListState: List.ListState
+  ListType: List.ListType
 }
 
 export interface NexusGenScalars {
@@ -127,6 +129,7 @@ export interface NexusGenFieldTypes {
     likes: Array<NexusGenRootTypes['ListLike'] | null>; // [ListLike]!
     state: NexusGenEnums['ListState'] | null; // ListState
     title: string; // String!
+    type: NexusGenEnums['ListType']; // ListType!
     updatedAt: NexusGenScalars['Date'] | null; // Date
   }
   ListItem: { // field return type
@@ -190,6 +193,7 @@ export interface NexusGenFieldTypeNames {
     likes: 'ListLike'
     state: 'ListState'
     title: 'String'
+    type: 'ListType'
     updatedAt: 'Date'
   }
   ListItem: { // field return type name

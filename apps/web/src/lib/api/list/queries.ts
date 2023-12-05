@@ -1,111 +1,40 @@
 import gql from "graphql-tag";
+import { listFragment } from "./fragments";
 
 export const GET_LIST = gql`
   query GetList($id: String!) {
     list(id: $id) {
-      _id
-      title
-      description
-      coverImageURL
-      state
-      items {
-        _id
-        text
-        imageURL
-      }
-      author {
-        _id
-        username
-        imageURL
-      }
-      likeCount
-      likes {
-        _id
-        user
-      }
+      ...list
     }
   }
+  ${listFragment}
 `;
 
 export const GET_LISTS = gql`
   query GetLists($cursor: Int, $pageSize: Int, $state: ListState) {
     lists(cursor: $cursor, pageSize: $pageSize, state: $state) {
-      _id
-      title
-      description
-      coverImageURL
-      state
-      items {
-        _id
-        text
-        imageURL
-      }
-      author {
-        _id
-        username
-        imageURL
-      }
-      likeCount
-      likes {
-        _id
-        user
-      }
+      ...list
     }
   }
+  ${listFragment}
 `;
 
 export const GET_USER_LISTS = gql`
   query GetUserLists($userId: String) {
     userLists(userId: $userId) {
-      _id
-      title
-      description
-      coverImageURL
-      state
-      items {
-        _id
-        text
-        imageURL
-      }
-      author {
-        _id
-        username
-        imageURL
-      }
-      likeCount
-      likes {
-        _id
-        user
-      }
+      ...list
     }
   }
+  ${listFragment}
 `;
 
 export const CREATE_LIST = gql`
   mutation CreateList($list: ListInput!) {
     createList(list: $list) {
-      _id
-      title
-      description
-      coverImageURL
-      state
-      items {
-        _id
-        text
-        imageURL
-      }
-      author {
-        _id
-        username
-        imageURL
-      }
-      likeCount
-      likes {
-        _id
-        user
-      }
+      ...list
     }
   }
+  ${listFragment}
 `;
 
 export const GET_LIKE_COUNT = gql`

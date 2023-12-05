@@ -1,11 +1,17 @@
 "use client";
 import { Card } from "@/app/components/ui";
-import { GetListQuery, GetListQueryVariables, List, ListLike } from "@/lib/api";
+import {
+  GetListQuery,
+  GetListQueryVariables,
+  List,
+  ListLike,
+  ListType,
+} from "@/lib/api";
 import { UserAvatar } from "@/app/components/ui";
 import { ListCardActionRow } from ".";
 import { useApolloClient } from "@apollo/client";
 import { GET_LIST } from "@/lib/api/list/queries";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { UserContext } from "../../user/UserProvider";
 
 const ListCard = ({
@@ -51,7 +57,11 @@ const ListCard = ({
         <h3 className="font-bold">{list.title}</h3>
         {list.description && <p>{list.description}</p>}
 
-        <ul className="flex flex-col gap-1 list-disc list-inside">
+        <ul
+          className={`flex flex-col gap-1 list-inside ${
+            list.type === ListType.Bulleted ? "list-disc" : "list-decimal"
+          }`}
+        >
           {list.items.map((item, index) => (
             <li key={index}>{item?.text}</li>
           ))}
