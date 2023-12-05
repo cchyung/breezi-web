@@ -6,11 +6,12 @@ import {
   CreateListMutationVariables,
   List,
   ListInput,
-  ListItem,
   ListItemInput,
   ListState,
 } from "@/lib/api";
 import {
+  FormEvent,
+  FormEventHandler,
   RefObject,
   createRef,
   useCallback,
@@ -41,9 +42,15 @@ const CreateList = ({
   const [activeItemIndex, setActiveItemIndex] = useState(-1);
   const client = useApolloClient();
 
-  const listItemInputRefs = useMemo<RefObject<HTMLInputElement>[]>(() => {
-    return items.map(() => createRef<HTMLInputElement>());
+  const listItemInputRefs = useMemo<RefObject<HTMLTextAreaElement>[]>(() => {
+    return items.map(() => createRef<HTMLTextAreaElement>());
   }, [items]);
+
+  function autoGrowTextArea(index: number) {
+    listItemInputRefs[index].current!.style.height = "5px";
+    listItemInputRefs[index].current!.style.height =
+      listItemInputRefs[index].current!.scrollHeight + "px";
+  }
 
   const onSubmit = useCallback(
     async (publish?: boolean) => {
@@ -149,10 +156,15 @@ const CreateList = ({
           {items.map((item, index) => {
             return (
               <li key={index}>
-                <input
+                <textarea
                   ref={listItemInputRefs[index]}
                   value={item.text}
+                  onInput={() => {
+                    autoGrowTextArea(index);
+                  }}
+                  className="resize-none flex-1 align-top w-[90%] active:outline-none focus:outline-none"
                   placeholder={`Item ${index + 1}`}
+                  rows={1}
                   onChange={(e) => {
                     setItems((prev) => {
                       return [
@@ -170,6 +182,7 @@ const CreateList = ({
                   }}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
+                      e.preventDefault();
                       setItems((prev) => {
                         return [
                           ...prev.slice(0, index + 1),
