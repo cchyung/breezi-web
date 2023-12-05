@@ -1,7 +1,7 @@
 "use client";
 import CodeInput from "./components/CodeInput";
 import { useContext, useEffect, useState } from "react";
-import { UserData, writeUserToLocalStorage } from "@/app/lib/auth";
+import { UserData } from "@/app/lib/auth";
 import { useRouter } from "next/navigation";
 import { useLazyQuery } from "@apollo/client";
 import { LoginUserQuery, LoginUserQueryVariables } from "@/lib/api";
@@ -20,7 +20,6 @@ const Verify = () => {
 
   useEffect(() => {
     if (user) {
-      console.log(user);
       setUserData(user as Partial<UserData>);
     }
   }, [user]);
@@ -35,7 +34,6 @@ const Verify = () => {
         },
       });
 
-      response.data?.loginUser && console.log(response.data?.loginUser);
       updateUser({
         _id: response.data?.loginUser?.user?._id,
         phone: response.data?.loginUser?.user?.phone as string,

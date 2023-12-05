@@ -45,7 +45,9 @@ const ListCardActionRow = ({
   return (
     <div className="w-full flex items-center gap-4">
       <button
-        className="flex flex-col items-center gap-1 rounded-3xl w-1/2 py-2 bg-secondary text-primary hover:text-white hover:bg-primary transition-colors btn-small"
+        className={`flex flex-col items-center gap-1 rounded-3xl w-1/2 py-2  ${
+          userLiked ? "bg-secondary text-primary" : "bg-gray-200 text-gray-400"
+        } hover:text-white hover:bg-primary transition-colors btn-small`}
         onClick={onLikeButtonClick}
       >
         <BreeziStarIcon className="w-10 ml-2"></BreeziStarIcon>
