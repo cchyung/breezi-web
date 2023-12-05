@@ -104,7 +104,7 @@ export const ListService = (db: Database) => {
     items?: ListItemInput[];
     state?: ListState | null;
     description?: string | null;
-    coverImageURL?: string | null; 
+    coverImageURL?: string | null;
     type?: ListType | null;
   }) => {
     const update: Partial<CreateListInput> = {};

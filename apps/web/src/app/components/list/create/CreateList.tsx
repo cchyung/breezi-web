@@ -59,6 +59,13 @@ const CreateList = ({
       listItemInputRefs[index].current!.scrollHeight + "px";
   }
 
+  // initialize textareas
+  useEffect(() => {
+    list?.items.map((_, index) => {
+      autoGrowTextArea(index);
+    });
+  }, []);
+
   const onSubmit = useCallback(
     async (publish?: boolean) => {
       try {
@@ -202,7 +209,7 @@ const CreateList = ({
         ></input>
 
         <ul
-          className={`flex flex-col gap-1 list-inside ${
+          className={`flex flex-col gap-1 list-inside overflow-scroll flex-1 ${
             type === ListType.Bulleted ? "list-disc" : "list-decimal"
           }`}
         >
