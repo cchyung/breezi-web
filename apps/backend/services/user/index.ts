@@ -2,6 +2,7 @@ import { FilterQuery, Schema, Types } from "mongoose";
 import { Database } from "models";
 import { AuthService } from "../auth";
 import { User } from "@/models/user";
+import { PopulatedUserFollower } from "@/models/userFollower";
 
 const identityFilter = ({
   id,
@@ -88,11 +89,7 @@ export const UserService = (db: Database) => {
    * @param options
    * @returns User object
    */
-  async function getOrCreateUser({
-    phone,
-  }: {
-    phone: string;
-  }) {
+  async function getOrCreateUser({ phone }: { phone: string }) {
     const existingUser = await getUser({ phone });
     if (existingUser) {
       return existingUser;
@@ -187,6 +184,44 @@ export const UserService = (db: Database) => {
     }
   }
 
+  async function createUserFollower({
+    userId,
+    followerId,
+  }: {
+    userId: string;
+    followerId: string;
+  }) {
+    const userFollower = new db.UserFollower({
+      user: userId,
+      follower: followerId,
+    });
+
+    return userFollower.save();
+  }
+
+  async function deleteUserFollower({
+    userId,
+    followerId,
+  }: {
+    userId: string;
+    followerId: string;
+  }) {
+    return db.UserFollower.findOneAndDelete({
+      user: userId,
+      follower: followerId,
+    });
+  }
+
+  async function getUserFollowers({ userId }: { userId: string }) {
+    return db.UserFollower.find({ user: userId })
+      .populate<PopulatedUserFollower>({ path: "follower" })
+      .exec();
+  }
+
+  async function getUserFollowerCount({ userId }: { userId: string }) {
+    return db.UserFollower.countDocuments({ user: userId }).exec();
+  }
+
   return {
     getUser,
     getUsers,
@@ -195,5 +230,9 @@ export const UserService = (db: Database) => {
     updateUser,
     deleteUser,
     getAuthenticatedUser,
+    createUserFollower,
+    deleteUserFollower,
+    getUserFollowers,
+    getUserFollowerCount,
   };
 };

@@ -6,6 +6,7 @@
 import type * as List from "./../models/list/index"
 import type * as ListLike from "./../models/listLike/index"
 import type * as User from "./../models/user/index"
+import type * as UserFollower from "./../models/userFollower/index"
 import type { AuthenticatedContext } from "./../lib/context/index"
 import type { FieldAuthorizeResolver } from "nexus/dist/plugins/fieldAuthorizePlugin"
 import type { core } from "nexus"
@@ -105,6 +106,7 @@ export interface NexusGenObjects {
   }
   Query: {};
   User: User.User;
+  UserFollower: UserFollower.UserFollower;
 }
 
 export interface NexusGenInterfaces {
@@ -150,7 +152,9 @@ export interface NexusGenFieldTypes {
   Mutation: { // field return type
     createList: NexusGenRootTypes['List'] | null; // List
     deleteList: boolean | null; // Boolean
+    followUser: NexusGenRootTypes['User'] | null; // User
     likeList: NexusGenRootTypes['ListLike'] | null; // ListLike
+    unfollowUser: NexusGenRootTypes['User'] | null; // User
     unlikeList: boolean | null; // Boolean
     updateList: NexusGenRootTypes['List'] | null; // List
     updateUser: NexusGenRootTypes['User'] | null; // User
@@ -176,10 +180,17 @@ export interface NexusGenFieldTypes {
     about: string | null; // String
     createdAt: NexusGenScalars['DateTime'] | null; // DateTime
     email: string | null; // String
+    followerCount: number | null; // Int
+    followers: Array<NexusGenRootTypes['UserFollower'] | null> | null; // [UserFollower]
     imageURL: string | null; // String
     phone: string | null; // String
     updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
     username: string | null; // String
+  }
+  UserFollower: { // field return type
+    _id: string | null; // String
+    follower: NexusGenRootTypes['User'] | null; // User
+    user: string | null; // String
   }
 }
 
@@ -216,7 +227,9 @@ export interface NexusGenFieldTypeNames {
   Mutation: { // field return type name
     createList: 'List'
     deleteList: 'Boolean'
+    followUser: 'User'
     likeList: 'ListLike'
+    unfollowUser: 'User'
     unlikeList: 'Boolean'
     updateList: 'List'
     updateUser: 'User'
@@ -242,10 +255,17 @@ export interface NexusGenFieldTypeNames {
     about: 'String'
     createdAt: 'DateTime'
     email: 'String'
+    followerCount: 'Int'
+    followers: 'UserFollower'
     imageURL: 'String'
     phone: 'String'
     updatedAt: 'DateTime'
     username: 'String'
+  }
+  UserFollower: { // field return type name
+    _id: 'String'
+    follower: 'User'
+    user: 'String'
   }
 }
 
@@ -257,8 +277,14 @@ export interface NexusGenArgTypes {
     deleteList: { // args
       id: string; // String!
     }
+    followUser: { // args
+      userId: string; // String!
+    }
     likeList: { // args
       listId: string; // String!
+    }
+    unfollowUser: { // args
+      userId: string; // String!
     }
     unlikeList: { // args
       listId: string; // String!

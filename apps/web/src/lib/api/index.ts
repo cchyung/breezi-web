@@ -89,7 +89,9 @@ export type Mutation = {
   __typename?: 'Mutation';
   createList?: Maybe<List>;
   deleteList?: Maybe<Scalars['Boolean']['output']>;
+  followUser?: Maybe<User>;
   likeList?: Maybe<ListLike>;
+  unfollowUser?: Maybe<User>;
   unlikeList?: Maybe<Scalars['Boolean']['output']>;
   updateList?: Maybe<List>;
   updateUser?: Maybe<User>;
@@ -106,8 +108,18 @@ export type MutationDeleteListArgs = {
 };
 
 
+export type MutationFollowUserArgs = {
+  userId: Scalars['String']['input'];
+};
+
+
 export type MutationLikeListArgs = {
   listId: Scalars['String']['input'];
+};
+
+
+export type MutationUnfollowUserArgs = {
+  userId: Scalars['String']['input'];
 };
 
 
@@ -216,10 +228,19 @@ export type User = {
   about?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   email?: Maybe<Scalars['String']['output']>;
+  followerCount?: Maybe<Scalars['Int']['output']>;
+  followers?: Maybe<Array<Maybe<UserFollower>>>;
   imageURL?: Maybe<Scalars['String']['output']>;
   phone?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   username?: Maybe<Scalars['String']['output']>;
+};
+
+export type UserFollower = {
+  __typename?: 'UserFollower';
+  _id?: Maybe<Scalars['String']['output']>;
+  follower?: Maybe<User>;
+  user?: Maybe<Scalars['String']['output']>;
 };
 
 export type UserInput = {

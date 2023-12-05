@@ -5,6 +5,7 @@ import {
   inputObjectType,
   nonNull,
   mutationField,
+  extendType,
 } from "nexus";
 import { db } from "models";
 import { UserService } from "services";
@@ -56,6 +57,38 @@ export const LoginObject = objectType({
   definition(t) {
     t.string("authToken");
     t.field("user", { type: User });
+  },
+});
+
+export const UserFollower = objectType({
+  name: "UserFollower",
+  definition(t) {
+    t.string("_id");
+    t.string("user");
+    t.field("follower", {
+      type: User,
+    });
+  },
+});
+
+export const UserWithFollowers = extendType({
+  type: "User",
+  definition(t) {
+    t.list.field("followers", {
+      type: "UserFollower",
+      resolve: async (parent, _, __) => {
+        return await userService.getUserFollowers({
+          userId: parent._id.toString(),
+        });
+      },
+    });
+    t.int("followerCount", {
+      resolve: async (parent, _, __) => {
+        return await userService.getUserFollowerCount({
+          userId: parent._id.toString(),
+        });
+      },
+    });
   },
 });
 
@@ -169,7 +202,56 @@ export const updateUser = mutationField("updateUser", {
       throw new Error("Must be logged in as the user you are trying to update");
     }
 
+    // @ts-ignore
     const updatedUser = await userService.updateUser({ id: id, ...user });
     return updatedUser;
+  },
+});
+
+export const followUser = mutationField("followUser", {
+  type: User,
+  args: {
+    userId: nonNull(stringArg()),
+  },
+  resolve: async (_, { userId }, ctx) => {
+    if (!ctx.user) {
+      throw new Error("Must be logged in to follow user");
+    }
+
+    // get user to follow and ensure exists
+    const userToFollow = await userService.getUser({ id: userId });
+    if (!userToFollow) {
+      throw new Error("User to follow does not exist");
+    }
+
+    await userService.createUserFollower({
+      userId,
+      followerId: ctx.user._id.toString(),
+    });
+    return userToFollow;
+  },
+});
+
+export const unfollowUser = mutationField("unfollowUser", {
+  type: User,
+  args: {
+    userId: nonNull(stringArg()),
+  },
+  resolve: async (_, { userId }, ctx) => {
+    if (!ctx.user) {
+      throw new Error("Must be logged in to unfollow user");
+    }
+
+    // get user to follow and ensure exists
+    const userToUnfollow = await userService.getUser({ id: userId });
+    if (!userToUnfollow) {
+      throw new Error("User to unfollow does not exist");
+    }
+
+    await userService.deleteUserFollower({
+      userId,
+      followerId: ctx.user._id.toString(),
+    });
+    return userToUnfollow;
   },
 });
