@@ -5,7 +5,8 @@
     "dev": "dotenv -- turbo dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "seed": "dotenv -- npm run --workspace=backend script script/seed.ts"
+    "seed": "dotenv -- npm run --workspace=backend script script/seed.ts",
+    "heroku-postbuild": "npm run build:backend"
   },
   "devDependencies": {
     "dotenv-cli": "^7.3.0",
