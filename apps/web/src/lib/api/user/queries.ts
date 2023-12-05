@@ -7,6 +7,13 @@ export const GET_USER = gql`
       username
       imageURL
       about
+      followers {
+        follower {
+          _id
+        }
+        user
+      }
+      followerCount
     }
   }
 `;
@@ -35,6 +42,22 @@ export const LOGIN_USER = gql`
 export const UPDATE_USER = gql`
   mutation UpdateUser($id: String!, $user: UpdateUserInput!) {
     updateUser(id: $id, user: $user) {
+      _id
+    }
+  }
+`;
+
+export const FOLLOW_USER = gql`
+  mutation FollowUser($userId: String!) {
+    followUser(userId: $userId) {
+      _id
+    }
+  }
+`;
+
+export const UNFOLLOW_USER = gql`
+  mutation UnfollowUser($userId: String!) {
+    unfollowUser(userId: $userId) {
       _id
     }
   }

@@ -2,7 +2,7 @@
 import { List } from "@/lib/api";
 import { ListCard } from ".";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 const ListGallery = ({
   initialLists,
@@ -12,6 +12,10 @@ const ListGallery = ({
   showOptions?: boolean;
 }) => {
   const [lists, setLists] = useState<List[]>(initialLists);
+
+  useEffect(() => {
+    setLists(initialLists);
+  }, [initialLists]);
 
   const onRefetch = useCallback((updatedList: List) => {
     setLists((currentLists) => {

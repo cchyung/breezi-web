@@ -2,7 +2,7 @@
 
 import { CreateListButton } from "@/app/components/list";
 import UserAvatar from "@/app/components/ui/UserAvatar";
-import { UserProfileContent } from "@/app/components/user";
+import { FollowButton, UserProfileContent } from "@/app/components/user";
 import {
   GetUserListsQuery,
   GetUserListsQueryVariables,
@@ -25,13 +25,15 @@ const UserPage = ({ params }: { params: { id: string } }) => {
     nextFetchPolicy: "network-only",
   });
 
-  const { loading: userLoading, data: userData } = useQuery<
-    GetUserQuery,
-    GetUserQueryVariables
-  >(GET_USER, {
+  const {
+    loading: userLoading,
+    data: userData,
+    refetch: refetchUser,
+  } = useQuery<GetUserQuery, GetUserQueryVariables>(GET_USER, {
     variables: {
       id: params.id,
     },
+    nextFetchPolicy: "cache-and-network",
   });
 
   if (userLoading) return <p>Loading...</p>;
@@ -54,14 +56,23 @@ const UserPage = ({ params }: { params: { id: string } }) => {
               <p className="caption">{userData.user.about}</p>
             )}
 
+            <FollowButton user={userData.user} refetchUser={refetchUser} />
+
             <div className="flex flex-row items-center justify-between">
               <div className="flex flex-col gap-2 items-center px-4">
                 <p className="font-bold text-[20px]">16</p>
                 <p className="text-gray-400 caption">Lists</p>
               </div>
               <div className="flex flex-col gap-2 items-center px-4">
-                <p className="font-bold text-[20px]">12k</p>
-                <p className="text-gray-400 caption">Followers</p>
+                <p className="font-bold text-[20px]">
+                  {userData.user.followerCount ?? 0}
+                </p>
+                <p className="text-gray-400 caption">
+                  {userData.user.followerCount &&
+                  userData.user.followerCount === 1
+                    ? "Follower"
+                    : "Followers"}
+                </p>
               </div>
               <div className="flex flex-col gap-2 items-center px-4">
                 <p className="font-bold text-[20px]">129k</p>

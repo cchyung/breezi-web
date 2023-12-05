@@ -3,6 +3,7 @@ import { MouseEventHandler } from "react";
 const Button = ({
   children,
   onClick,
+  onMouseOver,
   size = "md",
   color = "primary",
   disabled = false,
@@ -10,8 +11,9 @@ const Button = ({
 }: {
   children: React.ReactNode;
   onClick?: MouseEventHandler<HTMLButtonElement>;
+  onMouseOver?: MouseEventHandler<HTMLButtonElement>;
   size?: "sm" | "md" | "lg";
-  color?: "primary" | "gray";
+  color?: "primary" | "gray" | "black";
   disabled?: boolean;
   className?: string;
 }) => {
@@ -26,6 +28,7 @@ const Button = ({
   const colorStyles = {
     primary: "bg-primary text-white disabled:bg-gray-300 disabled:text-white",
     gray: "bg-gray-400 text-white disabled:bg-gray-300 disabled:text-white",
+    black: "bg-black text-white disabled:bg-gray-300 disabled:text-white"
   };
 
   const colorStyle = colorStyles[color];
@@ -35,6 +38,7 @@ const Button = ({
         className={`${className} ${sizeStyle} ${colorStyle} disabled:cursor-not-allowed rounded-2xl
         transition-colors`}
         onClick={onClick}
+        onMouseOver={onMouseOver}
         disabled={disabled}
       >
         {children}

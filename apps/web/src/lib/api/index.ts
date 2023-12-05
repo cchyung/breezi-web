@@ -323,7 +323,7 @@ export type GetUserQueryVariables = Exact<{
 }>;
 
 
-export type GetUserQuery = { __typename?: 'Query', user?: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null, about?: string | null } | null };
+export type GetUserQuery = { __typename?: 'Query', user?: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null, about?: string | null, followerCount?: number | null, followers?: Array<{ __typename?: 'UserFollower', user?: string | null, follower?: { __typename?: 'User', _id: string } | null } | null> | null } | null };
 
 export type SendSmsVerificationTokenQueryVariables = Exact<{
   phone: Scalars['String']['input'];
@@ -347,3 +347,17 @@ export type UpdateUserMutationVariables = Exact<{
 
 
 export type UpdateUserMutation = { __typename?: 'Mutation', updateUser?: { __typename?: 'User', _id: string } | null };
+
+export type FollowUserMutationVariables = Exact<{
+  userId: Scalars['String']['input'];
+}>;
+
+
+export type FollowUserMutation = { __typename?: 'Mutation', followUser?: { __typename?: 'User', _id: string } | null };
+
+export type UnfollowUserMutationVariables = Exact<{
+  userId: Scalars['String']['input'];
+}>;
+
+
+export type UnfollowUserMutation = { __typename?: 'Mutation', unfollowUser?: { __typename?: 'User', _id: string } | null };
