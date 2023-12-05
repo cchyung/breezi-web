@@ -22,6 +22,7 @@ const UserPage = ({ params }: { params: { id: string } }) => {
     variables: {
       userId: params.id,
     },
+    nextFetchPolicy: "cache-and-network",
   });
 
   const { loading: userLoading, data: userData } = useQuery<

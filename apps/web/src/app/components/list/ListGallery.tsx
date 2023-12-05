@@ -4,7 +4,13 @@ import { ListCard } from ".";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { useCallback, useMemo, useState } from "react";
 
-const ListGallery = ({ initialLists }: { initialLists: List[] }) => {
+const ListGallery = ({
+  initialLists,
+  showOptions = false,
+}: {
+  initialLists: List[];
+  showOptions?: boolean;
+}) => {
   const [lists, setLists] = useState<List[]>(initialLists);
 
   const onRefetch = useCallback((updatedList: List) => {
@@ -26,7 +32,12 @@ const ListGallery = ({ initialLists }: { initialLists: List[] }) => {
           <Masonry gutter={"12px"}>
             {lists?.length > 0 ? (
               lists?.map((list) => (
-                <ListCard list={list} key={list._id} onRefetch={onRefetch} />
+                <ListCard
+                  list={list}
+                  key={list._id}
+                  onRefetch={onRefetch}
+                  showOptions={showOptions}
+                />
               ))
             ) : (
               <p className="caption-light">No lists... go make some!</p>

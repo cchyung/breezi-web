@@ -9,6 +9,8 @@ import {
   ListItemInput,
   ListState,
   ListType,
+  UpdateListMutation,
+  UpdateListMutationVariables,
 } from "@/lib/api";
 import {
   RefObject,
@@ -24,7 +26,7 @@ import {
   BulletedListIcon,
   NumberedListIcon,
 } from "@/app/components/icon";
-import { CREATE_LIST } from "@/lib/api/list/queries";
+import { CREATE_LIST, UPDATE_LIST } from "@/lib/api/list/queries";
 import { useApolloClient } from "@apollo/client";
 
 const CreateList = ({
@@ -39,11 +41,11 @@ const CreateList = ({
   const [title, setTitle] = useState(list?.title ?? "");
   const [description, setDescription] = useState(list?.description ?? "");
   const [items, setItems] = useState<ListItemInput[]>(
-    list?.items ? (list.items as ListItemInput[]) : []
+    list?.items ? ([...list.items, { text: "" }] as ListItemInput[]) : []
   );
   const [type, setType] = useState<ListType>(list?.type ?? ListType.Bulleted);
-
   const [coverImageURL, setCoverImageURL] = useState(list?.coverImageURL);
+
   const [activeItemIndex, setActiveItemIndex] = useState(-1);
   const client = useApolloClient();
 
@@ -63,22 +65,44 @@ const CreateList = ({
         const input: ListInput = {
           title,
           description,
-          items: items.filter((item) => item.text !== ""),
+          items: items
+            .filter((item) => item.text !== "")
+            .map((item) => {
+              return {
+                text: item.text,
+                parent: item.parent,
+                imageURL: item.imageURL,
+              };
+            }),
           coverImageURL,
           state: publish ? ListState.Published : ListState.Draft,
           type,
         };
-        const mutation = await client.mutate<
-          CreateListMutation,
-          CreateListMutationVariables
-        >({
-          mutation: CREATE_LIST,
-          variables: {
-            list: input,
-          },
-        });
 
-        onCreation(mutation.data?.createList);
+        if (create) {
+          const mutation = await client.mutate<
+            CreateListMutation,
+            CreateListMutationVariables
+          >({
+            mutation: CREATE_LIST,
+            variables: {
+              list: input,
+            },
+          });
+          onCreation(mutation.data?.createList);
+        } else {
+          const mutation = await client.mutate<
+            UpdateListMutation,
+            UpdateListMutationVariables
+          >({
+            mutation: UPDATE_LIST,
+            variables: {
+              id: list!._id!,
+              list: input,
+            },
+          });
+          onCreation(mutation.data?.updateList);
+        }
       } catch (error) {
         console.log(error);
       }
@@ -147,7 +171,7 @@ const CreateList = ({
             }
             onClick={() => onSubmit(true)}
           >
-            Share
+            {create ? "Share" : "Update"}
           </Button>
         </div>
       </div>
@@ -226,6 +250,7 @@ const CreateList = ({
                       e.key === "Backspace" &&
                       items.length > 1
                     ) {
+                      e.preventDefault();
                       // remove item at index
                       setItems((prev) => {
                         if (prev.length > 1) {

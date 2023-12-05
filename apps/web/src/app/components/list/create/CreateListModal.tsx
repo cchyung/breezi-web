@@ -3,17 +3,20 @@ import { Dialog } from "@headlessui/react";
 import { CreateList } from ".";
 import { CrossIcon } from "@/app/components/icon";
 import { Card } from "@/app/components/ui";
+import { List } from "@/lib/api";
 
 const CreateListModal = ({
   isOpen = false,
   create = false,
   setIsOpen,
   onCreation,
+  list,
 }: {
   isOpen: boolean;
   create: boolean;
   setIsOpen: (_: boolean) => void;
   onCreation?: () => void;
+  list?: List;
 }) => {
   return (
     <Dialog
@@ -36,6 +39,7 @@ const CreateListModal = ({
                     onCreation();
                   }
                 }}
+                list={list}
               />
 
               <div className="absolute left-6 top-6">

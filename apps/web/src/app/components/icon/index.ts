@@ -6,3 +6,4 @@ export { default as DraftsIcon } from "./DraftsIcon";
 export { default as ListIcon } from "./ListsIcon";
 export { default as NumberedListIcon } from "./NumberedListIcon";
 export { default as BulletedListIcon } from "./BulletedListIcon";
+export { default as MoreVerticalIcon } from "./MoreVerticalIcon";

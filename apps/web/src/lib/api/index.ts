@@ -88,14 +88,21 @@ export type LoginObject = {
 export type Mutation = {
   __typename?: 'Mutation';
   createList?: Maybe<List>;
+  deleteList?: Maybe<Scalars['Boolean']['output']>;
   likeList?: Maybe<ListLike>;
   unlikeList?: Maybe<Scalars['Boolean']['output']>;
+  updateList?: Maybe<List>;
   updateUser?: Maybe<User>;
 };
 
 
 export type MutationCreateListArgs = {
   list: ListInput;
+};
+
+
+export type MutationDeleteListArgs = {
+  id: Scalars['String']['input'];
 };
 
 
@@ -106,6 +113,12 @@ export type MutationLikeListArgs = {
 
 export type MutationUnlikeListArgs = {
   listId: Scalars['String']['input'];
+};
+
+
+export type MutationUpdateListArgs = {
+  id: Scalars['String']['input'];
+  list: ListInput;
 };
 
 
@@ -267,6 +280,21 @@ export type UnlikeListMutationVariables = Exact<{
 
 
 export type UnlikeListMutation = { __typename?: 'Mutation', unlikeList?: boolean | null };
+
+export type UpdateListMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  list: ListInput;
+}>;
+
+
+export type UpdateListMutation = { __typename?: 'Mutation', updateList?: { __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null> } | null };
+
+export type DeleteListMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type DeleteListMutation = { __typename?: 'Mutation', deleteList?: boolean | null };
 
 export type GetUserQueryVariables = Exact<{
   authToken?: InputMaybe<Scalars['String']['input']>;

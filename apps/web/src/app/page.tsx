@@ -19,6 +19,7 @@ export default function Home() {
       pageSize: 10,
       state: ListState.Published,
     },
+    nextFetchPolicy: "cache-and-network",
   });
 
   return (

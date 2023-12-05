@@ -56,3 +56,18 @@ export const UNLIKE_LIST = gql`
     unlikeList(listId: $listId)
   }
 `;
+
+export const UPDATE_LIST = gql`
+  mutation UpdateList($id: String!, $list: ListInput!) {
+    updateList(id: $id, list: $list) {
+      ...list
+    }
+  }
+  ${listFragment}
+`;
+
+export const DELETE_LIST = gql`
+  mutation DeleteList($id: String!) {
+    deleteList(id: $id)
+  }
+`;

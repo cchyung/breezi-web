@@ -123,6 +123,28 @@ export const CreateList = mutationField("createList", {
   },
 });
 
+export const UpdateList = mutationField("updateList", {
+  type: List,
+  args: {
+    list: nonNull(ListInput),
+    id: nonNull(stringArg()),
+  },
+  resolve: async (_, { list, id }, { user }) => {
+    if (!user) throw new AuthenticationError("user is not logged in");
+    const listToUpdate = await listService.getList({ id });
+
+    if (!listToUpdate) throw new SystemError("list not found");
+    if (listToUpdate.author!._id.toString() !== user._id.toString()) {
+      throw new AuthenticationError("user is not authorized to update list");
+    }
+
+    return await listService.updateList({
+      id,
+      ...list,
+    });
+  },
+});
+
 export const GetList = queryField("list", {
   type: List,
   args: {
@@ -176,5 +198,24 @@ export const GetUserLists = queryField("userLists", {
       const lists = await listService.getUserLists({ userId: ctx.user._id });
       return lists;
     }
+  },
+});
+
+export const DeleteList = mutationField("deleteList", {
+  type: "Boolean",
+  args: {
+    id: nonNull(stringArg()),
+  },
+  resolve: async (_, { id }, { user }) => {
+    if (!user) throw new AuthenticationError("user is not logged in");
+    const list = await listService.getList({ id });
+
+    if (!list) throw new SystemError("list not found");
+    if (list.author!._id.toString() !== user._id.toString()) {
+      throw new AuthenticationError("user is not authorized to delete list");
+    }
+
+    await listService.deleteList({ id });
+    return true;
   },
 });

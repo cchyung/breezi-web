@@ -72,8 +72,10 @@ type LoginObject {
 
 type Mutation {
   createList(list: ListInput!): List
+  deleteList(id: String!): Boolean
   likeList(listId: String!): ListLike
   unlikeList(listId: String!): Boolean
+  updateList(id: String!, list: ListInput!): List
   updateUser(id: String!, user: UpdateUserInput!): User
 }
 

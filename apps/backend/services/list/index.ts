@@ -100,21 +100,21 @@ export const ListService = (db: Database) => {
     type,
   }: {
     id: string;
-    title?: string;
-    items?: ListItem[];
-    state?: ListState;
-    description?: string;
-    coverImageURL?: string;
-    type?: ListType;
+    title?: string | null;
+    items?: ListItemInput[];
+    state?: ListState | null;
+    description?: string | null;
+    coverImageURL?: string | null; 
+    type?: ListType | null;
   }) => {
-    const update: Partial<List> = {};
+    const update: Partial<CreateListInput> = {};
     if (title) update.title = title;
-    if (items) update.items = items;
+    if (items) update.items = items; // TODO: Update items in list
     if (state) update.state = state;
     if (description) update.description = description;
     if (coverImageURL) update.coverImageURL = coverImageURL;
     if (type) update.type = type;
-    return await db.List.findByIdAndUpdate(id, update)
+    return await db.List.findOneAndUpdate({ _id: id }, { $set: update })
       .populate<PopulatedList>({ path: "author" })
       .exec();
   };

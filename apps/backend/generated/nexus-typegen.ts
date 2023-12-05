@@ -149,8 +149,10 @@ export interface NexusGenFieldTypes {
   }
   Mutation: { // field return type
     createList: NexusGenRootTypes['List'] | null; // List
+    deleteList: boolean | null; // Boolean
     likeList: NexusGenRootTypes['ListLike'] | null; // ListLike
     unlikeList: boolean | null; // Boolean
+    updateList: NexusGenRootTypes['List'] | null; // List
     updateUser: NexusGenRootTypes['User'] | null; // User
   }
   Ok: { // field return type
@@ -213,8 +215,10 @@ export interface NexusGenFieldTypeNames {
   }
   Mutation: { // field return type name
     createList: 'List'
+    deleteList: 'Boolean'
     likeList: 'ListLike'
     unlikeList: 'Boolean'
+    updateList: 'List'
     updateUser: 'User'
   }
   Ok: { // field return type name
@@ -250,11 +254,18 @@ export interface NexusGenArgTypes {
     createList: { // args
       list: NexusGenInputs['ListInput']; // ListInput!
     }
+    deleteList: { // args
+      id: string; // String!
+    }
     likeList: { // args
       listId: string; // String!
     }
     unlikeList: { // args
       listId: string; // String!
+    }
+    updateList: { // args
+      id: string; // String!
+      list: NexusGenInputs['ListInput']; // ListInput!
     }
     updateUser: { // args
       id: string; // String!

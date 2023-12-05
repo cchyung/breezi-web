@@ -156,3 +156,23 @@
 [31merror[39m: Variable "$id" of required type "String!" was not provided.
 [31merror[39m: Variable "$id" of required type "String!" was not provided.
 [31merror[39m: Variable "$id" of required type "String!" was not provided.
+[31merror[39m: Variable "$list" got invalid value { __typename: "ListItem", _id: "656f7cd4ffc5b292a5ed7d55", text: "1", imageURL: null } at "list.items[0]"; Field "__typename" is not defined by type "ListItemInput".
+[31merror[39m: Variable "$list" got invalid value { __typename: "ListItem", _id: "656f7cd4ffc5b292a5ed7d55", text: "1", imageURL: null } at "list.items[0]"; Field "_id" is not defined by type "ListItemInput".
+[31merror[39m: Variable "$list" got invalid value { __typename: "ListItem", _id: "656f7cd4ffc5b292a5ed7d55", text: "1", imageURL: null } at "list.items[0]"; Field "__typename" is not defined by type "ListItemInput".
+[31merror[39m: Variable "$list" got invalid value { __typename: "ListItem", _id: "656f7cd4ffc5b292a5ed7d55", text: "1", imageURL: null } at "list.items[0]"; Field "_id" is not defined by type "ListItemInput".
+[31merror[39m: Variable "$list" got invalid value { __typename: "ListItem", _id: "656f7cd4ffc5b292a5ed7d55", text: "1", imageURL: null } at "list.items[0]"; Field "__typename" is not defined by type "ListItemInput".
+[31merror[39m: Variable "$list" got invalid value { __typename: "ListItem", _id: "656f7cd4ffc5b292a5ed7d55", text: "1", imageURL: null } at "list.items[0]"; Field "_id" is not defined by type "ListItemInput".
+[31merror[39m: Variable "$list" got invalid value { __typename: "ListItem", _id: "656f7cd4ffc5b292a5ed7d56", text: "2", imageURL: null } at "list.items[1]"; Field "__typename" is not defined by type "ListItemInput".
+[31merror[39m: Variable "$list" got invalid value { __typename: "ListItem", _id: "656f7cd4ffc5b292a5ed7d56", text: "2", imageURL: null } at "list.items[1]"; Field "_id" is not defined by type "ListItemInput".
+[31merror[39m: Variable "$list" got invalid value { __typename: "ListItem", _id: "656f7cd4ffc5b292a5ed7d57", text: "3", imageURL: null } at "list.items[2]"; Field "__typename" is not defined by type "ListItemInput".
+[31merror[39m: Variable "$list" got invalid value { __typename: "ListItem", _id: "656f7cd4ffc5b292a5ed7d57", text: "3", imageURL: null } at "list.items[2]"; Field "_id" is not defined by type "ListItemInput".
+[31merror[39m: Variable "$list" got invalid value { __typename: "ListItem", _id: "656f7cd4ffc5b292a5ed7d58", text: "4", imageURL: null } at "list.items[3]"; Field "__typename" is not defined by type "ListItemInput".
+[31merror[39m: Variable "$list" got invalid value { __typename: "ListItem", _id: "656f7cd4ffc5b292a5ed7d58", text: "4", imageURL: null } at "list.items[3]"; Field "_id" is not defined by type "ListItemInput".
+[31merror[39m: Variable "$list" got invalid value { __typename: "ListItem", _id: "656f7cd4ffc5b292a5ed7d55", text: "1", imageURL: null } at "list.items[0]"; Field "__typename" is not defined by type "ListItemInput".
+[31merror[39m: Variable "$list" got invalid value { __typename: "ListItem", _id: "656f7cd4ffc5b292a5ed7d55", text: "1", imageURL: null } at "list.items[0]"; Field "_id" is not defined by type "ListItemInput".
+[31merror[39m: Variable "$list" got invalid value { __typename: "ListItem", _id: "656f7cd4ffc5b292a5ed7d56", text: "2", imageURL: null } at "list.items[1]"; Field "__typename" is not defined by type "ListItemInput".
+[31merror[39m: Variable "$list" got invalid value { __typename: "ListItem", _id: "656f7cd4ffc5b292a5ed7d56", text: "2", imageURL: null } at "list.items[1]"; Field "_id" is not defined by type "ListItemInput".
+[31merror[39m: Variable "$list" got invalid value { __typename: "ListItem", _id: "656f7cd4ffc5b292a5ed7d57", text: "3", imageURL: null } at "list.items[2]"; Field "__typename" is not defined by type "ListItemInput".
+[31merror[39m: Variable "$list" got invalid value { __typename: "ListItem", _id: "656f7cd4ffc5b292a5ed7d57", text: "3", imageURL: null } at "list.items[2]"; Field "_id" is not defined by type "ListItemInput".
+[31merror[39m: Variable "$list" got invalid value { __typename: "ListItem", _id: "656f7cd4ffc5b292a5ed7d58", text: "4", imageURL: null } at "list.items[3]"; Field "__typename" is not defined by type "ListItemInput".
+[31merror[39m: Variable "$list" got invalid value { __typename: "ListItem", _id: "656f7cd4ffc5b292a5ed7d58", text: "4", imageURL: null } at "list.items[3]"; Field "_id" is not defined by type "ListItemInput".

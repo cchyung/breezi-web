@@ -13,13 +13,16 @@ import { useApolloClient } from "@apollo/client";
 import { GET_LIST } from "@/lib/api/list/queries";
 import { useContext } from "react";
 import { UserContext } from "../../user/UserProvider";
+import ListCardOptions from "./ListCardOptions";
 
 const ListCard = ({
   list,
   onRefetch,
+  showOptions = false,
 }: {
   list: List;
   onRefetch?: (list: List) => void;
+  showOptions?: boolean;
 }) => {
   const client = useApolloClient();
   const refetchList = async () => {
@@ -44,6 +47,12 @@ const ListCard = ({
         <div className="flex flex-row gap-3 items-center">
           <UserAvatar user={list.author} size="sm" />
           <p className="font-bold">@{list.author.username}</p>
+
+          {showOptions && (
+            <div className="ml-auto">
+              <ListCardOptions refetchList={refetchList} list={list} />
+            </div>
+          )}
         </div>
 
         {list.coverImageURL && (
