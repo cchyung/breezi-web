@@ -30,10 +30,6 @@ let buildSettings = {
   },
 };
 
-esbuild
-  .build(buildSettings)
-  .then((result) => {
-    console.log("Build complete ✅");
-    console.log(result);
-  })
-  .finally(process.exit(0));
+console.log("Building...");
+
+esbuild.build(buildSettings);
