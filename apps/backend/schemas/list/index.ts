@@ -47,8 +47,8 @@ export const List = objectType({
     // @ts-ignore
     // TODO: Fix this
     t.nonNull.field("author", { type: User });
-    t.date("createdAt");
-    t.date("updatedAt");
+    t.datetime("createdAt");
+    t.datetime("updatedAt");
   },
 });
 

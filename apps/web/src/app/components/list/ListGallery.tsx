@@ -27,7 +27,7 @@ const ListGallery = ({
         }
       });
     });
-  }, lists);
+  }, [lists]);
 
   return (
     <div className="w-full">

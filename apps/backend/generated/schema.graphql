@@ -16,7 +16,7 @@ type List {
   _id: String!
   author: User!
   coverImageURL: String
-  createdAt: Date
+  createdAt: DateTime
   description: String
   items: [ListItem]!
   likeCount: Int!
@@ -24,7 +24,7 @@ type List {
   state: ListState
   title: String!
   type: ListType!
-  updatedAt: Date
+  updatedAt: DateTime
 }
 
 input ListInput {

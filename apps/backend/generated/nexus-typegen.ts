@@ -124,7 +124,7 @@ export interface NexusGenFieldTypes {
     _id: string; // String!
     author: NexusGenRootTypes['User']; // User!
     coverImageURL: string | null; // String
-    createdAt: NexusGenScalars['Date'] | null; // Date
+    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
     description: string | null; // String
     items: Array<NexusGenRootTypes['ListItem'] | null>; // [ListItem]!
     likeCount: number; // Int!
@@ -132,7 +132,7 @@ export interface NexusGenFieldTypes {
     state: NexusGenEnums['ListState'] | null; // ListState
     title: string; // String!
     type: NexusGenEnums['ListType']; // ListType!
-    updatedAt: NexusGenScalars['Date'] | null; // Date
+    updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
   }
   ListItem: { // field return type
     _id: string; // String!
@@ -199,7 +199,7 @@ export interface NexusGenFieldTypeNames {
     _id: 'String'
     author: 'User'
     coverImageURL: 'String'
-    createdAt: 'Date'
+    createdAt: 'DateTime'
     description: 'String'
     items: 'ListItem'
     likeCount: 'Int'
@@ -207,7 +207,7 @@ export interface NexusGenFieldTypeNames {
     state: 'ListState'
     title: 'String'
     type: 'ListType'
-    updatedAt: 'Date'
+    updatedAt: 'DateTime'
   }
   ListItem: { // field return type name
     _id: 'String'

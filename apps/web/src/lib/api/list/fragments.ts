@@ -23,5 +23,7 @@ export const listFragment = gql`
       _id
       user
     }
+    createdAt
+    updatedAt
   }
 `;

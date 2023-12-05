@@ -14,6 +14,7 @@ import { GET_LIST } from "@/lib/api/list/queries";
 import { useContext } from "react";
 import { UserContext } from "../../user/UserProvider";
 import ListCardOptions from "./ListCardOptions";
+import { formatTime } from "@/app/lib/utils/formatting";
 
 const ListCard = ({
   list,
@@ -41,12 +42,18 @@ const ListCard = ({
 
   const { user } = useContext(UserContext);
 
+  console.log(list.title, list.createdAt)
+
   return (
     <Card className="shadow-xl">
       <div className="flex flex-col gap-4">
-        <div className="flex flex-row gap-3 items-center">
+        <div className="flex flex-row gap-1 items-center">
           <UserAvatar user={list.author} size="sm" />
-          <p className="font-bold">@{list.author.username}</p>
+          <p className="font-bold ml-2">@{list.author.username}</p>
+          <p className="text-gray-400">·</p>
+          <p className="text-gray-400">
+            {formatTime(new Date(list.createdAt), new Date(), true)}
+          </p>
 
           {showOptions && (
             <div className="ml-auto">
