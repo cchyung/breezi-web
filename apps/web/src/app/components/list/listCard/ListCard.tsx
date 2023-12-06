@@ -15,6 +15,7 @@ import { useContext } from "react";
 import { UserContext } from "../../user/UserProvider";
 import ListCardOptions from "./ListCardOptions";
 import { formatTime } from "@/app/lib/utils/formatting";
+import ListCardComments from "./ListCardComments";
 
 const ListCard = ({
   list,
@@ -80,6 +81,8 @@ const ListCard = ({
             <li key={index}>{item?.text}</li>
           ))}
         </ul>
+
+        <ListCardComments list={list} refetchList={refetchList}/>
         <ListCardActionRow
           listId={list._id}
           likeCount={list.likeCount}

@@ -1,11 +1,5 @@
 import { Database } from "@/models";
-import {
-  List,
-  ListItem,
-  ListState,
-  ListType,
-  PopulatedList,
-} from "@/models/list";
+import { ListState, ListType, PopulatedList } from "@/models/list";
 import { Schema } from "mongoose";
 
 export interface ListItemInput {
@@ -24,10 +18,12 @@ export interface CreateListInput {
   coverImageURL?: string | null;
 }
 
+const populateList = [{ path: "author" }, { path: "comments.author" }];
+
 export const ListService = (db: Database) => {
   const getList = async ({ id }: { id: string }) => {
     return await db.List.findById(id)
-      .populate<PopulatedList>({ path: "author" })
+      .populate<PopulatedList>(populateList)
       .exec();
   };
 
@@ -47,7 +43,7 @@ export const ListService = (db: Database) => {
       {},
       { skip: cursor, limit: pageSize, sort: { createdAt: -1 } }
     )
-      .populate<PopulatedList>({ path: "author" })
+      .populate<PopulatedList>(populateList)
       .exec();
   };
 
@@ -61,7 +57,7 @@ export const ListService = (db: Database) => {
       {},
       { sort: { createdAt: -1 } }
     )
-      .populate<PopulatedList>({ path: "author" })
+      .populate<PopulatedList>(populateList)
       .exec();
   };
 
@@ -83,7 +79,7 @@ export const ListService = (db: Database) => {
       type,
       coverImageURL,
     });
-    return (await list.save()).populate<PopulatedList>({ path: "author" });
+    return (await list.save()).populate<PopulatedList>(populateList);
   };
 
   const deleteList = async ({ id }: { id: string }) => {
@@ -115,8 +111,61 @@ export const ListService = (db: Database) => {
     if (coverImageURL) update.coverImageURL = coverImageURL;
     if (type) update.type = type;
     return await db.List.findOneAndUpdate({ _id: id }, { $set: update })
-      .populate<PopulatedList>({ path: "author" })
+      .populate<PopulatedList>(populateList)
       .exec();
+  };
+
+  const addListComment = async ({
+    listId,
+    text,
+    author,
+  }: {
+    listId: string;
+    text: string;
+    author: string;
+  }) => {
+    const updatedList = await db.List.findOneAndUpdate(
+      {
+        _id: listId,
+      },
+      {
+        $push: {
+          comments: {
+            text,
+            author,
+          },
+        },
+      }
+    )
+      .populate<PopulatedList>(populateList)
+      .exec();
+
+    return updatedList;
+  };
+
+  const removeListComment = async ({
+    listId,
+    commentId,
+  }: {
+    listId: string;
+    commentId: string;
+  }) => {
+    const updatedList = await db.List.findOneAndUpdate(
+      {
+        _id: listId,
+      },
+      {
+        $pull: {
+          comments: {
+            _id: commentId,
+          },
+        },
+      }
+    )
+      .populate<PopulatedList>(populateList)
+      .exec();
+
+    return updatedList;
   };
 
   return {
@@ -126,5 +175,7 @@ export const ListService = (db: Database) => {
     createList,
     updateList,
     deleteList,
+    addListComment,
+    removeListComment,
   };
 };

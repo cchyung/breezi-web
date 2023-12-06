@@ -71,3 +71,12 @@ export const DELETE_LIST = gql`
     deleteList(id: $id)
   }
 `;
+
+export const ADD_COMMENT_TO_LIST = gql`
+  mutation AddCommentToList($listId: String!, $text: String!) {
+    addCommentToList(listId: $listId, text: $text) {
+      ...list
+    }
+  }
+  ${listFragment}
+`;

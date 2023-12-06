@@ -13,6 +13,15 @@ export const listFragment = gql`
       text
       imageURL
     }
+    comments {
+      _id
+      text
+      author {
+        _id
+        username
+      }
+      createdAt
+    }
     author {
       _id
       username

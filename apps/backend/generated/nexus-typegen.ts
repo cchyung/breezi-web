@@ -93,6 +93,7 @@ export interface NexusGenScalars {
 
 export interface NexusGenObjects {
   List: List.List;
+  ListComment: List.ListComment;
   ListItem: List.ListItem;
   ListLike: ListLike.ListLike;
   LoginObject: { // root type
@@ -127,6 +128,7 @@ export interface NexusGenFieldTypes {
   List: { // field return type
     _id: string; // String!
     author: NexusGenRootTypes['User']; // User!
+    comments: NexusGenRootTypes['ListComment'][] | null; // [ListComment!]
     coverImageURL: string | null; // String
     createdAt: NexusGenScalars['DateTime'] | null; // DateTime
     description: string | null; // String
@@ -136,6 +138,13 @@ export interface NexusGenFieldTypes {
     state: NexusGenEnums['ListState'] | null; // ListState
     title: string; // String!
     type: NexusGenEnums['ListType']; // ListType!
+    updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
+  }
+  ListComment: { // field return type
+    _id: string; // String!
+    author: NexusGenRootTypes['User']; // User!
+    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
+    text: string; // String!
     updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
   }
   ListItem: { // field return type
@@ -154,10 +163,12 @@ export interface NexusGenFieldTypes {
     user: NexusGenRootTypes['User'] | null; // User
   }
   Mutation: { // field return type
+    addCommentToList: NexusGenRootTypes['List'] | null; // List
     createList: NexusGenRootTypes['List'] | null; // List
     deleteList: boolean | null; // Boolean
     followUser: NexusGenRootTypes['User'] | null; // User
     likeList: NexusGenRootTypes['ListLike'] | null; // ListLike
+    removeCommentFromList: NexusGenRootTypes['List'] | null; // List
     unfollowUser: NexusGenRootTypes['User'] | null; // User
     unlikeList: boolean | null; // Boolean
     updateList: NexusGenRootTypes['List'] | null; // List
@@ -208,6 +219,7 @@ export interface NexusGenFieldTypeNames {
   List: { // field return type name
     _id: 'String'
     author: 'User'
+    comments: 'ListComment'
     coverImageURL: 'String'
     createdAt: 'DateTime'
     description: 'String'
@@ -217,6 +229,13 @@ export interface NexusGenFieldTypeNames {
     state: 'ListState'
     title: 'String'
     type: 'ListType'
+    updatedAt: 'DateTime'
+  }
+  ListComment: { // field return type name
+    _id: 'String'
+    author: 'User'
+    createdAt: 'DateTime'
+    text: 'String'
     updatedAt: 'DateTime'
   }
   ListItem: { // field return type name
@@ -235,10 +254,12 @@ export interface NexusGenFieldTypeNames {
     user: 'User'
   }
   Mutation: { // field return type name
+    addCommentToList: 'List'
     createList: 'List'
     deleteList: 'Boolean'
     followUser: 'User'
     likeList: 'ListLike'
+    removeCommentFromList: 'List'
     unfollowUser: 'User'
     unlikeList: 'Boolean'
     updateList: 'List'
@@ -287,6 +308,10 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    addCommentToList: { // args
+      listId: string; // String!
+      text: string; // String!
+    }
     createList: { // args
       list: NexusGenInputs['ListInput']; // ListInput!
     }
@@ -297,6 +322,10 @@ export interface NexusGenArgTypes {
       userId: string; // String!
     }
     likeList: { // args
+      listId: string; // String!
+    }
+    removeCommentFromList: { // args
+      commentId: string; // String!
       listId: string; // String!
     }
     unfollowUser: { // args

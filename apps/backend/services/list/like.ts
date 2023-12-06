@@ -1,14 +1,4 @@
 import { Database } from "@/models";
-import { objectType } from "nexus";
-
-export const ListLike = objectType({
-  name: "ListLike",
-  definition(t) {
-    t.string("_id");
-    t.string("user");
-    t.string("list");
-  },
-});
 
 export const ListLikeService = (db: Database) => {
   const getListLikes = async ({ listId }: { listId: string }) => {

@@ -19,10 +19,26 @@ export interface List {
   state: ListState;
   items: ListItem[];
   type: ListType;
+  comments: ListComment[];
   coverImageURL?: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface PopulatedList extends List {
+  author: User | null;
+  comments: PopulatedListComment[];
+}
+
+export interface ListComment {
+  _id: Schema.Types.ObjectId;
+  text: string;
+  author: string | User | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface PopulatedListComment extends ListComment {
   author: User | null;
 }
 
@@ -48,6 +64,23 @@ export const ListItemSchema = new Schema(
     },
   },
   { timestamps: {} }
+);
+
+export const ListCommentSchema = new Schema(
+  {
+    text: {
+      type: String,
+      required: true,
+    },
+    author: {
+      type: String,
+      ref: "User",
+      required: true,
+    },
+  },
+  {
+    timestamps: {},
+  }
 );
 
 export const ListSchema = new Schema(
@@ -78,6 +111,11 @@ export const ListSchema = new Schema(
     items: [
       {
         type: ListItemSchema,
+      },
+    ],
+    comments: [
+      {
+        type: ListCommentSchema,
       },
     ],
     type: {

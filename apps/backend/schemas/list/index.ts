@@ -42,6 +42,7 @@ export const List = objectType({
     t.field("state", { type: ListState });
     t.nonNull.field("type", { type: ListType });
     t.nonNull.list.field("items", { type: ListItem });
+    t.list.nonNull.field("comments", { type: ListComment });
     t.string("description");
     t.string("coverImageURL");
     // @ts-ignore
@@ -80,6 +81,19 @@ export const ListItem = objectType({
     t.nonNull.string("text");
     t.string("parent");
     t.string("imageURL");
+  },
+});
+
+export const ListComment = objectType({
+  name: "ListComment",
+  definition(t) {
+    t.nonNull.string("_id");
+    t.nonNull.string("text");
+    // @ts-ignore
+    // TODO: Fix this
+    t.nonNull.field("author", { type: User });
+    t.datetime("createdAt");
+    t.datetime("updatedAt");
   },
 });
 
@@ -217,5 +231,36 @@ export const DeleteList = mutationField("deleteList", {
 
     await listService.deleteList({ id });
     return true;
+  },
+});
+
+export const AddCommentToList = mutationField("addCommentToList", {
+  type: "List",
+  args: {
+    listId: nonNull(stringArg()),
+    text: nonNull(stringArg()),
+  },
+  resolve: async (_, { listId, text }, { user }) => {
+    if (!user) throw new AuthenticationError("user is not logged in");
+    return await listService.addListComment({
+      listId,
+      text,
+      author: user._id.toString(),
+    });
+  },
+});
+
+export const RemoveCommentFromList = mutationField("removeCommentFromList", {
+  type: "List",
+  args: {
+    listId: nonNull(stringArg()),
+    commentId: nonNull(stringArg()),
+  },
+  resolve: async (_, { listId, commentId }, { user }) => {
+    if (!user) throw new AuthenticationError("user is not logged in");
+    return await listService.removeListComment({
+      listId,
+      commentId,
+    });
   },
 });
