@@ -154,6 +154,8 @@ export type Query = {
   /** Logs in the user based on the supplied number and verification code.  If the user doesn't exist, a new user will be created */
   loginUser?: Maybe<LoginObject>;
   sendSMSVerificationToken?: Maybe<Ok>;
+  uploadListCoverURL?: Maybe<SignedUrl>;
+  uploadUserProfileImageURL?: Maybe<SignedUrl>;
   user?: Maybe<User>;
   userLikes?: Maybe<Array<Maybe<ListLike>>>;
   userLists?: Maybe<Array<Maybe<List>>>;
@@ -213,6 +215,12 @@ export type QueryUserListsArgs = {
 export type QueryVerifySmsVerificationTokenArgs = {
   code: Scalars['String']['input'];
   phone: Scalars['String']['input'];
+};
+
+export type SignedUrl = {
+  __typename?: 'SignedURL';
+  key: Scalars['String']['output'];
+  url: Scalars['String']['output'];
 };
 
 export type UpdateUserInput = {
@@ -316,6 +324,16 @@ export type DeleteListMutationVariables = Exact<{
 
 
 export type DeleteListMutation = { __typename?: 'Mutation', deleteList?: boolean | null };
+
+export type GetUploadProfileImageUrlQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetUploadProfileImageUrlQuery = { __typename?: 'Query', uploadUserProfileImageURL?: { __typename?: 'SignedURL', url: string, key: string } | null };
+
+export type GetUploadListCoverUrlQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetUploadListCoverUrlQuery = { __typename?: 'Query', uploadListCoverURL?: { __typename?: 'SignedURL', url: string, key: string } | null };
 
 export type GetUserQueryVariables = Exact<{
   authToken?: InputMaybe<Scalars['String']['input']>;

@@ -105,6 +105,10 @@ export interface NexusGenObjects {
     ok?: boolean | null; // Boolean
   }
   Query: {};
+  SignedURL: { // root type
+    key: string; // String!
+    url: string; // String!
+  }
   User: User.User;
   UserFollower: UserFollower.UserFollower;
 }
@@ -170,10 +174,16 @@ export interface NexusGenFieldTypes {
     lists: Array<NexusGenRootTypes['List'] | null> | null; // [List]
     loginUser: NexusGenRootTypes['LoginObject'] | null; // LoginObject
     sendSMSVerificationToken: NexusGenRootTypes['Ok'] | null; // Ok
+    uploadListCoverURL: NexusGenRootTypes['SignedURL'] | null; // SignedURL
+    uploadUserProfileImageURL: NexusGenRootTypes['SignedURL'] | null; // SignedURL
     user: NexusGenRootTypes['User'] | null; // User
     userLikes: Array<NexusGenRootTypes['ListLike'] | null> | null; // [ListLike]
     userLists: Array<NexusGenRootTypes['List'] | null> | null; // [List]
     verifySMSVerificationToken: NexusGenRootTypes['Ok'] | null; // Ok
+  }
+  SignedURL: { // field return type
+    key: string; // String!
+    url: string; // String!
   }
   User: { // field return type
     _id: string; // String!
@@ -245,10 +255,16 @@ export interface NexusGenFieldTypeNames {
     lists: 'List'
     loginUser: 'LoginObject'
     sendSMSVerificationToken: 'Ok'
+    uploadListCoverURL: 'SignedURL'
+    uploadUserProfileImageURL: 'SignedURL'
     user: 'User'
     userLikes: 'ListLike'
     userLists: 'List'
     verifySMSVerificationToken: 'Ok'
+  }
+  SignedURL: { // field return type name
+    key: 'String'
+    url: 'String'
   }
   User: { // field return type name
     _id: 'String'

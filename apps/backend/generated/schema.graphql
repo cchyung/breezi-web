@@ -97,10 +97,17 @@ type Query {
   """
   loginUser(phone: String!, verificationCode: String!): LoginObject
   sendSMSVerificationToken(phone: String!): Ok
+  uploadListCoverURL: SignedURL
+  uploadUserProfileImageURL: SignedURL
   user(authToken: String, id: String): User
   userLikes(userId: String): [ListLike]
   userLists(userId: String): [List]
   verifySMSVerificationToken(code: String!, phone: String!): Ok
+}
+
+type SignedURL {
+  key: String!
+  url: String!
 }
 
 """

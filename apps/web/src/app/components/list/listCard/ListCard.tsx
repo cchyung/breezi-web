@@ -62,7 +62,7 @@ const ListCard = ({
 
         {list.coverImageURL && (
           <img
-            className="h-36 w-full rounded-md object-cover"
+            className="h-40 w-full rounded-3xl object-cover"
             alt="list cover"
             src={list.coverImageURL}
           />
