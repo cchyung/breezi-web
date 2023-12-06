@@ -62,7 +62,10 @@ const FollowButton = ({
   };
 
   return (
-    <Button color="black" onClick={handleClick}>
+    <Button
+      color={loggedInUserIsFollowing() ? "gray" : "black"}
+      onClick={handleClick}
+    >
       {loggedInUserIsFollowing() ? "Following" : "Follow"}
     </Button>
   );

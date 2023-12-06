@@ -30,7 +30,6 @@ const timeDifference = (start: Date, end: Date) => {
 export const formatTime = (start: Date, end: Date, shorten = false) => {
   const remainingTime = timeDifference(start, end);
 
-  console.log(start, end);
   if (remainingTime.days > 0) {
     const label = remainingTime.days === 1 ? "day" : "days";
     return `${remainingTime.days} ${label}`;

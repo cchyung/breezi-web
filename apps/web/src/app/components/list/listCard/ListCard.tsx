@@ -42,8 +42,6 @@ const ListCard = ({
 
   const { user } = useContext(UserContext);
 
-  console.log(list.title, list.createdAt)
-
   return (
     <Card className="shadow-xl">
       <div className="flex flex-col gap-4">
