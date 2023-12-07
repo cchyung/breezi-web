@@ -1,12 +1,6 @@
 "use client";
 import { Card } from "@/app/components/ui";
-import {
-  GetListQuery,
-  GetListQueryVariables,
-  List,
-  ListLike,
-  ListType,
-} from "@/lib/api";
+import { GetListQuery, GetListQueryVariables, List, ListType } from "@/lib/api";
 import { UserAvatar } from "@/app/components/ui";
 import { ListCardActionRow } from ".";
 import { useApolloClient } from "@apollo/client";
@@ -21,23 +15,29 @@ const ListCard = ({
   list,
   onRefetch,
   showOptions = false,
+  refetch,
 }: {
   list: List;
   onRefetch?: (list: List) => void;
   showOptions?: boolean;
+  refetch?: () => Promise<any>; // refetch function from parent
 }) => {
   const client = useApolloClient();
   const refetchList = async () => {
-    const query = await client.query<GetListQuery, GetListQueryVariables>({
-      query: GET_LIST,
-      variables: {
-        id: list._id,
-      },
-      fetchPolicy: "network-only",
-    });
+    if (refetch) {
+      refetch();
+    } else {
+      const query = await client.query<GetListQuery, GetListQueryVariables>({
+        query: GET_LIST,
+        variables: {
+          id: list._id,
+        },
+        fetchPolicy: "network-only",
+      });
 
-    if (onRefetch) {
-      onRefetch(query.data.list as List);
+      if (onRefetch) {
+        onRefetch(query.data.list as List);
+      }
     }
   };
 

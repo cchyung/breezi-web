@@ -42,8 +42,26 @@ const ListCardActionRow = ({
     await refetchList();
   };
 
+  const onShareButtonClick = () => {
+    const listURL = window.location.host + "/list/" + listId;
+
+    // check if native share is available
+    if (navigator.share) {
+      navigator.share({
+        title: "Breezi",
+        text: "Check out this list on Breezi",
+        url: listURL,
+      });
+    } else {
+      // put link in clipboard
+      navigator.clipboard.writeText(listURL);
+
+      // TODO: Show pop up saying link is copied to clipboard
+    }
+  };
+
   return (
-    <div className="w-full flex items-center gap-4">
+    <div className="w-full flex items-center gap-2">
       <button
         className={`flex flex-col items-center gap-1 rounded-3xl w-1/2 py-2  ${
           userLiked ? "bg-secondary text-primary" : "bg-gray-200 text-gray-400"
@@ -56,9 +74,7 @@ const ListCardActionRow = ({
 
       <button
         className="flex flex-col items-center gap-1 rounded-3xl w-1/2 py-2 bg-gray-200 text-gray-400 btn-small"
-        onClick={() => {
-          window.alert("TODO: Implement share");
-        }}
+        onClick={onShareButtonClick}
       >
         <ShareIcon className="w-8 text-gray-400"></ShareIcon>
         Share
