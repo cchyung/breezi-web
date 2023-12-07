@@ -54,7 +54,7 @@ const CodeInput = ({ onSubmit }: CodeInputProps) => {
           return (
             <div
               key={i}
-              className={`w-12 h-16 rounded-xl bg-gray-secondary text-center flex items-center justify-center text-[22px] font-bold border-2 border-gray-secondary ${
+              className={`w-10 h-14 md:w-12 md:h-16 rounded-xl bg-gray-secondary text-center flex items-center justify-center text-[22px] font-bold border-2 border-gray-secondary ${
                 i === code.length ? "border-black" : ""
               }`}
             >

@@ -20,9 +20,6 @@ const Username = () => {
 
   const onSubmit = useCallback(
     async (username: string) => {
-
-      console.log(user)
-      console.log(username)
       if (!user) {
         console.error("No user logged in");
         return;
@@ -46,9 +43,9 @@ const Username = () => {
 
   return (
     <>
-      <div className="h-screen w-screen grid items-center justify-center">
+      <div className="h-screen w-screen grid items-center justify-center px-4">
         <div className="flex flex-col items-center gap-2">
-          <img src="/logo/star3.png" alt="star" className="w-48" />
+          <img src="/logo/star3.png" alt="star" className="w-36 md:w-48" />
           <h1>Add your name</h1>
           <p className="mb-4">
             Add your display name so that friends can find you
@@ -65,6 +62,7 @@ const Username = () => {
             onClick={() => {
               onSubmit(username);
             }}
+            className="w-full"
           >
             Almost There!
           </Button>

@@ -45,8 +45,8 @@ const ListCard = ({
 
   return (
     <Card className="shadow-xl">
-      <div className="flex flex-col gap-4">
-        <div className="flex flex-row gap-1 items-center">
+      <div className="flex flex-col gap-2">
+        <div className="flex flex-row gap-1 items-center mb-2">
           <UserAvatar user={list.author} size="sm" />
           <p className="font-bold ml-2">@{list.author.username}</p>
           <p className="text-gray-400">·</p>
@@ -71,9 +71,8 @@ const ListCard = ({
 
         <h3 className="font-bold">{list.title}</h3>
         {list.description && <p>{list.description}</p>}
-
         <ul
-          className={`flex flex-col gap-1 list-inside ${
+          className={`flex flex-col gap-1 ml-4 list-inside overflow-hidden ${
             list.type === ListType.Bulleted ? "list-disc" : "list-decimal"
           }`}
         >
@@ -82,7 +81,7 @@ const ListCard = ({
           ))}
         </ul>
 
-        <ListCardComments list={list} refetchList={refetchList}/>
+        <ListCardComments list={list} refetchList={refetchList} />
         <ListCardActionRow
           listId={list._id}
           likeCount={list.likeCount}

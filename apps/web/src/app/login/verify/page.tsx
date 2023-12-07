@@ -52,7 +52,7 @@ const Verify = () => {
 
   return (
     <>
-      <div className="h-screen w-screen grid items-center justify-center">
+      <div className="h-screen w-screen grid items-center justify-center px-4">
         <div className="flex flex-col items-center gap-2">
           <img src="/logo/star3.png" alt="star" className="w-48" />
           <h1>Enter your one-time passcode</h1>

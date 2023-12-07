@@ -262,7 +262,7 @@ const CreateList = ({
           />
         </div>
 
-        <div className="p-6 flex flex-col gap-4">
+        <div className="p-6 flex flex-col gap-2">
           <input
             placeholder="Title your list"
             className="font-bold text-3xl"
@@ -280,7 +280,7 @@ const CreateList = ({
           ></input>
 
           <ul
-            className={`flex flex-col gap-1 list-inside flex-1 ${
+            className={`flex flex-col gap-1 ml-4 list-inside flex-1 ${
               type === ListType.Bulleted ? "list-disc" : "list-decimal"
             }`}
           >

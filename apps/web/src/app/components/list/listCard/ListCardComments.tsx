@@ -39,7 +39,7 @@ const ListCardComments = ({
   };
 
   return (
-    <div className="flex flex-col gap-2 py-2">
+    <div className="flex flex-col gap-2">
       {list.comments
         ?.slice(0, expanded ? list.comments.length : 5)
         .map((comment) => (
@@ -49,13 +49,15 @@ const ListCardComments = ({
           </div>
         ))}
 
-      {list.comments?.length && list.comments?.length > 5 && (
+      {list.comments?.length && list.comments?.length > 5 ? (
         <button
           onClick={() => setExpanded(!expanded)}
           className="text-gray-400 hover:text-gray-500 underline text-[16px] text-left"
         >
           {expanded ? "Hide" : "View"} {list.comments?.length} comments
         </button>
+      ) : (
+        ""
       )}
 
       <div className="mt-2">
