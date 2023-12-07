@@ -43,7 +43,8 @@ const ListCardActionRow = ({
   };
 
   const onShareButtonClick = () => {
-    const listURL = window.location.host + "/list/" + listId;
+    const listURL =
+      location.protocol + "//" + window.location.host + "/list/" + listId;
 
     // check if native share is available
     if (navigator.share) {
@@ -73,10 +74,10 @@ const ListCardActionRow = ({
       </button>
 
       <button
-        className="flex flex-col items-center gap-1 rounded-3xl w-1/2 py-2 bg-gray-200 text-gray-400 btn-small"
+        className="flex flex-col items-center gap-1 rounded-3xl w-1/2 py-2 bg-gray-200 text-gray-400 btn-small hover:text-white hover:bg-primary"
         onClick={onShareButtonClick}
       >
-        <ShareIcon className="w-8 text-gray-400"></ShareIcon>
+        <ShareIcon className="w-8"></ShareIcon>
         Share
       </button>
     </div>

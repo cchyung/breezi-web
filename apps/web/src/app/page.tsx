@@ -24,7 +24,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex flex-col mt-10 gap-4 max-w-6xl mx-auto p-3">
+      <div className="flex flex-col gap-4 max-w-6xl mx-auto p-3">
         {loading ? <></> : <ListGallery initialLists={data?.lists as List[]} />}
       </div>
       <CreateListButton onCreation={refetch} />

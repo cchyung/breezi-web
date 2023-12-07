@@ -19,7 +19,7 @@ const ShareIcon = ({ className }: { className?: string }) => {
           <rect
             width="24"
             height="24"
-            fill="white"
+            fill="currentColor"
             transform="translate(0.5)"
           />
         </clipPath>

@@ -3,7 +3,7 @@
 import { ListCard } from "@/app/components/list";
 import { GetListQuery, GetListQueryVariables } from "@/lib/api";
 import { GET_LIST } from "@/lib/api/list/queries";
-import { useApolloClient, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 
 const ListPage = ({ params }: { params: { listId: string } }) => {
   const { loading, data, refetch } = useQuery<
