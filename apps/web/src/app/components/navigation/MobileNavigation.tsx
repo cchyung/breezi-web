@@ -18,7 +18,12 @@ const MobileNavigation = () => {
     <>
       <div className="h-[52px]"></div>
       <div className="fixed bottom-0 w-full bg-white md:hidden flex items-center justify-around">
-        <button className="py-2 hover:text-primary transition-colors">
+        <button
+          className="py-2 hover:text-primary transition-colors"
+          onClick={() => {
+            router.push("/");
+          }}
+        >
           <HomeIcon className="w-6 h-6" />
         </button>
 
