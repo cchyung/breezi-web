@@ -59,6 +59,7 @@ const Username = () => {
             onChange={(e) => {
               setUsername(e.target.value);
             }}
+            className="w-full"
           />
           <Button
             onClick={() => {

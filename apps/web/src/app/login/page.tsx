@@ -28,6 +28,7 @@ const Login = () => {
             onChange={(e) => {
               setPhone(e.target.value);
             }}
+            className="w-full"
           />
           <a href="/login/verify" className="w-full">
             <Button

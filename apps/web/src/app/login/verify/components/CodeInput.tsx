@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface CodeInputProps {
   onSubmit: (code: string) => void;
@@ -10,6 +10,11 @@ const codeLength = 6;
 
 const CodeInput = ({ onSubmit }: CodeInputProps) => {
   const [code, setCode] = useState<string>("");
+  const hiddenInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    hiddenInputRef.current?.focus();
+  }, []);
 
   useEffect(() => {
     const handleKeydown = (e: KeyboardEvent) => {
@@ -39,20 +44,28 @@ const CodeInput = ({ onSubmit }: CodeInputProps) => {
   }, [code]);
 
   return (
-    <div className="flex flex-row items-center gap-2">
-      {[...Array(codeLength)].map((_, i) => {
-        return (
-          <div
-            key={i}
-            className={`w-12 h-16 rounded-xl bg-gray-secondary text-center flex items-center justify-center text-[22px] font-bold border-2 border-gray-secondary ${
-              i === code.length ? "border-black" : ""
-            }`}
-          >
-            {code.length > i ? code[i] : " "}
-          </div>
-        );
-      })}
-    </div>
+    <button
+      onClick={() => {
+        hiddenInputRef.current?.focus();
+      }}
+    >
+      <div className="flex flex-row items-center gap-2">
+        {[...Array(codeLength)].map((_, i) => {
+          return (
+            <div
+              key={i}
+              className={`w-12 h-16 rounded-xl bg-gray-secondary text-center flex items-center justify-center text-[22px] font-bold border-2 border-gray-secondary ${
+                i === code.length ? "border-black" : ""
+              }`}
+            >
+              {code.length > i ? code[i] : " "}
+            </div>
+          );
+        })}
+
+        <input className="w-0 overflow-hidden" ref={hiddenInputRef} type="number"></input>
+      </div>
+    </button>
   );
 };
 

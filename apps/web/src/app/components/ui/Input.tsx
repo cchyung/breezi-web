@@ -4,7 +4,8 @@ interface InputProps {
   placeholder: string;
   type: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  value: any;
+  value?: any;
+  className?: string;
 }
 
 const Input = ({
@@ -13,9 +14,10 @@ const Input = ({
   onChange,
   children,
   value,
+  className
 }: PropsWithChildren<InputProps>) => {
   return (
-    <div className="relative">
+    <div className={`relative ${className}`}>
       <input
         className="bg-gray-200 px-4 py-3 rounded-2xl w-full"
         type={type}
