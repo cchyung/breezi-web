@@ -8,9 +8,9 @@ const UserAvatar = ({
   size: "sm" | "md" | "lg";
 }) => {
   const sizeStyles = {
-    sm: "w-9 h-9",
-    md: "w-12 h-12",
-    lg: "w-32 h-32",
+    sm: "w-9 h-9 border-2",
+    md: "w-16 h-16 border-4",
+    lg: "w-32 h-32 border-4",
   };
 
   const sizeStyle = sizeStyles[size];
@@ -19,12 +19,14 @@ const UserAvatar = ({
     <>
       {user.imageURL ? (
         <img
-          className={`rounded-full ${sizeStyle}`}
+          className={`rounded-full border-white shadow-lg ${sizeStyle}`}
           src={user.imageURL}
           alt="user profile"
         ></img>
       ) : (
-        <div className={`bg-blue-400 rounded-full ${sizeStyle}`} />
+        <div
+          className={`bg-blue-400 rounded-full border-white shadow-lg ${sizeStyle}`}
+        />
       )}
     </>
   );

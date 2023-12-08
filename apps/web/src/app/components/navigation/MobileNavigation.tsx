@@ -1,9 +1,8 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import AddIcon from "../icon/AddIcon";
-import HomeIcon from "../icon/HomeIcon";
-import ProfileIcon from "../icon/ProfileIcon";
+import { AddIcon, HomeIcon, ProfileIcon } from "../icon";
+
 import { UserContext } from "../user";
 import { useContext } from "react";
 
@@ -33,7 +32,7 @@ const MobileNavigation = () => {
             router.push("/list/create");
           }}
         >
-          <AddIcon className="text-white" />  
+          <AddIcon className="text-white" />
         </button>
 
         <button

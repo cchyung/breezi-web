@@ -8,6 +8,9 @@ import {
 } from "@/lib/api";
 import { LIKE_LIST, UNLIKE_LIST } from "@/lib/api/list/queries";
 import { useApolloClient } from "@apollo/client";
+import { UserContext } from "../../user";
+import { useContext } from "react";
+import { useRouter } from "next/navigation";
 
 const ListCardActionRow = ({
   listId,
@@ -21,7 +24,15 @@ const ListCardActionRow = ({
   refetchList: () => Promise<void>;
 }) => {
   const client = useApolloClient();
+  const { user } = useContext(UserContext);
+  const router = useRouter();
+
   const onLikeButtonClick = async () => {
+    if (!user) {
+      router.push("/login");
+      return
+    }
+
     if (!userLiked) {
       await client.mutate<LikeListMutation, LikeListMutationVariables>({
         mutation: LIKE_LIST,

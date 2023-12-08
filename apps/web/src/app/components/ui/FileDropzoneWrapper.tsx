@@ -11,7 +11,11 @@ import { useDropzone } from "react-dropzone";
 const FileDropzoneWrapper = ({
   children,
   onDrop,
-}: PropsWithChildren<{ onDrop: (files: File[]) => void }>) => {
+  noClick = true,
+}: PropsWithChildren<{
+  onDrop: (files: File[]) => void;
+  noClick?: boolean;
+}>) => {
   const onDropInternal = useCallback((acceptedFiles: File[]) => {
     // Do something with the files
     onDrop(acceptedFiles);
@@ -19,7 +23,7 @@ const FileDropzoneWrapper = ({
 
   const { getRootProps, isDragActive } = useDropzone({
     onDrop: onDropInternal,
-    noClick: true,
+    noClick,
   });
 
   return (

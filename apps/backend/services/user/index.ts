@@ -66,6 +66,7 @@ export const UserService = (db: Database) => {
     phone,
     imageURL,
     invitedBy,
+    registered = true,
   }: {
     phone: string;
     username?: string;
@@ -73,6 +74,7 @@ export const UserService = (db: Database) => {
     email?: string;
     imageURL?: string;
     invitedBy?: string | null;
+    registered?: boolean;
   }) {
     const user = new db.User({
       username,
@@ -81,6 +83,7 @@ export const UserService = (db: Database) => {
       phone,
       imageURL,
       invitedBy,
+      registered,
     });
 
     return user.save();
@@ -117,12 +120,14 @@ export const UserService = (db: Database) => {
     about,
     email,
     imageURL,
+    registered,
   }: {
     id: string | Schema.Types.ObjectId;
     username?: string;
     about?: string;
     email?: string;
     imageURL?: string;
+    registered?: boolean;
   }) {
     if (!id) {
       throw new Error("Must provide uesr id");
@@ -134,6 +139,7 @@ export const UserService = (db: Database) => {
         about,
         email,
         imageURL,
+        registered,
       },
     };
     const options = { new: true };

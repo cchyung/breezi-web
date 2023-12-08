@@ -10,7 +10,7 @@ import { useCallback, useContext, useState } from "react";
 
 const Username = () => {
   const router = useRouter();
-  const { user } = useContext(UserContext);
+  const { user, updateLocalUser } = useContext(UserContext);
 
   const [username, setUsername] = useState("");
   const [updateUser] = useMutation<
@@ -31,12 +31,19 @@ const Username = () => {
           id: user._id as string,
           user: {
             username: username,
+            registered: true,
           },
         },
       });
 
+      updateLocalUser({
+        ...user,
+        username: username,
+        registered: true,
+      });
+
       // navigate to home
-      router.push(`/user/${user._id}`);
+      router.push(`/login/onboarding/profile-image`);
     },
     [user]
   );
@@ -44,8 +51,8 @@ const Username = () => {
   return (
     <>
       <div className="h-screen w-screen grid items-center justify-center px-4">
-        <div className="flex flex-col items-center gap-2">
-          <img src="/logo/star3.png" alt="star" className="w-36 md:w-48" />
+        <div className="flex flex-col items-center gap-4">
+          <img src="/logo/logo.png" className="w-64" />
           <h1>Add your name</h1>
           <p className="mb-4">
             Add your display name so that friends can find you
@@ -64,7 +71,7 @@ const Username = () => {
             }}
             className="w-full"
           >
-            Almost There!
+            Continue
           </Button>
         </div>
       </div>

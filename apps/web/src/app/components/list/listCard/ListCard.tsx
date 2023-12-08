@@ -51,7 +51,18 @@ const ListCard = ({
           <p className="font-bold ml-2">@{list.author.username}</p>
           <p className="text-gray-400">·</p>
           <p className="text-gray-400">
-            {formatTime(new Date(list.createdAt), new Date(), true)}
+            {/* {formatTime(new Date(list.createdAt), new Date(), true)} */}
+            {list.createdAt !== list.updatedAt
+              ? `Updated ${formatTime(
+                  new Date(list.updatedAt),
+                  new Date(),
+                  true
+                )}`
+              : `Posted ${formatTime(
+                  new Date(list.createdAt),
+                  new Date(),
+                  true
+                )}`}
           </p>
 
           {showOptions && (

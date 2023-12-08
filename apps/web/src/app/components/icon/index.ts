@@ -8,3 +8,6 @@ export { default as NumberedListIcon } from "./NumberedListIcon";
 export { default as BulletedListIcon } from "./BulletedListIcon";
 export { default as MoreVerticalIcon } from "./MoreVerticalIcon";
 export { default as UpArrowIcon } from "./UpArrowIcon";
+export { default as AddIcon } from "./AddIcon";
+export { default as ProfileIcon } from "./ProfileIcon";
+export { default as HomeIcon } from "./HomeIcon";

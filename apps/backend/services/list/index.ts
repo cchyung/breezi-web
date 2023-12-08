@@ -41,7 +41,7 @@ export const ListService = (db: Database) => {
         ...(state && { state }),
       },
       {},
-      { skip: cursor, limit: pageSize, sort: { createdAt: -1 } }
+      { skip: cursor, limit: pageSize, sort: { updatedAt: -1 } }
     )
       .populate<PopulatedList>(populateList)
       .exec();
@@ -135,7 +135,8 @@ export const ListService = (db: Database) => {
             author,
           },
         },
-      }
+      },
+      { timestamps: false }
     )
       .populate<PopulatedList>(populateList)
       .exec();
@@ -160,7 +161,8 @@ export const ListService = (db: Database) => {
             _id: commentId,
           },
         },
-      }
+      },
+      { timestamps: false }
     )
       .populate<PopulatedList>(populateList)
       .exec();

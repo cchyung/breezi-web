@@ -66,11 +66,13 @@ export interface NexusGenInputs {
     about?: string | null; // String
     email?: string | null; // String
     imageURL?: string | null; // String
+    registered?: boolean | null; // Boolean
     username?: string | null; // String
   }
   UserInput: { // input type
     _id?: string | null; // String
     phone?: string | null; // String
+    registered?: boolean | null; // Boolean
     username?: string | null; // String
   }
 }
@@ -205,6 +207,7 @@ export interface NexusGenFieldTypes {
     followers: Array<NexusGenRootTypes['UserFollower'] | null> | null; // [UserFollower]
     imageURL: string | null; // String
     phone: string | null; // String
+    registered: boolean | null; // Boolean
     updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
     username: string | null; // String
   }
@@ -296,6 +299,7 @@ export interface NexusGenFieldTypeNames {
     followers: 'UserFollower'
     imageURL: 'String'
     phone: 'String'
+    registered: 'Boolean'
     updatedAt: 'DateTime'
     username: 'String'
   }

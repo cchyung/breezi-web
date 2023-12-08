@@ -38,6 +38,7 @@ export const User = objectType({
     t.string("about");
     t.string("email");
     t.string("imageURL");
+    t.boolean("registered");
     t.field("createdAt", { type: "DateTime" });
     t.field("updatedAt", { type: "DateTime" });
   },
@@ -49,6 +50,7 @@ export const UserInput = inputObjectType({
     t.string("_id");
     t.string("username");
     t.string("phone");
+    t.boolean("registered");
   },
 });
 
@@ -142,7 +144,10 @@ export const LoginUser = queryField("loginUser", {
         },
       });
     } else {
-      const user = await userService.getOrCreateUser({ phone, invitedBy });
+      const user = await userService.getOrCreateUser({
+        phone,
+        invitedBy,
+      });
       const authToken = authService.generateAuthToken(user._id.toString());
       return {
         authToken,
@@ -185,6 +190,7 @@ export const UpdateUserInput = inputObjectType({
     t.string("about");
     t.string("email");
     t.string("imageURL");
+    t.boolean("registered");
   },
 });
 

@@ -14,6 +14,7 @@ export const GET_USER = gql`
         user
       }
       followerCount
+      registered
     }
   }
 `;
@@ -33,7 +34,18 @@ export const LOGIN_USER = gql`
       authToken
       user {
         _id
+        username
+        imageURL
+        about
         phone
+        followers {
+          follower {
+            _id
+          }
+          user
+        }
+        registered
+        followerCount
       }
     }
   }
@@ -43,6 +55,17 @@ export const UPDATE_USER = gql`
   mutation UpdateUser($id: String!, $user: UpdateUserInput!) {
     updateUser(id: $id, user: $user) {
       _id
+      username
+      imageURL
+      about
+      phone
+      followers {
+        follower {
+          _id
+        }
+        user
+      }
+      followerCount
     }
   }
 `;

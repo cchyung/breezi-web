@@ -13,7 +13,7 @@ const DesktopNavigation = () => {
   return (
     <div className="w-full">
       <div className="w-full max-w-6xl mx-auto p-4 flex items-center justify-between">
-        <a href="/">
+        <a href="/list">
           <img
             src="/logo/wordmark.png"
             className="w-32"

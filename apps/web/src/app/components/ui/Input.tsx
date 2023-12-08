@@ -1,8 +1,8 @@
-import { PropsWithChildren } from "react";
+import { HTMLInputTypeAttribute, PropsWithChildren } from "react";
 
 interface InputProps {
   placeholder: string;
-  type: string;
+  type: HTMLInputTypeAttribute;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value?: any;
   className?: string;
@@ -14,7 +14,7 @@ const Input = ({
   onChange,
   children,
   value,
-  className
+  className,
 }: PropsWithChildren<InputProps>) => {
   return (
     <div className={`relative ${className}`}>

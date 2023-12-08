@@ -252,6 +252,7 @@ export type UpdateUserInput = {
   about?: InputMaybe<Scalars['String']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
   imageURL?: InputMaybe<Scalars['String']['input']>;
+  registered?: InputMaybe<Scalars['Boolean']['input']>;
   username?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -265,6 +266,7 @@ export type User = {
   followers?: Maybe<Array<Maybe<UserFollower>>>;
   imageURL?: Maybe<Scalars['String']['output']>;
   phone?: Maybe<Scalars['String']['output']>;
+  registered?: Maybe<Scalars['Boolean']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   username?: Maybe<Scalars['String']['output']>;
 };
@@ -279,6 +281,7 @@ export type UserFollower = {
 export type UserInput = {
   _id?: InputMaybe<Scalars['String']['input']>;
   phone?: InputMaybe<Scalars['String']['input']>;
+  registered?: InputMaybe<Scalars['Boolean']['input']>;
   username?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -374,7 +377,7 @@ export type GetUserQueryVariables = Exact<{
 }>;
 
 
-export type GetUserQuery = { __typename?: 'Query', user?: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null, about?: string | null, followerCount?: number | null, followers?: Array<{ __typename?: 'UserFollower', user?: string | null, follower?: { __typename?: 'User', _id: string } | null } | null> | null } | null };
+export type GetUserQuery = { __typename?: 'Query', user?: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null, about?: string | null, followerCount?: number | null, registered?: boolean | null, followers?: Array<{ __typename?: 'UserFollower', user?: string | null, follower?: { __typename?: 'User', _id: string } | null } | null> | null } | null };
 
 export type SendSmsVerificationTokenQueryVariables = Exact<{
   phone: Scalars['String']['input'];
@@ -389,7 +392,7 @@ export type LoginUserQueryVariables = Exact<{
 }>;
 
 
-export type LoginUserQuery = { __typename?: 'Query', loginUser?: { __typename?: 'LoginObject', authToken?: string | null, user?: { __typename?: 'User', _id: string, phone?: string | null } | null } | null };
+export type LoginUserQuery = { __typename?: 'Query', loginUser?: { __typename?: 'LoginObject', authToken?: string | null, user?: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null, about?: string | null, phone?: string | null, registered?: boolean | null, followerCount?: number | null, followers?: Array<{ __typename?: 'UserFollower', user?: string | null, follower?: { __typename?: 'User', _id: string } | null } | null> | null } | null } | null };
 
 export type UpdateUserMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -397,7 +400,7 @@ export type UpdateUserMutationVariables = Exact<{
 }>;
 
 
-export type UpdateUserMutation = { __typename?: 'Mutation', updateUser?: { __typename?: 'User', _id: string } | null };
+export type UpdateUserMutation = { __typename?: 'Mutation', updateUser?: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null, about?: string | null, phone?: string | null, followerCount?: number | null, followers?: Array<{ __typename?: 'UserFollower', user?: string | null, follower?: { __typename?: 'User', _id: string } | null } | null> | null } | null };
 
 export type FollowUserMutationVariables = Exact<{
   userId: Scalars['String']['input'];

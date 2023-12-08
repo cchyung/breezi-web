@@ -9,42 +9,34 @@ import { LOGIN_USER } from "@/lib/api/user/queries";
 import { UserContext } from "@/app/components/user";
 
 const Verify = () => {
-  const [userData, setUserData] = useState<Partial<UserData>>();
   const router = useRouter();
-  const [loginUser, { data }] = useLazyQuery<
-    LoginUserQuery,
-    LoginUserQueryVariables
-  >(LOGIN_USER);
-
-  const { user, updateUser } = useContext(UserContext);
-
-  useEffect(() => {
-    if (user) {
-      setUserData(user as Partial<UserData>);
-    }
-  }, [user]);
+  const [loginUser] = useLazyQuery<LoginUserQuery, LoginUserQueryVariables>(
+    LOGIN_USER
+  );
+  const { user, updateLocalUser } = useContext(UserContext);
 
   const submitVerificationCode = async (code: string) => {
     // call out to server
-    if (userData?.phone) {
+    if (user?.phone) {
       const response = await loginUser({
         variables: {
-          phone: userData.phone,
+          phone: user.phone,
           verificationCode: code,
         },
       });
 
-      updateUser({
+      // set information in local storage
+      updateLocalUser({
         _id: response.data?.loginUser?.user?._id,
         phone: response.data?.loginUser?.user?.phone as string,
         authToken: response.data?.loginUser?.authToken as string,
       });
 
-      if (userData.username) {
-        // otherwise, go to home page
+      // check if user is registered.  If not, show username screens
+      if (response.data?.loginUser?.user?.registered) {
         router.push("/user/" + response.data?.loginUser?.user?._id);
       } else {
-        // check if user is registered.  If not, show username screens
+        // otherwise, go to home page
         router.push("/login/onboarding/username");
       }
     }

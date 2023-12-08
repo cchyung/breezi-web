@@ -36,7 +36,7 @@ const UserPage = ({ params }: { params: { id: string } }) => {
     nextFetchPolicy: "cache-and-network",
   });
 
-  if (userLoading) return <p>Loading...</p>;
+  if (userLoading) return <></>;
   else if (!userData?.user) {
     return (
       <>

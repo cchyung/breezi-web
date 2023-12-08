@@ -10,13 +10,14 @@ const Login = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const welcome = searchParams.get("welcome") === "true";
+
   const [phone, setPhone] = useState<string>("");
   const [showWelcome, setShowWelcome] = useState<boolean>(welcome); // [1
-  const { updateUser } = useContext(UserContext);
+  const { updateLocalUser } = useContext(UserContext);
 
   const onSubmit = (phone: string) => {
     // write phone to user local storage
-    updateUser({ phone });
+    updateLocalUser({ phone });
     router.push(`/login/verify`);
   };
 
@@ -27,7 +28,7 @@ const Login = () => {
           <img src="/logo/logo.png" alt="logo" className="w-72" />
           <h1 className="mb-4">Login or Create an Account</h1>
           <Input
-            type="phone"
+            type="tel"
             placeholder="Phone Number"
             onChange={(e) => {
               setPhone(e.target.value);

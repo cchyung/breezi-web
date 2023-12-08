@@ -5,11 +5,13 @@ import {
   AddCommentToListMutationVariables,
   List,
 } from "@/lib/api";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Input } from "../../ui";
 import { UpArrowIcon } from "../../icon";
 import { useApolloClient } from "@apollo/client";
 import { ADD_COMMENT_TO_LIST } from "@/lib/api/list/queries";
+import { UserContext } from "../../user";
+import { useRouter } from "next/navigation";
 
 const ListCardComments = ({
   list,
@@ -19,11 +21,18 @@ const ListCardComments = ({
   refetchList: () => Promise<void>;
 }) => {
   const client = useApolloClient();
+  const { user } = useContext(UserContext);
+  const router = useRouter();
 
   const [expanded, setExpanded] = useState(false);
   const [commentText, setCommentText] = useState("");
 
   const submitComment = async (text: string) => {
+    if (!user) {
+      router.push("/login");
+      return;
+    }
+
     await client.mutate<
       AddCommentToListMutation,
       AddCommentToListMutationVariables
@@ -31,7 +40,7 @@ const ListCardComments = ({
       mutation: ADD_COMMENT_TO_LIST,
       variables: {
         listId: list._id,
-        text: commentText,
+        text: text,
       },
     });
     setCommentText("");

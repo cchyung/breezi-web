@@ -8,6 +8,7 @@ export interface User {
   email?: string;
   imageURL?: string;
   invitedBy?: string;
+  registered?: boolean;
 }
 
 export const UserSchema = new Schema(
@@ -26,6 +27,10 @@ export const UserSchema = new Schema(
     },
     invitedBy: {
       type: String,
+    },
+    registered: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: {} }

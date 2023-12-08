@@ -57,6 +57,7 @@ const CreateList = ({
   const [type, setType] = useState<ListType>(list?.type ?? ListType.Bulleted);
   const [coverImageURL, setCoverImageURL] = useState(list?.coverImageURL);
   const [coverImageFile, setCoverImageFile] = useState<File | null>(null);
+  const [submitLoading, setSubmitLoading] = useState(false);
   const [activeItemIndex, setActiveItemIndex] = useState(-1);
 
   const client = useApolloClient();
@@ -90,6 +91,7 @@ const CreateList = ({
   const onSubmit = useCallback(
     async (publish?: boolean) => {
       try {
+        setSubmitLoading(true);
         // check if cover imageURL was changed
         let coverImageURLInput = list?.coverImageURL;
 
@@ -154,6 +156,8 @@ const CreateList = ({
         }
       } catch (error) {
         console.log(error);
+      } finally {
+        setSubmitLoading(false);
       }
     },
     [title, description, items, coverImageURL, type]
@@ -214,6 +218,7 @@ const CreateList = ({
               size="sm"
               color="primary"
               disabled={
+                submitLoading ||
                 !title ||
                 title.length == 0 ||
                 !items ||
@@ -245,8 +250,8 @@ const CreateList = ({
             </div>
           ) : (
             <button onClick={() => fileInputRef.current?.click()}>
-              <div className="flex items-center gap-2 px-6 text-gray-400">
-                <ImageIcon /> Add Cover Image (Optional)
+              <div className="flex items-center gap-2 px-6 text-gray-400 text-[14px]">
+                <ImageIcon /> Add Cover Image
               </div>
             </button>
           )}
@@ -262,7 +267,7 @@ const CreateList = ({
           />
         </div>
 
-        <div className="p-6 flex flex-col gap-2">
+        <div className="p-6 pt-4 flex flex-col gap-2">
           <input
             placeholder="Title your list"
             className="font-bold text-3xl"

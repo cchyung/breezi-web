@@ -130,6 +130,7 @@ input UpdateUserInput {
   about: String
   email: String
   imageURL: String
+  registered: Boolean
   username: String
 }
 
@@ -142,6 +143,7 @@ type User {
   followers: [UserFollower]
   imageURL: String
   phone: String
+  registered: Boolean
   updatedAt: DateTime
   username: String
 }
@@ -155,5 +157,6 @@ type UserFollower {
 input UserInput {
   _id: String
   phone: String
+  registered: Boolean
   username: String
 }

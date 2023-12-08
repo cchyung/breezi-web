@@ -4,21 +4,20 @@ import {
   getUserFromLocalStorage,
   writeUserToLocalStorage,
 } from "@/app/lib/auth";
-import { User } from "@/lib/api";
 import { PropsWithChildren, createContext, useEffect, useState } from "react";
 
 interface UserContext {
-  user: Partial<User> | null;
-  updateUser: (user: Partial<UserData>) => void;
+  user: UserData | null;
+  updateLocalUser: (user: UserData) => void;
 }
 
 export const UserContext = createContext<UserContext>({
   user: null,
-  updateUser: () => {},
+  updateLocalUser: () => {},
 });
 
 const UserProvider = ({ children }: PropsWithChildren) => {
-  const [user, setUser] = useState<Partial<User> | null>(null);
+  const [user, setUser] = useState<UserData | null>(null);
 
   useEffect(() => {
     const userDataFromLocalStorage = getUserFromLocalStorage();
@@ -28,13 +27,13 @@ const UserProvider = ({ children }: PropsWithChildren) => {
     }
   }, []);
 
-  const updateUser = (_user: Partial<UserData>) => {
+  const updateLocalUser = (_user: UserData) => {
     setUser(_user);
     writeUserToLocalStorage(_user);
   };
 
   return (
-    <UserContext.Provider value={{ user, updateUser }}>
+    <UserContext.Provider value={{ user, updateLocalUser }}>
       {children}
     </UserContext.Provider>
   );
