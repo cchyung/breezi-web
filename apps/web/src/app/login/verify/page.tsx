@@ -30,6 +30,7 @@ const Verify = () => {
         _id: response.data?.loginUser?.user?._id,
         phone: response.data?.loginUser?.user?.phone as string,
         authToken: response.data?.loginUser?.authToken as string,
+        imageURL: response.data?.loginUser?.user?.imageURL,
       });
 
       // check if user is registered.  If not, show username screens

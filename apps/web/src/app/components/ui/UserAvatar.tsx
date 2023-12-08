@@ -4,7 +4,7 @@ const UserAvatar = ({
   user,
   size = "md",
 }: {
-  user: User;
+  user: Pick<User, "imageURL">;
   size: "sm" | "md" | "lg";
 }) => {
   const sizeStyles = {
@@ -19,7 +19,7 @@ const UserAvatar = ({
     <>
       {user.imageURL ? (
         <img
-          className={`rounded-full border-white shadow-lg ${sizeStyle}`}
+          className={`rounded-full border-white shadow-lg object-cover aspect-square ${sizeStyle}`}
           src={user.imageURL}
           alt="user profile"
         ></img>

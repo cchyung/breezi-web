@@ -12,7 +12,7 @@ const Login = () => {
   const welcome = searchParams.get("welcome") === "true";
 
   const [phone, setPhone] = useState<string>("");
-  const [showWelcome, setShowWelcome] = useState<boolean>(welcome); // [1
+  const [showWelcome, setShowWelcome] = useState<boolean>(welcome);
   const { updateLocalUser } = useContext(UserContext);
 
   const onSubmit = (phone: string) => {
