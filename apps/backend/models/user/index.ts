@@ -7,6 +7,7 @@ export interface User {
   about?: string;
   email?: string;
   imageURL?: string;
+  invitedBy?: string;
 }
 
 export const UserSchema = new Schema(
@@ -21,6 +22,9 @@ export const UserSchema = new Schema(
       type: String,
     },
     imageURL: {
+      type: String,
+    },
+    invitedBy: {
       type: String,
     },
   },

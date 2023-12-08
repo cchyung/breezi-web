@@ -1,13 +1,17 @@
 "use client";
 
 import { Button, Input } from "@/app/components/ui";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useContext, useState } from "react";
 import { UserContext } from "../components/user";
+import WelcomeScreen from "./components/WelcomeScreen";
 
 const Login = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const welcome = searchParams.get("welcome") === "true";
   const [phone, setPhone] = useState<string>("");
+  const [showWelcome, setShowWelcome] = useState<boolean>(welcome); // [1
   const { updateUser } = useContext(UserContext);
 
   const onSubmit = (phone: string) => {
@@ -42,6 +46,14 @@ const Login = () => {
           </a>
         </div>
       </div>
+
+      {showWelcome && (
+        <WelcomeScreen
+          onEnter={() => {
+            setShowWelcome(false);
+          }}
+        />
+      )}
     </>
   );
 };

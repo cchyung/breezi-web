@@ -23,10 +23,7 @@ export default function RootLayout({
       <UserProvider>
         <ApolloWrapper>
           <body className={`${inter.className}`}>
-            <DesktopNavigation />
             <CreateListModalProvider>{children}</CreateListModalProvider>
-
-            <MobileNavigation />
           </body>
         </ApolloWrapper>
       </UserProvider>

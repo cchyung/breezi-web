@@ -33,7 +33,7 @@ const MobileNavigation = () => {
             router.push("/list/create");
           }}
         >
-          <AddIcon className="text-white" />
+          <AddIcon className="text-white" />  
         </button>
 
         <button

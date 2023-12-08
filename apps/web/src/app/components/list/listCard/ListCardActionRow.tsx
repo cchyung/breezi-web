@@ -44,7 +44,12 @@ const ListCardActionRow = ({
 
   const onShareButtonClick = () => {
     const listURL =
-      location.protocol + "//" + window.location.host + "/list/" + listId;
+      location.protocol +
+      "//" +
+      window.location.host +
+      "/list/" +
+      listId +
+      "?shared=true";
 
     // check if native share is available
     if (navigator.share) {

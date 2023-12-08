@@ -18,7 +18,7 @@ const authService = AuthService();
 
 export const UserService = (db: Database) => {
   /**
-   * Get a user by id or address
+   * Get a user by id
    * @param options
    * @returns
    */
@@ -64,14 +64,15 @@ export const UserService = (db: Database) => {
     about,
     email,
     phone,
-
     imageURL,
+    invitedBy,
   }: {
     phone: string;
     username?: string;
     about?: string;
     email?: string;
     imageURL?: string;
+    invitedBy?: string | null;
   }) {
     const user = new db.User({
       username,
@@ -79,6 +80,7 @@ export const UserService = (db: Database) => {
       email,
       phone,
       imageURL,
+      invitedBy,
     });
 
     return user.save();
@@ -89,13 +91,19 @@ export const UserService = (db: Database) => {
    * @param options
    * @returns User object
    */
-  async function getOrCreateUser({ phone }: { phone: string }) {
+  async function getOrCreateUser({
+    phone,
+    invitedBy,
+  }: {
+    phone: string;
+    invitedBy?: string | null;
+  }) {
     const existingUser = await getUser({ phone });
     if (existingUser) {
       return existingUser;
     }
 
-    return await createUser({ phone });
+    return await createUser({ phone, invitedBy });
   }
 
   /**
@@ -105,45 +113,27 @@ export const UserService = (db: Database) => {
    */
   async function updateUser({
     id,
-    address,
-    conversationToken,
     username,
     about,
     email,
-    phone,
     imageURL,
-    receiveNotifications,
-    registered,
-    isBrowserStreamer,
   }: {
     id: string | Schema.Types.ObjectId;
-    address?: string;
     username?: string;
     about?: string;
     email?: string;
-    phone?: string;
-    receiveNotifications?: boolean;
     imageURL?: string;
-    registered?: boolean;
-    conversationToken?: string;
-    isBrowserStreamer?: boolean;
   }) {
-    if (!id && !address) {
-      throw new Error("Must provide either id or address");
+    if (!id) {
+      throw new Error("Must provide uesr id");
     }
     // Address is immutable
     const properties = {
       $set: {
-        address,
         username,
         about,
         email,
-        phone,
-        receiveNotifications,
         imageURL,
-        registered,
-        conversationToken,
-        isBrowserStreamer,
       },
     };
     const options = { new: true };

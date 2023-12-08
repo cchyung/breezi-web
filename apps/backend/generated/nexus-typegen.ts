@@ -359,6 +359,7 @@ export interface NexusGenArgTypes {
       state?: NexusGenEnums['ListState'] | null; // ListState
     }
     loginUser: { // args
+      invitedBy?: string | null; // String
       phone: string; // String!
       verificationCode: string; // String!
     }

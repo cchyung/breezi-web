@@ -106,7 +106,7 @@ type Query {
   """
   Logs in the user based on the supplied number and verification code.  If the user doesn't exist, a new user will be created
   """
-  loginUser(phone: String!, verificationCode: String!): LoginObject
+  loginUser(invitedBy: String, phone: String!, verificationCode: String!): LoginObject
   sendSMSVerificationToken(phone: String!): Ok
   uploadListCoverURL: SignedURL
   uploadUserProfileImageURL: SignedURL

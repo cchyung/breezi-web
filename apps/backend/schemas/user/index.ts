@@ -128,9 +128,10 @@ export const LoginUser = queryField("loginUser", {
     "Logs in the user based on the supplied number and verification code.  If the user doesn't exist, a new user will be created",
   args: {
     phone: nonNull(stringArg()),
+    invitedBy: stringArg(),
     verificationCode: nonNull(stringArg()),
   },
-  resolve: async (_, { phone, verificationCode }, __) => {
+  resolve: async (_, { phone, verificationCode, invitedBy }, __) => {
     let valid: boolean = false;
     ({ valid } = await verifyTwilioVerificationToken(phone, verificationCode));
 
@@ -141,7 +142,7 @@ export const LoginUser = queryField("loginUser", {
         },
       });
     } else {
-      const user = await userService.getOrCreateUser({ phone });
+      const user = await userService.getOrCreateUser({ phone, invitedBy });
       const authToken = authService.generateAuthToken(user._id.toString());
       return {
         authToken,

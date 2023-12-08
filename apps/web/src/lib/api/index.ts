@@ -210,6 +210,7 @@ export type QueryListsArgs = {
 
 
 export type QueryLoginUserArgs = {
+  invitedBy?: InputMaybe<Scalars['String']['input']>;
   phone: Scalars['String']['input'];
   verificationCode: Scalars['String']['input'];
 };
