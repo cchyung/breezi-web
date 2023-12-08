@@ -19,7 +19,7 @@ const ListPage = ({ params }: { params: { listId: string } }) => {
   if (!loading && data?.list) {
     return (
       <div className="w-full flex justify-center px-4">
-        <div className="w-96">
+        <div className="w-full md:w-[412px]">
           <ListCard list={data.list} refetch={refetch} />
         </div>
       </div>

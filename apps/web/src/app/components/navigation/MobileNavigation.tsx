@@ -3,7 +3,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import { AddIcon, HomeIcon, ProfileIcon } from "../icon";
 
-import { UserContext } from "../user";
+import { UserContext } from "../user/UserProvider";
 import { useContext } from "react";
 
 const MobileNavigation = () => {

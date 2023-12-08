@@ -5,7 +5,7 @@ export type UserData = Partial<User> & {
   authToken?: string;
 };
 
-export const writeUserToLocalStorage = (user: Partial<UserData>) => {
+export const writeUserToLocalStorage = (user: Partial<UserData> | null) => {
   writeToLocalStorage("user", JSON.stringify(user));
 };
 

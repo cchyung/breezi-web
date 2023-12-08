@@ -8,7 +8,7 @@ import { PropsWithChildren, createContext, useEffect, useState } from "react";
 
 interface UserContext {
   user: UserData | null;
-  updateLocalUser: (user: UserData) => void;
+  updateLocalUser: (user: UserData | null) => void;
 }
 
 export const UserContext = createContext<UserContext>({
@@ -16,7 +16,7 @@ export const UserContext = createContext<UserContext>({
   updateLocalUser: () => {},
 });
 
-const UserProvider = ({ children }: PropsWithChildren) => {
+export const UserProvider = ({ children }: PropsWithChildren) => {
   const [user, setUser] = useState<UserData | null>(null);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const UserProvider = ({ children }: PropsWithChildren) => {
     }
   }, []);
 
-  const updateLocalUser = (_user: UserData) => {
+  const updateLocalUser = (_user: UserData | null) => {
     setUser(_user);
     writeUserToLocalStorage(_user);
   };
@@ -38,5 +38,3 @@ const UserProvider = ({ children }: PropsWithChildren) => {
     </UserContext.Provider>
   );
 };
-
-export default UserProvider;

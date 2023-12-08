@@ -3,12 +3,15 @@ import { Menu } from "@headlessui/react";
 import { UserAvatar } from "../ui";
 import { User } from "@/lib/api";
 import { useRouter } from "next/navigation";
+import { useContext } from "react";
+import { UserContext } from "@/app/components/user/UserProvider";
 
 const UserAvatarDropdown = ({ user }: { user: User }) => {
   const router = useRouter();
+  const { updateLocalUser } = useContext(UserContext);
 
   const logout = () => {
-    localStorage.removeItem("user");
+    updateLocalUser(null);
     router.push("/list");
   };
 

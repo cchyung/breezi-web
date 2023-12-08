@@ -10,7 +10,7 @@ import { Button } from "@/app/components/ui";
 import { useMutation } from "@apollo/client";
 import { FOLLOW_USER, UNFOLLOW_USER } from "@/lib/api/user/queries";
 import { useContext, useState } from "react";
-import { UserContext } from ".";
+import { UserContext } from "@/app/components/user/UserProvider";
 
 const FollowButton = ({
   user,

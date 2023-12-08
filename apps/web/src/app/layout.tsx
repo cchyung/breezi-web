@@ -1,11 +1,9 @@
 import { ApolloWrapper } from "@/lib/api/apolloProvider";
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter, Poppins } from "next/font/google";
+import { Inter } from "next/font/google";
 import { CreateListModalProvider } from "./components/list/create/CreateListModalProvider";
-import MobileNavigation from "./components/navigation/MobileNavigation";
-import DesktopNavigation from "./components/navigation/DesktopNavigation";
-import UserProvider from "./components/user/UserProvider";
+import { UserProvider } from "@/app/components/user/UserProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 

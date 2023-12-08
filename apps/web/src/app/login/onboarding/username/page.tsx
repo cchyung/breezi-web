@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Input } from "@/app/components/ui";
-import { UserContext } from "@/app/components/user";
+import { UserContext } from "@/app/components/user/UserProvider";
 import { UpdateUserMutation, UpdateUserMutationVariables } from "@/lib/api";
 import { UPDATE_USER } from "@/lib/api/user/queries";
 import { useMutation } from "@apollo/client";

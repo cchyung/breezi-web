@@ -2,8 +2,6 @@
 import {
   PropsWithChildren,
   createContext,
-  useCallback,
-  useEffect,
   useState,
 } from "react";
 import CreateListModal from "./CreateListModal";

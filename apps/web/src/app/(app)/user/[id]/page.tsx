@@ -1,6 +1,6 @@
 "use client";
 
-import { CreateListButton } from "@/app/components/list";
+import { CreateListButton } from "@/app/components/list/create";
 import UserAvatar from "@/app/components/ui/UserAvatar";
 import { FollowButton, UserProfileContent } from "@/app/components/user";
 import {

@@ -1,12 +1,11 @@
 "use client";
 import CodeInput from "./components/CodeInput";
-import { useContext, useEffect, useState } from "react";
-import { UserData } from "@/app/lib/auth";
+import { useContext } from "react";
 import { useRouter } from "next/navigation";
 import { useLazyQuery } from "@apollo/client";
 import { LoginUserQuery, LoginUserQueryVariables } from "@/lib/api";
 import { LOGIN_USER } from "@/lib/api/user/queries";
-import { UserContext } from "@/app/components/user";
+import { UserContext } from "@/app/components/user/UserProvider";
 
 const Verify = () => {
   const router = useRouter();

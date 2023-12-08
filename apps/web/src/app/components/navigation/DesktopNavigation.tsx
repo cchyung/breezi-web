@@ -1,9 +1,8 @@
 "use client";
-import UserAvatar from "../ui/UserAvatar";
 import { Button } from "../ui";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
-import { UserContext } from "../user";
+import { UserContext } from "../user/UserProvider";
 import UserAvatarDropdown from "./UserAvatarDropdown";
 
 const DesktopNavigation = () => {

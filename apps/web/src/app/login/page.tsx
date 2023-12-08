@@ -3,7 +3,7 @@
 import { Button, Input } from "@/app/components/ui";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useContext, useState } from "react";
-import { UserContext } from "../components/user";
+import { UserContext } from "@/app/components/user/UserProvider";
 import WelcomeScreen from "./components/WelcomeScreen";
 
 const Login = () => {

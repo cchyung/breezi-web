@@ -8,7 +8,7 @@ import {
 } from "@/lib/api";
 import { LIKE_LIST, UNLIKE_LIST } from "@/lib/api/list/queries";
 import { useApolloClient } from "@apollo/client";
-import { UserContext } from "../../user";
+import { UserContext } from "@/app/components/user/UserProvider";
 import { useContext } from "react";
 import { useRouter } from "next/navigation";
 
