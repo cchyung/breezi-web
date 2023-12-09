@@ -29,7 +29,7 @@ export const ListService = (db: Database) => {
 
   const getLists = async ({
     cursor = 0,
-    pageSize = 10,
+    pageSize = 20,
     state,
   }: {
     cursor?: number;
