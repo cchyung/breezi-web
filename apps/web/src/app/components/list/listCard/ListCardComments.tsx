@@ -80,7 +80,13 @@ const ListCardComments = ({
           onChange={({ target: { value } }) => {
             setCommentText(value);
           }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              submitComment(commentText);
+            }
+          }}
           value={commentText}
+          inputClassName="pr-14"
         >
           <div
             className={`absolute right-0 top-0 h-full p-2 transition-opacity ${
