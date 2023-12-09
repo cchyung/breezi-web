@@ -19,7 +19,7 @@ const UserAvatar = ({
     <>
       {user.imageURL ? (
         <img
-          className={`rounded-full border-white shadow-lg object-cover aspect-square ${sizeStyle}`}
+          className={`rounded-full border-white shadow-lg object-cover ${sizeStyle}`}
           src={user.imageURL}
           alt="user profile"
         ></img>
