@@ -10,6 +10,7 @@ import { UserContext } from "../../user/UserProvider";
 import ListCardOptions from "./ListCardOptions";
 import { formatTime } from "@/app/lib/utils/formatting";
 import ListCardComments from "./ListCardComments";
+import { Username } from "@/app/components/user";
 
 const ListCard = ({
   list,
@@ -48,7 +49,7 @@ const ListCard = ({
       <div className="flex flex-col gap-2">
         <div className="flex flex-row gap-1 items-center mb-2">
           <UserAvatar user={list.author} size="sm" />
-          <p className="font-bold ml-2">@{list.author.username}</p>
+          <Username user={list.author} className={"ml-2"} />
           <p className="text-gray-400">·</p>
           <p className="text-gray-400">
             {list.createdAt !== list.updatedAt

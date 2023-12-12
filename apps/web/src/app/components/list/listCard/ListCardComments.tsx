@@ -12,6 +12,7 @@ import { useApolloClient } from "@apollo/client";
 import { ADD_COMMENT_TO_LIST } from "@/lib/api/list/queries";
 import { UserContext } from "@/app/components/user/UserProvider";
 import { useRouter } from "next/navigation";
+import { Username } from "../../user";
 
 const ListCardComments = ({
   list,
@@ -57,7 +58,7 @@ const ListCardComments = ({
         ?.slice(0, expanded ? list.comments.length : 5)
         .map((comment) => (
           <div key={comment._id} className="flex flex-row gap-1">
-            <p className="font-bold">@{comment.author.username}</p>
+            <Username user={list.author} />
             <p>{comment.text}</p>
           </div>
         ))}
