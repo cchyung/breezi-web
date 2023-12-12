@@ -260,17 +260,6 @@ export const ListService = (db: Database) => {
         },
       },
     ]).exec();
-    console.log(
-      listFeed.map((list) => ({
-        title: list.title,
-        likes: list.likes,
-        followers: list.followers,
-        score: list.totalScore,
-        followerScore: list.followerScore,
-        likesScore: list.likesScore,
-      }))
-    );
-
     const populatedLists = await db.List.populate<PopulatedList>(
       listFeed,
       populateList
