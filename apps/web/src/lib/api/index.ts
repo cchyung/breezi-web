@@ -172,6 +172,7 @@ export type Ok = {
 export type Query = {
   __typename?: 'Query';
   list?: Maybe<List>;
+  listFeed?: Maybe<Array<Maybe<List>>>;
   listLikeCount?: Maybe<Scalars['Int']['output']>;
   listLikes?: Maybe<Array<Maybe<ListLike>>>;
   lists?: Maybe<Array<Maybe<List>>>;
@@ -189,6 +190,12 @@ export type Query = {
 
 export type QueryListArgs = {
   id: Scalars['String']['input'];
+};
+
+
+export type QueryListFeedArgs = {
+  cursor?: Scalars['Int']['input'];
+  pageSize?: Scalars['Int']['input'];
 };
 
 
@@ -302,6 +309,14 @@ export type GetListsQueryVariables = Exact<{
 
 
 export type GetListsQuery = { __typename?: 'Query', lists?: Array<{ __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null> } | null> | null };
+
+export type GetListFeedQueryVariables = Exact<{
+  cursor?: InputMaybe<Scalars['Int']['input']>;
+  pageSize?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type GetListFeedQuery = { __typename?: 'Query', listFeed?: Array<{ __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null> } | null> | null };
 
 export type GetUserListsQueryVariables = Exact<{
   userId?: InputMaybe<Scalars['String']['input']>;

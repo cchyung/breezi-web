@@ -199,6 +199,29 @@ export const GetLists = queryField("lists", {
   },
 });
 
+export const GetListFeed = queryField("listFeed", {
+  type: list(List),
+  args: {
+    cursor: nonNull(intArg({ default: 0 })),
+    pageSize: nonNull(intArg({ default: 20 })),
+  },
+  resolve: async (_, { cursor, pageSize }, ctx) => {
+    if (!ctx.user) {
+      return listService.getLists({
+        state: ListStateEnum.published,
+        cursor: cursor,
+        pageSize: pageSize,
+      });
+    } else {
+      return listService.getListFeed({
+        userId: ctx.user._id,
+        cursor: cursor,
+        pageSize: pageSize,
+      });
+    }
+  },
+});
+
 export const GetUserLists = queryField("userLists", {
   type: list(List),
   args: {

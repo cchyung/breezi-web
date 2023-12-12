@@ -14,10 +14,10 @@ export interface PopulatedUserFollower extends UserFollower {
 export const UserFollowerSchema = new Schema(
   {
     user: {
-      type: Schema.Types.ObjectId,
+      type: String,
     },
     follower: {
-      type: Schema.Types.ObjectId,
+      type: String,
       ref: "User",
     },
   },

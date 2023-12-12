@@ -1,6 +1,6 @@
 import { Database } from "@/models";
 import { ListState, ListType, PopulatedList } from "@/models/list";
-import { Schema } from "mongoose";
+import { Schema, ObjectId } from "mongoose";
 
 export interface ListItemInput {
   text: string;
@@ -170,6 +170,114 @@ export const ListService = (db: Database) => {
     return updatedList;
   };
 
+  const getListFeed = async ({
+    userId,
+    cursor = 0,
+    pageSize = 15,
+  }: {
+    userId: string | ObjectId;
+    cursor: number;
+    pageSize: number;
+  }) => {
+    const listFeed = await db.List.aggregate([
+      {
+        $sort: { createdAt: -1 },
+      },
+      { $skip: cursor },
+      {
+        $limit: pageSize,
+      },
+      {
+        $lookup: {
+          from: "userfollowers",
+          let: { authorId: "$author" },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $and: [
+                    { $eq: ["$user", "$$authorId"] },
+                    {
+                      $eq: [
+                        { $toObjectId: "$follower" },
+                        { $toObjectId: userId },
+                      ],
+                    },
+                  ],
+                },
+              },
+            },
+          ],
+          as: "followers",
+        },
+      },
+      {
+        $lookup: {
+          from: "listlikes",
+          let: { listId: "$_id" },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $eq: ["$$listId", { $toObjectId: "$list" }],
+                },
+              },
+            },
+          ],
+          as: "likes",
+        },
+      },
+      {
+        $addFields: {
+          followerScore: {
+            $cond: {
+              if: {
+                $gt: [{ $size: "$followers" }, 0],
+              },
+              then: 3,
+              else: 0,
+            },
+          },
+          likesScore: {
+            $cond: {
+              if: { $gte: [{ $size: "$likes" }, 2] },
+              then: 2,
+              else: 0,
+            },
+          },
+        },
+      },
+      {
+        $addFields: {
+          totalScore: { $add: ["$followerScore", "$likesScore"] },
+        },
+      },
+      {
+        $sort: {
+          totalScore: -1,
+          updatedAt: -1,
+          createdAt: -1,
+        },
+      },
+    ]).exec();
+    console.log(
+      listFeed.map((list) => ({
+        title: list.title,
+        likes: list.likes,
+        followers: list.followers,
+        score: list.totalScore,
+        followerScore: list.followerScore,
+        likesScore: list.likesScore,
+      }))
+    );
+
+    const populatedLists = await db.List.populate<PopulatedList>(
+      listFeed,
+      populateList
+    );
+    return populatedLists;
+  };
+
   return {
     getList,
     getLists,
@@ -179,5 +287,6 @@ export const ListService = (db: Database) => {
     deleteList,
     addListComment,
     removeListComment,
+    getListFeed,
   };
 };

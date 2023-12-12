@@ -182,6 +182,7 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     list: NexusGenRootTypes['List'] | null; // List
+    listFeed: Array<NexusGenRootTypes['List'] | null> | null; // [List]
     listLikeCount: number | null; // Int
     listLikes: Array<NexusGenRootTypes['ListLike'] | null> | null; // [ListLike]
     lists: Array<NexusGenRootTypes['List'] | null> | null; // [List]
@@ -274,6 +275,7 @@ export interface NexusGenFieldTypeNames {
   }
   Query: { // field return type name
     list: 'List'
+    listFeed: 'List'
     listLikeCount: 'Int'
     listLikes: 'ListLike'
     lists: 'List'
@@ -350,6 +352,10 @@ export interface NexusGenArgTypes {
   Query: {
     list: { // args
       id: string; // String!
+    }
+    listFeed: { // args
+      cursor: number; // Int!
+      pageSize: number; // Int!
     }
     listLikeCount: { // args
       listId: string; // String!

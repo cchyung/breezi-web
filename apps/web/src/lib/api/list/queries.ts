@@ -19,6 +19,15 @@ export const GET_LISTS = gql`
   ${listFragment}
 `;
 
+export const GET_LIST_FEED = gql`
+  query GetListFeed($cursor: Int, $pageSize: Int) {
+    listFeed(cursor: $cursor, pageSize: $pageSize) {
+      ...list
+    }
+  }
+  ${listFragment}
+`;
+
 export const GET_USER_LISTS = gql`
   query GetUserLists($userId: String) {
     userLists(userId: $userId) {

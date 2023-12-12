@@ -99,6 +99,7 @@ type Ok {
 
 type Query {
   list(id: String!): List
+  listFeed(cursor: Int! = 0, pageSize: Int! = 20): [List]
   listLikeCount(listId: String!): Int
   listLikes(listId: String!): [ListLike]
   lists(cursor: Int, pageSize: Int, state: ListState): [List]
