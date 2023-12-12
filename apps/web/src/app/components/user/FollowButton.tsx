@@ -9,7 +9,7 @@ import {
 import { Button } from "@/app/components/ui";
 import { useMutation } from "@apollo/client";
 import { FOLLOW_USER, UNFOLLOW_USER } from "@/lib/api/user/queries";
-import { useContext, useState } from "react";
+import { useCallback, useContext } from "react";
 import { UserContext } from "@/app/components/user/UserProvider";
 
 const FollowButton = ({
@@ -43,7 +43,7 @@ const FollowButton = ({
         },
       });
     } else {
-      followUserMutation({
+      await followUserMutation({
         variables: {
           userId: user._id,
         },
@@ -53,13 +53,13 @@ const FollowButton = ({
     refetchUser();
   };
 
-  const loggedInUserIsFollowing = () => {
+  const loggedInUserIsFollowing = useCallback(() => {
     if (!loggedInUser) return false;
 
     return user.followers?.some(
       (follower) => follower?.follower?._id === loggedInUser!._id
     );
-  };
+  }, [user, loggedInUser]);
 
   return (
     <Button
