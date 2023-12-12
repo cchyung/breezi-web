@@ -1,29 +1,55 @@
-"use client";
-
 import { ListCard } from "@/app/components/list";
+import StatefulListCard from "@/app/components/list/listCard/StatefulListCard";
 import { GetListQuery, GetListQueryVariables } from "@/lib/api";
+import { getClient } from "@/lib/api/client";
 import { GET_LIST } from "@/lib/api/list/queries";
 import { useQuery } from "@apollo/client";
+import { Metadata, ResolvingMetadata } from "next";
+import { notFound } from "next/navigation";
 
-const ListPage = ({ params }: { params: { listId: string } }) => {
-  const { loading, data, refetch } = useQuery<
-    GetListQuery,
-    GetListQueryVariables
-  >(GET_LIST, {
-    variables: {
-      id: params.listId,
-    },
-    nextFetchPolicy: "network-only",
+const getList = async (listId: string) => {
+  "use server";
+  const client = getClient();
+  const listQuery = await client.query<GetListQuery, GetListQueryVariables>({
+    query: GET_LIST,
+    variables: { id: listId },
   });
+  return listQuery.data.list;
+};
 
-  if (!loading && data?.list) {
-    return (
-      <div className="w-full flex justify-center px-4">
-        <div className="w-full md:w-[412px]">
-          <ListCard list={data.list} refetch={refetch} />
-        </div>
-      </div>
-    );
+interface Props {
+  params: {
+    listId: string;
+  };
+  searchParams: URLSearchParams;
+}
+export const generateMetadata = async ({
+  params,
+}: Props): Promise<Metadata> => {
+  const list = await getList(params.listId);
+  return {
+    title: list?.title,
+    description: list?.description,
+    openGraph: {
+      images: [...(list?.coverImageURL ? [list?.coverImageURL] : [])],
+    },
+  };
+};
+
+const ListPage = async ({ params }: { params: { listId: string } }) => {
+  let list = await getList(params.listId);
+
+  if (!list) {
+    // 404
+    return notFound();
   }
+
+  return (
+    <div className="w-full flex justify-center px-4">
+      <div className="w-full md:w-[412px]">
+        <StatefulListCard list={list} />
+      </div>
+    </div>
+  );
 };
 export default ListPage;

@@ -25,6 +25,10 @@ const Username = () => {
         return;
       }
       // validate username
+      if (username.length === 0) {
+        return;
+      }
+
       // update user's username in backend and update local storage
       await updateUser({
         variables: {
@@ -66,6 +70,7 @@ const Username = () => {
             className="w-full"
           />
           <Button
+            disabled={username.length === 0}
             onClick={() => {
               onSubmit(username);
             }}
