@@ -8,6 +8,7 @@ const Button = ({
   color = "primary",
   disabled = false,
   className = "",
+  loading = false,
 }: {
   children: React.ReactNode;
   onClick?: MouseEventHandler<HTMLButtonElement>;
@@ -16,6 +17,7 @@ const Button = ({
   color?: "primary" | "gray" | "black";
   disabled?: boolean;
   className?: string;
+  loading?: boolean;
 }) => {
   const sizeStyles = {
     sm: "py-2 px-4 text-sm",
@@ -28,7 +30,7 @@ const Button = ({
   const colorStyles = {
     primary: "bg-primary text-white disabled:bg-gray-300 disabled:text-white",
     gray: "bg-gray-400 text-white disabled:bg-gray-300 disabled:text-white",
-    black: "bg-black text-white disabled:bg-gray-300 disabled:text-white"
+    black: "bg-black text-white disabled:bg-gray-300 disabled:text-white",
   };
 
   const colorStyle = colorStyles[color];
@@ -39,7 +41,7 @@ const Button = ({
         transition-colors`}
         onClick={onClick}
         onMouseOver={onMouseOver}
-        disabled={disabled}
+        disabled={loading || disabled}
       >
         {children}
       </button>

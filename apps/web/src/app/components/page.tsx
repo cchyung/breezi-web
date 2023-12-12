@@ -1,4 +1,4 @@
-import { Card } from "@/app/components/ui";
+import { Card, Spinner } from "@/app/components/ui";
 import { List } from "@/lib/api";
 import ListCard from "./list/listCard/ListCard";
 import { CreateList } from "./list";
@@ -39,10 +39,8 @@ const Components = () => {
       </Card>
 
       <ListCard list={demoList} />
-      
-      <div className="w-full">
-        <CreateList create={true} />
-      </div>
+
+      <Spinner />
     </div>
   );
 };
