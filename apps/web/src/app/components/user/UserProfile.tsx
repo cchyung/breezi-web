@@ -1,7 +1,11 @@
 "use client";
 import { CreateListButton } from "@/app/components/list/create";
 import UserAvatar from "@/app/components/ui/UserAvatar";
-import { FollowButton, UserProfileContent } from "@/app/components/user";
+import {
+  FollowButton,
+  UserContext,
+  UserProfileContent,
+} from "@/app/components/user";
 import {
   GetUserListsQuery,
   GetUserListsQueryVariables,
@@ -13,10 +17,12 @@ import {
 import { GET_USER_LISTS } from "@/lib/api/list/queries";
 import { GET_USER } from "@/lib/api/user/queries";
 import { useQuery } from "@apollo/client";
-import { useCallback, useState } from "react";
+import { useCallback, useContext, useState } from "react";
+import { ListGallery } from "../list";
 
 const UserProfile = ({ initialUser }: { initialUser: User }) => {
   const [user, setUser] = useState<User>(initialUser);
+  const { user: loggedInUser } = useContext(UserContext);
 
   const { loading, data, refetch } = useQuery<
     GetUserListsQuery,
@@ -54,7 +60,9 @@ const UserProfile = ({ initialUser }: { initialUser: User }) => {
 
         {user.about && <p className="caption">{user.about}</p>}
 
-        <FollowButton user={user} refetchUser={refetchUser} />
+        {loggedInUser?._id !== user._id && (
+          <FollowButton user={user} refetchUser={refetchUser} />
+        )}
 
         <div className="flex flex-row items-center justify-between">
           <div className="flex flex-col gap-2 items-center px-4">
@@ -74,8 +82,15 @@ const UserProfile = ({ initialUser }: { initialUser: User }) => {
             <p className="text-gray-400 caption">Likes</p>
           </div>
         </div>
+
         {!loading && data && (
-          <UserProfileContent lists={data?.userLists as List[]} />
+          <>
+            {loggedInUser?._id === user._id ? (
+              <UserProfileContent lists={data.userLists as List[]} />
+            ) : (
+              <ListGallery initialLists={data.userLists as List[]} />
+            )}
+          </>
         )}
       </div>
 
