@@ -28,8 +28,8 @@ export const generateMetadata = async ({
 }: Props): Promise<Metadata> => {
   const list = await getList(params.listId);
   return {
-    title: list?.title,
-    description: list?.description,
+    title: `@${list?.author?.username} on Breezi: ${list?.title}`,
+    description: list?.description || "View this list on Breezi",
     openGraph: {
       images: [...(list?.coverImageURL ? [list?.coverImageURL] : [])],
     },
