@@ -245,6 +245,15 @@ export const ListService = (db: Database) => {
               else: 0,
             },
           },
+          isUsersList: {
+            $cond: {
+              if: {
+                $eq: [{ $toObjectId: "$author" }, { $toObjectId: userId }],
+              },
+              then: 1,
+              else: 0,
+            },
+          },
         },
       },
       {
@@ -254,6 +263,7 @@ export const ListService = (db: Database) => {
       },
       {
         $sort: {
+          isUsersList: -1,
           totalScore: -1,
           updatedAt: -1,
           createdAt: -1,
