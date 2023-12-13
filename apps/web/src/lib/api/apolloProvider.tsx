@@ -16,9 +16,7 @@ import {
   SSRMultipartLink,
 } from "@apollo/experimental-nextjs-app-support/ssr";
 import { setContext } from "@apollo/client/link/context";
-import {
-  getUserFromLocalStorage,
-} from "@/app/lib/auth";
+import { getUserFromLocalStorage } from "@/app/lib/auth";
 
 // have a function to create a client for you
 function makeClient() {
@@ -58,7 +56,20 @@ function makeClient() {
 
   return new NextSSRApolloClient({
     // use the `NextSSRInMemoryCache`, not the normal `InMemoryCache`
-    cache: new NextSSRInMemoryCache(),
+    cache: new NextSSRInMemoryCache({
+      typePolicies: {
+        Query: {
+          fields: {
+            listFeed: {
+              keyArgs: false,
+              merge(existing = [], incoming) {
+                return [...existing, ...incoming];
+              },
+            },
+          },
+        },
+      },
+    }),
     /* @ts-ignore */
     link:
       typeof window === "undefined"

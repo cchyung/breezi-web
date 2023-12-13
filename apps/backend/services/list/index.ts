@@ -260,6 +260,11 @@ export const ListService = (db: Database) => {
         },
       },
     ]).exec();
+
+    if (listFeed.length === 0) {
+      return [];
+    }
+
     const populatedLists = await db.List.populate<PopulatedList>(
       listFeed,
       populateList
