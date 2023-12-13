@@ -84,10 +84,14 @@ const CreateList = ({
 
   // initialize textareas
   useEffect(() => {
-    list?.items.map((_, index) => {
+    if (!items || items.length === 0) {
+      return;
+    }
+
+    items.map((_, index) => {
       autoGrowTextArea(index);
     });
-  }, []);
+  }, [items]);
 
   const onSubmit = useCallback(
     async (publish?: boolean) => {
@@ -161,7 +165,7 @@ const CreateList = ({
           Amplitude.trackEvent(AmplitudeEventType.EDIT_LIST, {
             listId: mutation.data?.updateList?._id,
           });
-          
+
           onCreation(mutation.data?.updateList);
         }
       } catch (error) {
