@@ -13,6 +13,7 @@ const Login = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const welcome = searchParams.get("welcome") === "true";
+  const invitedBy = searchParams.get("invitedBy") ?? undefined;
   const client = useApolloClient();
 
   const [phone, setPhone] = useState<string>("");
@@ -61,6 +62,7 @@ const Login = () => {
 
       {showWelcome && (
         <WelcomeScreen
+          invitedBy={invitedBy}
           onEnter={() => {
             setShowWelcome(false);
           }}
