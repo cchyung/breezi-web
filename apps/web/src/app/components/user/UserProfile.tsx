@@ -51,7 +51,7 @@ const UserProfile = ({ initialUser }: { initialUser: User }) => {
   }, [user]);
 
   return (
-    <div className="flex flex-col mt-10 gap-4">
+    <div className="flex flex-col mt-10 gap-4 max-w-6xl mx-auto p-3">
       <div className="w-full flex flex-col items-center gap-4">
         <UserAvatar user={user} size="lg" />
 
