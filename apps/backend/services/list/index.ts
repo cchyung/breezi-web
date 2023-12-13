@@ -312,7 +312,11 @@ export const ListService = (db: Database) => {
       { $project: { _id: 0, totalListLikes: 1 } },
     ]).exec();
 
-    return listLikeQuery[0].totalListLikes as number;
+    if (listLikeQuery?.length === 0) {
+      return 0;
+    } else {
+      return listLikeQuery[0].totalListLikes as number;
+    }
   };
 
   return {
