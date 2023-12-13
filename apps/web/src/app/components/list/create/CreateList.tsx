@@ -224,6 +224,7 @@ const CreateList = ({
                 !items ||
                 items.filter((item) => item.text !== "").length === 0
               }
+              loading={submitLoading}
               onClick={() => onSubmit(true)}
             >
               {create ? "Share" : "Update"}

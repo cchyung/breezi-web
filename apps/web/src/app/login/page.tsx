@@ -13,12 +13,25 @@ const Login = () => {
 
   const [phone, setPhone] = useState<string>("");
   const [showWelcome, setShowWelcome] = useState<boolean>(welcome);
+  const [loading, setLoading] = useState(false);
+
   const { updateLocalUser } = useContext(UserContext);
 
   const onSubmit = (phone: string) => {
-    // write phone to user local storage
-    updateLocalUser({ phone });
-    router.push(`/login/verify`);
+    try {
+      setLoading(true);
+
+      // TODO: Request text message with verification code
+      
+
+      // write phone to user local storage
+      updateLocalUser({ phone });
+      router.push(`/login/verify`);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -40,6 +53,7 @@ const Login = () => {
               onClick={() => {
                 onSubmit(phone);
               }}
+              loading={loading}
               className="w-full"
             >
               Submit

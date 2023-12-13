@@ -9,7 +9,7 @@ import {
 import { LIKE_LIST, UNLIKE_LIST } from "@/lib/api/list/queries";
 import { useApolloClient } from "@apollo/client";
 import { UserContext } from "@/app/components/user/UserProvider";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 
 const ListCardActionRow = ({
@@ -27,30 +27,43 @@ const ListCardActionRow = ({
   const { user } = useContext(UserContext);
   const router = useRouter();
 
+  const [likeLoading, setLikeLoading] = useState(false);
+
   const onLikeButtonClick = async () => {
-    if (!user) {
-      router.push("/login");
-      return
+    if (likeLoading) {
+      return;
     }
 
-    if (!userLiked) {
-      await client.mutate<LikeListMutation, LikeListMutationVariables>({
-        mutation: LIKE_LIST,
-        variables: {
-          listId: listId,
-        },
-        fetchPolicy: "network-only",
-      });
-    } else {
-      await client.mutate<UnlikeListMutation, UnlikeListMutationVariables>({
-        mutation: UNLIKE_LIST,
-        variables: {
-          listId: listId,
-        },
-        fetchPolicy: "network-only",
-      });
+    if (!user) {
+      router.push("/login");
+      return;
     }
-    await refetchList();
+
+    try {
+      setLikeLoading(true);
+      if (!userLiked) {
+        await client.mutate<LikeListMutation, LikeListMutationVariables>({
+          mutation: LIKE_LIST,
+          variables: {
+            listId: listId,
+          },
+          fetchPolicy: "network-only",
+        });
+      } else {
+        await client.mutate<UnlikeListMutation, UnlikeListMutationVariables>({
+          mutation: UNLIKE_LIST,
+          variables: {
+            listId: listId,
+          },
+          fetchPolicy: "network-only",
+        });
+      }
+      await refetchList();
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLikeLoading(false);
+    }
   };
 
   const onShareButtonClick = () => {

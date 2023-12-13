@@ -55,7 +55,7 @@ export const ListService = (db: Database) => {
     return await db.List.find(
       { author: userId },
       {},
-      { sort: { createdAt: -1 } }
+      { sort: { updatedAt: -1, createdAt: -1 } }
     )
       .populate<PopulatedList>(populateList)
       .exec();

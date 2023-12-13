@@ -1,4 +1,4 @@
-import { Card, Spinner } from "@/app/components/ui";
+import { Button, Card, Spinner } from "@/app/components/ui";
 import { List } from "@/lib/api";
 import ListCard from "./list/listCard/ListCard";
 import { CreateList } from "./list";
@@ -39,6 +39,7 @@ const Components = () => {
       </Card>
 
       <ListCard list={demoList} />
+      <Button loading={true}>Test Button</Button>
 
       <Spinner />
     </div>

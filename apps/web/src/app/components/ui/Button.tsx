@@ -1,4 +1,5 @@
 import { MouseEventHandler } from "react";
+import { Spinner } from ".";
 
 const Button = ({
   children,
@@ -28,22 +29,36 @@ const Button = ({
   const sizeStyle = sizeStyles[size];
 
   const colorStyles = {
-    primary: "bg-primary text-white disabled:bg-gray-300 disabled:text-white",
-    gray: "bg-gray-400 text-white disabled:bg-gray-300 disabled:text-white",
-    black: "bg-black text-white disabled:bg-gray-300 disabled:text-white",
+    primary: "bg-primary text-white",
+    gray: "bg-gray-400 text-white",
+    black: "bg-black text-white",
   };
+
+  const disabledStyle = "bg-gray-300 text-white";
 
   const colorStyle = colorStyles[color];
   return (
     <>
       <button
-        className={`${className} ${sizeStyle} ${colorStyle} disabled:cursor-not-allowed rounded-2xl
+        className={`${className} ${colorStyle} ${
+          disabled && disabledStyle
+        } relative disabled:cursor-not-allowed rounded-2xl
         transition-colors`}
         onClick={onClick}
         onMouseOver={onMouseOver}
         disabled={loading || disabled}
       >
-        {children}
+        <>
+          <div
+            className={`${sizeStyle} ${loading ? "opacity-0" : "opacity-1"}`}
+          >
+            {children}
+          </div>
+
+          <div className="absolute top-0 h-full w-full flex items-center justify-center">
+            {loading && <Spinner className="h-[70%] aspect-square mx-auto" />}
+          </div>
+        </>
       </button>
     </>
   );
