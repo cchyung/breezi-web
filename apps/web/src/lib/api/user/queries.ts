@@ -15,6 +15,7 @@ export const GET_USER = gql`
       }
       followerCount
       registered
+      likeCount
     }
   }
 `;

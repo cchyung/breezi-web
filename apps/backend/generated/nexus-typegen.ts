@@ -207,6 +207,7 @@ export interface NexusGenFieldTypes {
     followerCount: number | null; // Int
     followers: Array<NexusGenRootTypes['UserFollower'] | null> | null; // [UserFollower]
     imageURL: string | null; // String
+    likeCount: number | null; // Int
     phone: string | null; // String
     registered: boolean | null; // Boolean
     updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
@@ -300,6 +301,7 @@ export interface NexusGenFieldTypeNames {
     followerCount: 'Int'
     followers: 'UserFollower'
     imageURL: 'String'
+    likeCount: 'Int'
     phone: 'String'
     registered: 'Boolean'
     updatedAt: 'DateTime'

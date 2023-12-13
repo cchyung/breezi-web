@@ -8,7 +8,7 @@ import {
   extendType,
 } from "nexus";
 import { db } from "models";
-import { UserService } from "services";
+import { ListService, UserService } from "services";
 import { AuthenticationError } from "lib/errors";
 import {
   sendTwilioVerificationToken,
@@ -17,6 +17,7 @@ import {
 import { AuthService } from "@/services/auth";
 
 const userService = UserService(db);
+const listService = ListService(db);
 const authService = AuthService();
 
 // ---------------------- Objects ----------------------
@@ -41,6 +42,13 @@ export const User = objectType({
     t.boolean("registered");
     t.field("createdAt", { type: "DateTime" });
     t.field("updatedAt", { type: "DateTime" });
+    t.int("likeCount", {
+      resolve: async (parent, _, __) => {
+        return await listService.getListLikeCountForUser({
+          userId: parent._id.toString(),
+        });
+      },
+    });
   },
 });
 

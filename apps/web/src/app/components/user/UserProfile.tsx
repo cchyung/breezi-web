@@ -44,7 +44,6 @@ const UserProfile = ({ initialUser }: { initialUser: User }) => {
   });
 
   const refetchUser = useCallback(async () => {
-    console.log(user);
     const userRefetch = await _refetchUser({ id: user._id });
     if (userRefetch.data?.user) {
       setUser(userRefetch.data.user);
@@ -66,7 +65,9 @@ const UserProfile = ({ initialUser }: { initialUser: User }) => {
 
         <div className="flex flex-row items-center justify-between">
           <div className="flex flex-col gap-2 items-center px-4">
-            <p className="font-bold text-[20px]">16</p>
+            <p className="font-bold text-[20px]">
+              {data?.userLists?.length ?? 0}
+            </p>
             <p className="text-gray-400 caption">Lists</p>
           </div>
           <div className="flex flex-col gap-2 items-center px-4">
@@ -78,7 +79,7 @@ const UserProfile = ({ initialUser }: { initialUser: User }) => {
             </p>
           </div>
           <div className="flex flex-col gap-2 items-center px-4">
-            <p className="font-bold text-[20px]">129k</p>
+            <p className="font-bold text-[20px]">{user.likeCount}</p>
             <p className="text-gray-400 caption">Likes</p>
           </div>
         </div>

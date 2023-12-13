@@ -143,6 +143,7 @@ type User {
   followerCount: Int
   followers: [UserFollower]
   imageURL: String
+  likeCount: Int
   phone: String
   registered: Boolean
   updatedAt: DateTime

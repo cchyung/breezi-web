@@ -267,6 +267,49 @@ export const ListService = (db: Database) => {
     return populatedLists;
   };
 
+  const getListLikeCountForUser = async ({
+    userId,
+  }: {
+    userId: string | ObjectId;
+  }) => {
+    const listLikeQuery = await db.List.aggregate([
+      {
+        $match: {
+          author: userId.toString(),
+        },
+      },
+      {
+        $lookup: {
+          from: "listlikes",
+          let: { listId: "$_id" },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $eq: ["$$listId", { $toObjectId: "$list" }],
+                },
+              },
+            },
+          ],
+          as: "list_likes",
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalListLikes: {
+            $sum: {
+              $cond: [{ $isArray: "$list_likes" }, { $size: "$list_likes" }, 0],
+            },
+          },
+        },
+      },
+      { $project: { _id: 0, totalListLikes: 1 } },
+    ]).exec();
+
+    return listLikeQuery[0].totalListLikes as number;
+  };
+
   return {
     getList,
     getLists,
@@ -277,5 +320,6 @@ export const ListService = (db: Database) => {
     addListComment,
     removeListComment,
     getListFeed,
+    getListLikeCountForUser,
   };
 };

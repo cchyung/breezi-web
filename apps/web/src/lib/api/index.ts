@@ -272,6 +272,7 @@ export type User = {
   followerCount?: Maybe<Scalars['Int']['output']>;
   followers?: Maybe<Array<Maybe<UserFollower>>>;
   imageURL?: Maybe<Scalars['String']['output']>;
+  likeCount?: Maybe<Scalars['Int']['output']>;
   phone?: Maybe<Scalars['String']['output']>;
   registered?: Maybe<Scalars['Boolean']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -392,7 +393,7 @@ export type GetUserQueryVariables = Exact<{
 }>;
 
 
-export type GetUserQuery = { __typename?: 'Query', user?: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null, about?: string | null, followerCount?: number | null, registered?: boolean | null, followers?: Array<{ __typename?: 'UserFollower', user?: string | null, follower?: { __typename?: 'User', _id: string } | null } | null> | null } | null };
+export type GetUserQuery = { __typename?: 'Query', user?: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null, about?: string | null, followerCount?: number | null, registered?: boolean | null, likeCount?: number | null, followers?: Array<{ __typename?: 'UserFollower', user?: string | null, follower?: { __typename?: 'User', _id: string } | null } | null> | null } | null };
 
 export type SendSmsVerificationTokenQueryVariables = Exact<{
   phone: Scalars['String']['input'];
