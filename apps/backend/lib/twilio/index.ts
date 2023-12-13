@@ -36,7 +36,7 @@ export const sendTwilioVerificationToken = async (phone: string) => {
   }
   const client = getTwilioClient();
   const verificationInstance = await client.verify.v2
-    .services(process.env.TWILIO_AUTH_SID!)
+    .services(process.env.TWILIO_VERIFY_SERVICE_SID!)
     .verifications.create({ to: phone, channel: "sms" });
   return verificationInstance;
 };
@@ -53,7 +53,7 @@ export const verifyTwilioVerificationToken = async (
   }
   const client = getTwilioClient();
   const verificationInstance = await client.verify.v2
-    .services(process.env.TWILIO_AUTH_SID!)
+    .services(process.env.TWILIO_VERIFY_SERVICE_SID!)
     .verificationChecks.create({ to: phone, code });
   return verificationInstance;
 };

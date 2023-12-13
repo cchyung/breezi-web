@@ -15,6 +15,7 @@ const Verify = () => {
     LOGIN_USER
   );
   const [verifyLoading, setVerifyLoading] = useState(false);
+  const [invalidCode, setInvalidCode] = useState(false);
 
   const { user, updateLocalUser } = useContext(UserContext);
 
@@ -30,6 +31,12 @@ const Verify = () => {
             verificationCode: code,
           },
         });
+
+        if (response.error) {
+          setVerifyLoading(false);
+          setInvalidCode(true);
+          throw response.error
+        }
 
         // set information in local storage
         updateLocalUser({
@@ -51,6 +58,8 @@ const Verify = () => {
       console.log(error);
       setVerifyLoading(false);
     }
+
+    setVerifyLoading(false);
   };
 
   return (
@@ -70,12 +79,16 @@ const Verify = () => {
             />
           )}
 
-          <p className="mt-2">
-            Didn't receive a code?{" "}
-            <a href="/login" className="font-bold">
-              Resend Code
-            </a>
-          </p>
+          {invalidCode ? (
+            <p className="mt-2 text-red-500">Invalid code. Please try again.</p>
+          ) : (
+            <p className="mt-2">
+              Didn't receive a code?{" "}
+              <a href="/login" className="font-bold">
+                Resend Code
+              </a>
+            </p>
+          )}
         </div>
       </div>
     </>

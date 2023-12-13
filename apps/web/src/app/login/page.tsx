@@ -47,17 +47,15 @@ const Login = () => {
           <img src="/logo/logo.png" alt="logo" className="w-72" />
           <h1 className="mb-4">Login or Create an Account</h1>
           <PhoneInput onChange={(e) => setPhone(e.target.value)} />
-          <a href="/login/verify" className="w-full">
-            <Button
-              onClick={() => {
-                onSubmit(phone);
-              }}
-              loading={loading}
-              className="w-full"
-            >
-              Submit
-            </Button>
-          </a>
+          <Button
+            onClick={() => {
+              onSubmit(phone);
+            }}
+            loading={loading}
+            className="w-full"
+          >
+            Submit
+          </Button>
         </div>
       </div>
 

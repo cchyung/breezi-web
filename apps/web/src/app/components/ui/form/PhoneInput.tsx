@@ -13,12 +13,12 @@ const PhoneInput = ({
 }) => {
   const [number, setNumber] = useState<string>("");
   const [countryCode, setCountryCode] = useState<string>("US");
-  const [fullNumber, setFullNumber] = useState<string>("");
 
   useEffect(() => {
-    setFullNumber(`+${countryCode}${number}`);
     if (onChange) {
-      onChange({ target: { value: fullNumber } } as any);
+      // @ts-ignore
+      const _fullNumber = `+${getCountryCallingCode(countryCode)}${number}`;
+      onChange({ target: { value: _fullNumber } } as any);
     }
   }, [number, countryCode]);
 

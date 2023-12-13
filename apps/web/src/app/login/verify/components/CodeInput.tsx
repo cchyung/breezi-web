@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 interface CodeInputProps {
-  onSubmit: (code: string) => void;
+  onSubmit: (code: string) => void | Promise<void>;
 }
 
 const codeLength = 6;
@@ -17,20 +17,28 @@ const CodeInput = ({ onSubmit }: CodeInputProps) => {
   }, []);
 
   useEffect(() => {
-    const handleKeydown = (e: KeyboardEvent) => {
+    const handleKeydown = async (e: KeyboardEvent) => {
       if (code.length === codeLength) return;
+
+      let _code = code;
       // if key is a number key
       if (e.key.match(/[0-9]/)) {
-        setCode(code.concat(e.key));
+        _code = code.concat(e.key);
       }
 
       // if key is backspace
       if (e.key === "Backspace") {
-        setCode(code.slice(0, -1));
+        _code = code.slice(0, -1);
       }
+      setCode(_code);
 
-      if (code.length + 1 === codeLength) {
-        onSubmit(code);
+      if (_code.length === codeLength) {
+        try {
+          await onSubmit(_code);
+        } catch (error) {
+          console.error(error);
+          setCode("");
+        }
       }
     };
 
@@ -63,7 +71,11 @@ const CodeInput = ({ onSubmit }: CodeInputProps) => {
           );
         })}
 
-        <input className="w-0 overflow-hidden" ref={hiddenInputRef} type="number"></input>
+        <input
+          className="w-0 overflow-hidden"
+          ref={hiddenInputRef}
+          type="number"
+        ></input>
       </div>
     </button>
   );
