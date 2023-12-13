@@ -73,8 +73,12 @@ const CodeInput = ({ onSubmit }: CodeInputProps) => {
 
         <input
           className="w-0 overflow-hidden"
+          autoComplete="one-time-code"
           ref={hiddenInputRef}
           type="number"
+          onChange={(e) => {
+            setCode(e.target.value);
+          }}
         ></input>
       </div>
     </button>
