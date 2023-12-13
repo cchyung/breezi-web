@@ -27,8 +27,7 @@ const PhoneInput = ({
       <select
         className="border-0 bg-gray-200 px-4 py-3 rounded-2xl appearance-none"
         onChange={(e) => {
-          // @ts-ignore
-          setCountryCode(getCountryCallingCode(e.target.value));
+          setCountryCode(e.target.value);
         }}
         defaultValue={"US"}
       >
