@@ -11,6 +11,7 @@
     "gql:typegen:watch": "graphql-codegen --config codegen.yml --watch"
   },
   "dependencies": {
+    "@amplitude/analytics-browser": "^2.3.7",
     "@apollo/client": "^3.8.6",
     "@apollo/experimental-nextjs-app-support": "^0.5.2",
     "@graphql-codegen/add": "^5.0.0",

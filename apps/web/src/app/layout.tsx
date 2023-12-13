@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { CreateListModalProvider } from "./components/list/create/CreateListModalProvider";
 import { UserProvider } from "@/app/components/user/UserProvider";
+import AmplitudeProvider from "./lib/analytics/AmplitudeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,9 +22,11 @@ export default function RootLayout({
     <html lang="en" className="bg">
       <UserProvider>
         <ApolloWrapper>
-          <body className={`${inter.className}`}>
-            <CreateListModalProvider>{children}</CreateListModalProvider>
-          </body>
+          <AmplitudeProvider>
+            <body className={`${inter.className}`}>
+              <CreateListModalProvider>{children}</CreateListModalProvider>
+            </body>
+          </AmplitudeProvider>
         </ApolloWrapper>
       </UserProvider>
     </html>
