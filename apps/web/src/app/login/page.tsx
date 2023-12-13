@@ -6,11 +6,14 @@ import { useContext, useState } from "react";
 import { UserContext } from "@/app/components/user/UserProvider";
 import WelcomeScreen from "./components/WelcomeScreen";
 import PhoneInput from "@/app/components/ui/form/PhoneInput";
+import { useApolloClient } from "@apollo/client";
+import { SEND_SMS_VERIFICATION_TOKEN } from "@/lib/api/user/queries";
 
 const Login = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const welcome = searchParams.get("welcome") === "true";
+  const client = useApolloClient();
 
   const [phone, setPhone] = useState<string>("");
   const [showWelcome, setShowWelcome] = useState<boolean>(welcome);
@@ -18,18 +21,21 @@ const Login = () => {
 
   const { updateLocalUser } = useContext(UserContext);
 
-  const onSubmit = (phone: string) => {
+  const onSubmit = async (phone: string) => {
     try {
       setLoading(true);
-
-      // TODO: Request text message with verification code
+      await client.query({
+        query: SEND_SMS_VERIFICATION_TOKEN,
+        variables: {
+          phone,
+        },
+      });
 
       // write phone to user local storage
       updateLocalUser({ phone });
       router.push(`/login/verify`);
     } catch (error) {
       console.error(error);
-    } finally {
       setLoading(false);
     }
   };
