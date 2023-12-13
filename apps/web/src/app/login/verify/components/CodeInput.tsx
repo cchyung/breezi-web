@@ -78,6 +78,7 @@ const CodeInput = ({ onSubmit }: CodeInputProps) => {
           type="number"
           onChange={(e) => {
             setCode(e.target.value);
+            onSubmit(e.target.value);
           }}
         ></input>
       </div>
