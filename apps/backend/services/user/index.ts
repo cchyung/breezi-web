@@ -66,7 +66,7 @@ export const UserService = (db: Database) => {
     phone,
     imageURL,
     invitedBy,
-    registered = true,
+    registered = false,
   }: {
     phone: string;
     username?: string;

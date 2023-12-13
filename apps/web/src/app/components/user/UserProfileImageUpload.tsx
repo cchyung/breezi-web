@@ -25,11 +25,11 @@ const UserProfileImageUpload = ({
 
   return (
     <FileDropzoneWrapper onDrop={onDrop} noClick={false}>
-      <div className="flex flex-col items-center gap-2 rounded-full cursor-pointer">
+      <div className="flex flex-col items-center rounded-full cursor-pointer">
         {imageURL ? (
-          <UserAvatar user={{ imageURL }} size="md" />
+          <UserAvatar user={{ imageURL }} size="lg" />
         ) : (
-          <div className="w-24 h-24 md:w-36 md:h-36 aspect-square rounded-full bg-gray-200 flex items-center justify-center border-4 border-white">
+          <div className="w-32 h-32 md:w-36 md:h-36 aspect-square rounded-full bg-gray-200 flex items-center justify-center border-4 border-white">
             <ImageIcon className="text-gray-300 w-12 h-12" />
           </div>
         )}

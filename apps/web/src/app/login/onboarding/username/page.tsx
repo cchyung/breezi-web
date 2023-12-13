@@ -13,6 +13,7 @@ const Username = () => {
   const { user, updateLocalUser } = useContext(UserContext);
 
   const [username, setUsername] = useState("");
+  const [loading, setLoading] = useState(false);
   const [updateUser] = useMutation<
     UpdateUserMutation,
     UpdateUserMutationVariables
@@ -20,34 +21,40 @@ const Username = () => {
 
   const onSubmit = useCallback(
     async (username: string) => {
-      if (!user) {
-        console.error("No user logged in");
-        return;
-      }
-      // validate username
-      if (username.length === 0) {
-        return;
-      }
+      try {
+        setLoading(true);
+        if (!user) {
+          console.error("No user logged in");
+          return;
+        }
+        // validate username
+        if (username.length === 0) {
+          return;
+        }
 
-      // update user's username in backend and update local storage
-      await updateUser({
-        variables: {
-          id: user._id as string,
-          user: {
-            username: username,
-            registered: true,
+        // update user's username in backend and update local storage
+        await updateUser({
+          variables: {
+            id: user._id as string,
+            user: {
+              username: username,
+              registered: true,
+            },
           },
-        },
-      });
+        });
 
-      updateLocalUser({
-        ...user,
-        username: username,
-        registered: true,
-      });
+        updateLocalUser({
+          ...user,
+          username: username,
+          registered: true,
+        });
 
-      // navigate to home
-      router.push(`/login/onboarding/profile-image`);
+        // navigate to home
+        router.push(`/login/onboarding/profile-image`);
+      } catch (error) {
+        console.error(error);
+        setLoading(false);
+      }
     },
     [user]
   );
@@ -70,6 +77,7 @@ const Username = () => {
             className="w-full"
           />
           <Button
+            loading={loading}
             disabled={username.length === 0}
             onClick={() => {
               onSubmit(username);

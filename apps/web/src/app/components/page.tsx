@@ -2,6 +2,7 @@ import { Button, Card, Spinner } from "@/app/components/ui";
 import { List } from "@/lib/api";
 import ListCard from "./list/listCard/ListCard";
 import { CreateList } from "./list";
+import PhoneInput from "./ui/form/PhoneInput";
 
 const demoList: List = {
   _id: "0",
@@ -42,6 +43,8 @@ const Components = () => {
       <Button loading={true}>Test Button</Button>
 
       <Spinner />
+
+      <PhoneInput />
     </div>
   );
 };

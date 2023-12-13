@@ -1,10 +1,11 @@
 "use client";
 
-import { Button, Input } from "@/app/components/ui";
+import { Button } from "@/app/components/ui";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useContext, useState } from "react";
 import { UserContext } from "@/app/components/user/UserProvider";
 import WelcomeScreen from "./components/WelcomeScreen";
+import PhoneInput from "@/app/components/ui/form/PhoneInput";
 
 const Login = () => {
   const router = useRouter();
@@ -22,7 +23,6 @@ const Login = () => {
       setLoading(true);
 
       // TODO: Request text message with verification code
-      
 
       // write phone to user local storage
       updateLocalUser({ phone });
@@ -40,14 +40,7 @@ const Login = () => {
         <div className="flex flex-col items-center gap-2">
           <img src="/logo/logo.png" alt="logo" className="w-72" />
           <h1 className="mb-4">Login or Create an Account</h1>
-          <Input
-            type="tel"
-            placeholder="Phone Number"
-            onChange={(e) => {
-              setPhone(e.target.value);
-            }}
-            className="w-full"
-          />
+          <PhoneInput onChange={(e) => setPhone(e.target.value)} />
           <a href="/login/verify" className="w-full">
             <Button
               onClick={() => {

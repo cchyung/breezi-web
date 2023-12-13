@@ -26,49 +26,58 @@ const ProfileImage = () => {
     UpdateUserMutationVariables
   >(UPDATE_USER);
   const [imageFile, setImageFile] = useState<File>();
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = useCallback(
     async (imageFile?: File) => {
-      if (!user) {
-        console.error("No user logged in");
-        return;
-      }
+      try {
+        setLoading(true);
 
-      if (imageFile) {
-        const uploadImageURLQuery = await client.query<
-          GetUploadProfileImageUrlQuery,
-          GetUploadProfileImageUrlQueryVariables
-        >({
-          query: GET_UPLOAD_PROFILE_IMAGE_URL,
-        });
-
-        if (uploadImageURLQuery.data.uploadUserProfileImageURL) {
-          const { url, key } =
-            uploadImageURLQuery.data.uploadUserProfileImageURL;
-
-          await uploadFileToSignedURL(url, imageFile);
-          const profileImageURL = getObjectURL(key);
-
-          // update user
-          await updateUser({
-            variables: {
-              id: user._id as string,
-              user: {
-                imageURL: profileImageURL,
-              },
-            },
-          });
-
-          updateLocalUser({
-            ...user,
-            imageURL: profileImageURL,
-          });
-        } else {
-          console.error(new Error("Failed to get upload url"));
+        if (!user) {
+          console.error("No user logged in");
+          return;
         }
+
+        if (imageFile) {
+          const uploadImageURLQuery = await client.query<
+            GetUploadProfileImageUrlQuery,
+            GetUploadProfileImageUrlQueryVariables
+          >({
+            query: GET_UPLOAD_PROFILE_IMAGE_URL,
+          });
+
+          if (uploadImageURLQuery.data.uploadUserProfileImageURL) {
+            const { url, key } =
+              uploadImageURLQuery.data.uploadUserProfileImageURL;
+
+            await uploadFileToSignedURL(url, imageFile);
+            const profileImageURL = getObjectURL(key);
+
+            // update user
+            await updateUser({
+              variables: {
+                id: user._id as string,
+                user: {
+                  imageURL: profileImageURL,
+                },
+              },
+            });
+
+            updateLocalUser({
+              ...user,
+              imageURL: profileImageURL,
+            });
+          } else {
+            console.error(new Error("Failed to get upload url"));
+          }
+        }
+        // navigate to home
+        router.push(`/list/create?firstList=true`);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
       }
-      // navigate to home
-      router.push(`/list/create?firstList=true`);
     },
     [user]
   );
@@ -88,6 +97,7 @@ const ProfileImage = () => {
               onSubmit(imageFile);
             }}
             className="w-full"
+            loading={loading}
           >
             Almost There!
           </Button>
