@@ -39,6 +39,7 @@ import {
   GET_UPLOAD_PROFILE_IMAGE_URL,
 } from "@/lib/api/upload/queries";
 import { getObjectURL, uploadFileToSignedURL } from "@/lib/upload";
+import { Amplitude, AmplitudeEventType } from "@/app/lib/analytics";
 
 const CreateList = ({
   list,
@@ -140,6 +141,10 @@ const CreateList = ({
               list: input,
             },
           });
+
+          Amplitude.trackEvent(AmplitudeEventType.CREATE_LIST, {
+            listId: mutation.data?.createList?._id,
+          });
           onCreation(mutation.data?.createList);
         } else {
           const mutation = await client.mutate<
@@ -152,6 +157,11 @@ const CreateList = ({
               list: input,
             },
           });
+
+          Amplitude.trackEvent(AmplitudeEventType.EDIT_LIST, {
+            listId: mutation.data?.updateList?._id,
+          });
+          
           onCreation(mutation.data?.updateList);
         }
       } catch (error) {

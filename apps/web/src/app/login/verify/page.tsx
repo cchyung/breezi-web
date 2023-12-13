@@ -8,6 +8,7 @@ import { LOGIN_USER } from "@/lib/api/user/queries";
 import { UserContext } from "@/app/components/user/UserProvider";
 import { set } from "animejs";
 import { Spinner } from "@/app/components/ui";
+import { Amplitude, AmplitudeEventType } from "@/app/lib/analytics";
 
 const Verify = () => {
   const router = useRouter();
@@ -35,7 +36,7 @@ const Verify = () => {
         if (response.error) {
           setVerifyLoading(false);
           setInvalidCode(true);
-          throw response.error
+          throw response.error;
         }
 
         // set information in local storage
@@ -45,6 +46,9 @@ const Verify = () => {
           authToken: response.data?.loginUser?.authToken as string,
           imageURL: response.data?.loginUser?.user?.imageURL,
         });
+
+        Amplitude.setUser(response.data?.loginUser?.user?._id as string);
+        Amplitude.trackEvent(AmplitudeEventType.LOGIN);
 
         // check if user is registered.  If not, show username screens
         if (response.data?.loginUser?.user?.registered) {
@@ -58,8 +62,6 @@ const Verify = () => {
       console.log(error);
       setVerifyLoading(false);
     }
-
-    setVerifyLoading(false);
   };
 
   return (

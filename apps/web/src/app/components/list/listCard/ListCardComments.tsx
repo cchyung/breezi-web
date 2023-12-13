@@ -13,6 +13,7 @@ import { ADD_COMMENT_TO_LIST } from "@/lib/api/list/queries";
 import { UserContext } from "@/app/components/user/UserProvider";
 import { useRouter } from "next/navigation";
 import { Username } from "../../user";
+import { Amplitude, AmplitudeEventType } from "@/app/lib/analytics";
 
 const ListCardComments = ({
   list,
@@ -46,6 +47,11 @@ const ListCardComments = ({
           text: text,
         },
       });
+
+      Amplitude.trackEvent(AmplitudeEventType.CREATE_LIST_COMMENT, {
+        listId: list._id,
+      });
+
       setCommentText("");
       refetchList();
     },

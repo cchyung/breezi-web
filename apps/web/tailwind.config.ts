@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      height: {
+        screen: "100dvh",
+      },
       borderWidth: {
         DEFAULT: "1px",
         1: "1px",

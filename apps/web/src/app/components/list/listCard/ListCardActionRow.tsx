@@ -11,6 +11,7 @@ import { useApolloClient } from "@apollo/client";
 import { UserContext } from "@/app/components/user/UserProvider";
 import { useContext, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Amplitude, AmplitudeEventType } from "@/app/lib/analytics";
 
 const ListCardActionRow = ({
   listId,
@@ -49,6 +50,10 @@ const ListCardActionRow = ({
           },
           fetchPolicy: "network-only",
         });
+
+        Amplitude.trackEvent(AmplitudeEventType.LIKE_LIST, {
+          listId: listId,
+        });
       } else {
         await client.mutate<UnlikeListMutation, UnlikeListMutationVariables>({
           mutation: UNLIKE_LIST,
@@ -56,6 +61,10 @@ const ListCardActionRow = ({
             listId: listId,
           },
           fetchPolicy: "network-only",
+        });
+
+        Amplitude.trackEvent(AmplitudeEventType.UNLIKE_LIST, {
+          listId: listId,
         });
       }
       await refetchList();
