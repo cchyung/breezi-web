@@ -43,8 +43,8 @@ const Login = () => {
   return (
     <>
       <div className="h-screen w-screen grid items-center justify-center">
-        <div className="flex flex-col items-center gap-2">
-          <img src="/logo/logo.png" alt="logo" className="w-72" />
+        <div className="flex flex-col items-center gap-4">
+          <img src="/logo/logo.png" alt="logo" className="w-48 md:w-72" />
           <h1 className="mb-4">Login or Create an Account</h1>
           <PhoneInput onChange={(e) => setPhone(e.target.value)} />
           <Button
