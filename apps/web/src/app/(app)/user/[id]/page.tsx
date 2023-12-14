@@ -4,12 +4,16 @@ import { getClient } from "@/lib/api/client";
 import { GET_USER } from "@/lib/api/user/queries";
 import { notFound } from "next/navigation";
 
+export const dynamic = "force-dynamic";
+
 const getUser = async (userId: string) => {
   const client = getClient();
   const userQuery = await client.query<GetUserQuery, GetUserQueryVariables>({
     query: GET_USER,
     variables: { id: userId },
+    fetchPolicy: "network-only",
   });
+
   return userQuery.data.user;
 };
 

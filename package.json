@@ -16,7 +16,7 @@
     "eslint": "^8.48.0",
     "prettier": "^3.0.3",
     "tsconfig": "*",
-    "turbo": "latest"
+    "turbo": "^1.11.2"
   },
   "name": "breezi-app",
   "packageManager": "npm@8.19.3",
