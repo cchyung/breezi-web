@@ -5,6 +5,7 @@ export enum AmplitudeEventType {
   EDIT_LIST = "edit_list",
   LIKE_LIST = "like_list",
   UNLIKE_LIST = "unlike_list",
+  SHARE_LIST = "share_list",
   CREATE_LIST_COMMENT = "create_list_comment",
 }
 

@@ -28,6 +28,8 @@ const ListCardActionRow = ({
   const { user } = useContext(UserContext);
   const router = useRouter();
 
+  const [showCopied, setShowCopied] = useState(false);
+
   const [likeLoading, setLikeLoading] = useState(false);
 
   const onLikeButtonClick = async () => {
@@ -75,7 +77,7 @@ const ListCardActionRow = ({
     }
   };
 
-  const onShareButtonClick = () => {
+  const onShareButtonClick = async () => {
     const listURL =
       location.protocol +
       "//" +
@@ -86,7 +88,7 @@ const ListCardActionRow = ({
 
     // check if native share is available
     if (navigator.share) {
-      navigator.share({
+      await navigator.share({
         title: "Breezi",
         text: "Check out this list on Breezi",
         url: listURL,
@@ -95,8 +97,12 @@ const ListCardActionRow = ({
       // put link in clipboard
       navigator.clipboard.writeText(listURL);
 
-      // TODO: Show pop up saying link is copied to clipboard
+      setShowCopied(true);
+      setTimeout(() => {
+        setShowCopied(false);
+      }, 2000);
     }
+    Amplitude.trackEvent(AmplitudeEventType.SHARE_LIST, { listId });
   };
 
   return (
@@ -112,11 +118,11 @@ const ListCardActionRow = ({
       </button>
 
       <button
-        className="flex flex-col items-center gap-1 rounded-3xl w-1/2 py-2 bg-gray-200 text-gray-400 btn-small hover:text-white hover:bg-primary"
+        className="flex flex-col items-center gap-1 rounded-3xl w-1/2 py-2 bg-gray-200 text-gray-400 btn-small hover:text-white hover:bg-primary transition-colors"
         onClick={onShareButtonClick}
       >
         <ShareIcon className="w-8"></ShareIcon>
-        Share
+        {showCopied ? "Copied!" : "Share"}
       </button>
     </div>
   );
