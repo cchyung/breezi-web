@@ -25,7 +25,7 @@ const UserProfileImageUpload = ({
   }, []);
 
   return (
-    <FileDropzoneWrapper onDrop={onDrop} noClick={false}>
+    <FileDropzoneWrapper onDrop={onDrop}>
       <button onClick={() => fileInputRef.current?.click()}>
         <div className="flex flex-col items-center rounded-full cursor-pointer">
           {imageURL ? (
