@@ -31,7 +31,11 @@ export const generateMetadata = async ({
     title: `@${list?.author?.username} on Breezi: ${list?.title}`,
     description: list?.description || "View this list on Breezi",
     openGraph: {
-      images: [...(list?.coverImageURL ? [list?.coverImageURL] : [])],
+      images: [
+        ...(list?.coverImageURL
+          ? [list?.coverImageURL]
+          : ["/logo/placeholder.jpeg"]),
+      ],
     },
   };
 };
