@@ -34,7 +34,7 @@ export const generateMetadata = async ({
       images: [
         ...(list?.coverImageURL
           ? [list?.coverImageURL]
-          : ["/logo/placeholder.jpeg"]),
+          : ["https://getbreezi.com/logo/placeholder.jpeg"]),
       ],
     },
   };
