@@ -81,14 +81,14 @@ const Login = () => {
           {showInviteOnlyAlert && (
             <p className="text-red-500 max-w-fit text-center">
               Breezi is currently invite only. <br />
+              You can
               <a
-                href="https://discord.gg/YRWvc4mFN6"
+                href="https://tally.so/r/w4Qr4k"
                 target="_blank"
                 className="underline"
               >
-                Join our Discord
+                join the waitlist here.
               </a>{" "}
-              to get an invite!
             </p>
           )}
         </div>
