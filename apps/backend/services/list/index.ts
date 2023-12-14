@@ -183,6 +183,11 @@ export const ListService = (db: Database) => {
       {
         $sort: { createdAt: -1 },
       },
+      {
+        $match: {
+          state: ListState.published,
+        },
+      },
       { $skip: cursor },
       {
         $limit: pageSize,
