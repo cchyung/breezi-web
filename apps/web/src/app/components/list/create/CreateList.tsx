@@ -59,6 +59,7 @@ const CreateList = ({
   const [coverImageURL, setCoverImageURL] = useState(list?.coverImageURL);
   const [coverImageFile, setCoverImageFile] = useState<File | null>(null);
   const [submitLoading, setSubmitLoading] = useState(false);
+  const [saveDraftLoading, setSaveDraftLoading] = useState(false);
   const [activeItemIndex, setActiveItemIndex] = useState(-1);
 
   const client = useApolloClient();
@@ -96,7 +97,12 @@ const CreateList = ({
   const onSubmit = useCallback(
     async (publish?: boolean) => {
       try {
-        setSubmitLoading(true);
+        if (publish) {
+          setSubmitLoading(true);
+        } else {
+          setSaveDraftLoading(true);
+        }
+
         // check if cover imageURL was changed
         let coverImageURLInput = list?.coverImageURL;
 
@@ -172,6 +178,7 @@ const CreateList = ({
         console.log(error);
       } finally {
         setSubmitLoading(false);
+        setSaveDraftLoading(false);
       }
     },
     [title, description, items, coverImageURL, type]
@@ -217,10 +224,7 @@ const CreateList = ({
 
             <button
               disabled={
-                !title ||
-                title.length == 0 ||
-                !items ||
-                items.filter((item) => item.text !== "").length === 0
+                !title || title.length == 0 || saveDraftLoading || submitLoading
               }
               onClick={() => onSubmit(false)}
               className="disabled:text-gray-300 text-black"
@@ -228,21 +232,59 @@ const CreateList = ({
               <DraftsIcon />
             </button>
 
-            <Button
-              size="sm"
-              color="primary"
-              disabled={
-                submitLoading ||
-                !title ||
-                title.length == 0 ||
-                !items ||
-                items.filter((item) => item.text !== "").length === 0
-              }
-              loading={submitLoading}
-              onClick={() => onSubmit(true)}
-            >
-              {create ? "Share" : "Update"}
-            </Button>
+            {list?.state === ListState.Published ? (
+              <Button
+                size="sm"
+                color="primary"
+                disabled={
+                  submitLoading ||
+                  saveDraftLoading ||
+                  !title ||
+                  title.length == 0 ||
+                  !items ||
+                  items.filter((item) => item.text !== "").length === 0
+                }
+                loading={submitLoading}
+                onClick={() => onSubmit(true)}
+              >
+                {create ? "Share" : "Update"}
+              </Button>
+            ) : (
+              <>
+                <Button
+                  size="sm"
+                  color="gray"
+                  disabled={
+                    saveDraftLoading ||
+                    submitLoading ||
+                    !title ||
+                    title.length == 0 ||
+                    !items ||
+                    items.filter((item) => item.text !== "").length === 0
+                  }
+                  loading={saveDraftLoading}
+                  onClick={() => onSubmit(false)}
+                >
+                  Update Draft
+                </Button>
+                <Button
+                  size="sm"
+                  color="primary"
+                  disabled={
+                    saveDraftLoading ||
+                    submitLoading ||
+                    !title ||
+                    title.length == 0 ||
+                    !items ||
+                    items.filter((item) => item.text !== "").length === 0
+                  }
+                  loading={submitLoading}
+                  onClick={() => onSubmit(true)}
+                >
+                  Publish
+                </Button>
+              </>
+            )}
           </div>
         </div>
 

@@ -37,7 +37,7 @@ const ListCardOptions = ({
         <Menu.Button>
           <MoreVerticalIcon />
         </Menu.Button>
-        <Menu.Items className="absolute right-0 mt-2 flex flex-col w-24 bg-white shadow-xl rounded-xl overflow-hidden text-[16px]">
+        <Menu.Items className="absolute right-0 mt-2 flex flex-col w-24 bg-white shadow-xl rounded-xl overflow-hidden text-[16px] z-40">
           <Menu.Item>
             <button
               className="px-4 pb-2 pt-4 hover:bg-gray-100 transition-colors text-left"

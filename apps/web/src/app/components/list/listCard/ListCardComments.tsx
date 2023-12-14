@@ -65,7 +65,7 @@ const ListCardComments = ({
         .map((comment) => (
           <div key={comment._id} className="flex flex-row gap-1">
             <Username user={comment.author} />
-            <p>{comment.text}</p>
+            <p className="overflow-clip">{comment.text}</p>
           </div>
         ))}
 
