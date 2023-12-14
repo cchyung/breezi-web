@@ -11,7 +11,7 @@ const CreateListPage = () => {
   const { user } = useContext(UserContext);
 
   return (
-    <div className="absolute top-0 h-screen w-screen md:py-4 md:px-2 flex flex-col gap-8 items-center justify-center bg-gray-100">
+    <div className="absolute top-0 h-screen w-screen md:py-4 md:px-2 flex flex-col gap-8 items-center justify-center bg-gray-100 pb-10">
       {searchParams.get("firstList") === "true" && (
         <h1 className="text-[48px] max-w-xl text-center">
           Let's create your first list on Breezi
@@ -19,7 +19,7 @@ const CreateListPage = () => {
       )}
 
       <Card
-        className="shadow-xl md:max-w-md md:h-auto w-full h-screen"
+        className="shadow-xl md:max-w-md md:h-auto w-full h-full"
         tight={true}
       >
         <CreateList

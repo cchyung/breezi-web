@@ -201,7 +201,7 @@ const CreateList = ({
   }, []);
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 overflow-auto">
       <FileDropzoneWrapper onDrop={onFileDrop}>
         <div className="flex items-center justify-between p-4">
           <div className="ml-auto flex items-center gap-2">
@@ -240,9 +240,7 @@ const CreateList = ({
                   submitLoading ||
                   saveDraftLoading ||
                   !title ||
-                  title.length == 0 ||
-                  !items ||
-                  items.filter((item) => item.text !== "").length === 0
+                  title.length == 0
                 }
                 loading={submitLoading}
                 onClick={() => onSubmit(true)}
@@ -258,9 +256,7 @@ const CreateList = ({
                     saveDraftLoading ||
                     submitLoading ||
                     !title ||
-                    title.length == 0 ||
-                    !items ||
-                    items.filter((item) => item.text !== "").length === 0
+                    title.length == 0
                   }
                   loading={saveDraftLoading}
                   onClick={() => onSubmit(false)}
@@ -274,9 +270,7 @@ const CreateList = ({
                     saveDraftLoading ||
                     submitLoading ||
                     !title ||
-                    title.length == 0 ||
-                    !items ||
-                    items.filter((item) => item.text !== "").length === 0
+                    title.length == 0
                   }
                   loading={submitLoading}
                   onClick={() => onSubmit(true)}
@@ -324,7 +318,7 @@ const CreateList = ({
           />
         </div>
 
-        <div className="p-6 pt-4 flex flex-col gap-2">
+        <div className="p-6 pt-4 flex flex-col gap-2 overflow-hidden">
           <input
             placeholder="Title your list"
             className="font-bold text-3xl"

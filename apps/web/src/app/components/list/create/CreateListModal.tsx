@@ -26,10 +26,10 @@ const CreateListModal = ({
         setIsOpen(false);
       }}
     >
-      <div className="fixed inset-0 flex w-screen justify-center items-center overflow-auto">
-        <Dialog.Panel className="relative max-w-auto md:max-w-md md:h-auto h-screen w-full">
-          <div className="w-full h-full md:max-h-[80vh]">
-            <Card className="h-full shadow-xl" tight={true}>
+      <div className="fixed inset-0 flex w-screen">
+        <Dialog.Panel className="relative max-w-auto md:max-w-md md:h-auto h-screen w-full m-auto">
+          <div className="w-full h-full">
+            <Card className="h-full md:max-h-[80vh] shadow-xl " tight={true}>
               <CreateList
                 create={create}
                 onCreation={() => {
