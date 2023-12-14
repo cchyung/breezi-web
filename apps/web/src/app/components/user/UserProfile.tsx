@@ -89,7 +89,9 @@ const UserProfile = ({ initialUser }: { initialUser: User }) => {
             {loggedInUser?._id === user._id ? (
               <UserProfileContent lists={data.userLists as List[]} />
             ) : (
-              <ListGallery initialLists={data.userLists as List[]} />
+              <div className="mx-auto max-w-6xl w-full p-3">
+                <ListGallery initialLists={data.userLists as List[]} />
+              </div>
             )}
           </>
         )}
