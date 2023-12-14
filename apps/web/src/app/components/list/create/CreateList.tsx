@@ -232,7 +232,7 @@ const CreateList = ({
               <DraftsIcon />
             </button>
 
-            {list?.state === ListState.Published ? (
+            {create ? (
               <Button
                 size="sm"
                 color="primary"
