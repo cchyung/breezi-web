@@ -21,8 +21,8 @@ export const GET_USER = gql`
 `;
 
 export const SEND_SMS_VERIFICATION_TOKEN = gql`
-  query SendSMSVerificationToken($phone: String!) {
-    sendSMSVerificationToken(phone: $phone) {
+  query SendSMSVerificationToken($phone: String!, $invitedBy: String) {
+    sendSMSVerificationToken(phone: $phone, invitedBy: $invitedBy) {
       ok
       message
     }
@@ -30,8 +30,16 @@ export const SEND_SMS_VERIFICATION_TOKEN = gql`
 `;
 
 export const LOGIN_USER = gql`
-  query LoginUser($phone: String!, $verificationCode: String!) {
-    loginUser(phone: $phone, verificationCode: $verificationCode) {
+  query LoginUser(
+    $phone: String!
+    $verificationCode: String!
+    $invitedBy: String
+  ) {
+    loginUser(
+      phone: $phone
+      verificationCode: $verificationCode
+      invitedBy: $invitedBy
+    ) {
       authToken
       user {
         _id

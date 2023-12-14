@@ -8,6 +8,10 @@ import WelcomeScreen from "./components/WelcomeScreen";
 import PhoneInput from "@/app/components/ui/form/PhoneInput";
 import { useApolloClient } from "@apollo/client";
 import { SEND_SMS_VERIFICATION_TOKEN } from "@/lib/api/user/queries";
+import {
+  SendSmsVerificationTokenQuery,
+  SendSmsVerificationTokenQueryVariables,
+} from "@/lib/api";
 
 const Login = () => {
   const router = useRouter();
@@ -19,22 +23,39 @@ const Login = () => {
   const [phone, setPhone] = useState<string>("");
   const [showWelcome, setShowWelcome] = useState<boolean>(welcome);
   const [loading, setLoading] = useState(false);
+  const [showInviteOnlyAlert, setShowInviteOnlyAlert] =
+    useState<boolean>(false);
 
   const { updateLocalUser } = useContext(UserContext);
 
   const onSubmit = async (phone: string) => {
     try {
+      setShowInviteOnlyAlert(false);
       setLoading(true);
-      await client.query({
+
+      const {
+        data: { sendSMSVerificationToken },
+      } = await client.query<
+        SendSmsVerificationTokenQuery,
+        SendSmsVerificationTokenQueryVariables
+      >({
         query: SEND_SMS_VERIFICATION_TOKEN,
         variables: {
           phone,
+          invitedBy,
         },
       });
 
-      // write phone to user local storage
-      updateLocalUser({ phone });
-      router.push(`/login/verify`);
+      if (!sendSMSVerificationToken?.ok) {
+        setShowInviteOnlyAlert(true);
+        setLoading(false);
+      } else {
+        // write phone to user local storage
+        updateLocalUser({ phone });
+        router.push(
+          `/login/verify${invitedBy ? `?invitedBy=${invitedBy}` : ""}`
+        );
+      }
     } catch (error) {
       console.error(error);
       setLoading(false);
@@ -44,7 +65,7 @@ const Login = () => {
   return (
     <>
       <div className="h-screen w-screen grid items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
+        <div className="flex flex-col items-center gap-4 w-80">
           <img src="/logo/logo.png" alt="logo" className="w-48 md:w-72" />
           <h1 className="mb-4">Login or Create an Account</h1>
           <PhoneInput onChange={(e) => setPhone(e.target.value)} />
@@ -57,6 +78,19 @@ const Login = () => {
           >
             Submit
           </Button>
+          {showInviteOnlyAlert && (
+            <p className="text-red-500 max-w-fit text-center">
+              Breezi is currently invite only. <br />
+              <a
+                href="https://discord.gg/YRWvc4mFN6"
+                target="_blank"
+                className="underline"
+              >
+                Join our Discord
+              </a>{" "}
+              to get an invite!
+            </p>
+          )}
         </div>
       </div>
 

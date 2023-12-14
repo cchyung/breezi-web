@@ -100,6 +100,7 @@ export interface NexusGenObjects {
   ListLike: ListLike.ListLike;
   LoginObject: { // root type
     authToken?: string | null; // String
+    inviteValid?: boolean | null; // Boolean
     user?: NexusGenRootTypes['User'] | null; // User
   }
   Mutation: {};
@@ -162,6 +163,7 @@ export interface NexusGenFieldTypes {
   }
   LoginObject: { // field return type
     authToken: string | null; // String
+    inviteValid: boolean | null; // Boolean
     user: NexusGenRootTypes['User'] | null; // User
   }
   Mutation: { // field return type
@@ -256,6 +258,7 @@ export interface NexusGenFieldTypeNames {
   }
   LoginObject: { // field return type name
     authToken: 'String'
+    inviteValid: 'Boolean'
     user: 'User'
   }
   Mutation: { // field return type name
@@ -376,6 +379,7 @@ export interface NexusGenArgTypes {
       verificationCode: string; // String!
     }
     sendSMSVerificationToken: { // args
+      invitedBy?: string | null; // String
       phone: string; // String!
     }
     user: { // args

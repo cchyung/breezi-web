@@ -66,6 +66,7 @@ export const LoginObject = objectType({
   name: "LoginObject",
   definition(t) {
     t.string("authToken");
+    t.boolean("inviteValid");
     t.field("user", { type: User });
   },
 });
@@ -138,8 +139,8 @@ export const LoginUser = queryField("loginUser", {
     "Logs in the user based on the supplied number and verification code.  If the user doesn't exist, a new user will be created",
   args: {
     phone: nonNull(stringArg()),
-    invitedBy: stringArg(),
     verificationCode: nonNull(stringArg()),
+    invitedBy: stringArg(),
   },
   resolve: async (_, { phone, verificationCode, invitedBy }, __) => {
     let valid: boolean = false;
@@ -152,10 +153,8 @@ export const LoginUser = queryField("loginUser", {
         },
       });
     } else {
-      const user = await userService.getOrCreateUser({
-        phone,
-        invitedBy,
-      });
+      let user = await userService.getOrCreateUser({ phone, invitedBy });
+
       const authToken = authService.generateAuthToken(user._id.toString());
       return {
         authToken,
@@ -169,10 +168,22 @@ export const sendSMSVerificationToken = queryField("sendSMSVerificationToken", {
   type: Ok,
   args: {
     phone: nonNull(stringArg()),
+    invitedBy: stringArg(),
   },
-  resolve: async (_, { phone }, ___) => {
-    const { status, to } = await sendTwilioVerificationToken(phone);
-    return { ok: status === "pending", message: to };
+  resolve: async (_, { phone, invitedBy }, ___) => {
+    const existingUser = await userService.getUser({ phone });
+
+    if (existingUser) {
+      const { to } = await sendTwilioVerificationToken(phone);
+      return { ok: true, message: to };
+    } else {
+      if (invitedBy !== "656e6f7a5e9a71e1e08c061d") {
+        return { ok: false, message: "You must be invited to join the app" };
+      } else {
+        const { to } = await sendTwilioVerificationToken(phone);
+        return { ok: true, message: to };
+      }
+    }
   },
 });
 

@@ -92,6 +92,7 @@ export enum ListType {
 export type LoginObject = {
   __typename?: 'LoginObject';
   authToken?: Maybe<Scalars['String']['output']>;
+  inviteValid?: Maybe<Scalars['Boolean']['output']>;
   user?: Maybe<User>;
 };
 
@@ -224,6 +225,7 @@ export type QueryLoginUserArgs = {
 
 
 export type QuerySendSmsVerificationTokenArgs = {
+  invitedBy?: InputMaybe<Scalars['String']['input']>;
   phone: Scalars['String']['input'];
 };
 
@@ -397,6 +399,7 @@ export type GetUserQuery = { __typename?: 'Query', user?: { __typename?: 'User',
 
 export type SendSmsVerificationTokenQueryVariables = Exact<{
   phone: Scalars['String']['input'];
+  invitedBy?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -405,6 +408,7 @@ export type SendSmsVerificationTokenQuery = { __typename?: 'Query', sendSMSVerif
 export type LoginUserQueryVariables = Exact<{
   phone: Scalars['String']['input'];
   verificationCode: Scalars['String']['input'];
+  invitedBy?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 

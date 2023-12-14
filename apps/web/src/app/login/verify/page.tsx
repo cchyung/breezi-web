@@ -1,23 +1,24 @@
 "use client";
 import CodeInput from "./components/CodeInput";
 import { useContext, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useLazyQuery } from "@apollo/client";
-import { LoginUserQuery, LoginUserQueryVariables } from "@/lib/api";
 import { LOGIN_USER } from "@/lib/api/user/queries";
 import { UserContext } from "@/app/components/user/UserProvider";
-import { set } from "animejs";
 import { Spinner } from "@/app/components/ui";
 import { Amplitude, AmplitudeEventType } from "@/app/lib/analytics";
+import { LoginUserQuery, LoginUserQueryVariables } from "@/lib/api";
 
 const Verify = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const invitedBy = searchParams.get("invitedBy") ?? undefined;
+
   const [loginUser] = useLazyQuery<LoginUserQuery, LoginUserQueryVariables>(
     LOGIN_USER
   );
   const [verifyLoading, setVerifyLoading] = useState(false);
   const [invalidCode, setInvalidCode] = useState(false);
-
   const { user, updateLocalUser } = useContext(UserContext);
 
   const submitVerificationCode = async (code: string) => {
@@ -30,6 +31,7 @@ const Verify = () => {
           variables: {
             phone: user.phone,
             verificationCode: code,
+            invitedBy,
           },
         });
 
