@@ -172,7 +172,7 @@ export const GetList = queryField("list", {
 
     // if list is in draft, make sure it's only being requested by the author
     if (list.state === ListStateEnum.draft) {
-      if (ctx.user?._id !== list?.author?._id) {
+      if (ctx.user?._id?.toString() !== list?.author?._id?.toString()) {
         throw new AuthenticationError("user is not logged in");
       }
     }
