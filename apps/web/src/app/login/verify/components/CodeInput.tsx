@@ -77,8 +77,11 @@ const CodeInput = ({ onSubmit }: CodeInputProps) => {
           ref={hiddenInputRef}
           type="number"
           onChange={(e) => {
-            setCode(e.target.value);
-            onSubmit(e.target.value);
+            if (e.target.value.length === 6) {
+              setCode(e.target.value);
+              onSubmit(e.target.value);
+              e.target.value = "";
+            }
           }}
         ></input>
       </div>
