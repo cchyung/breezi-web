@@ -23,7 +23,10 @@ const FileDropzoneWrapper = ({
 
   const { getRootProps, isDragActive } = useDropzone({
     onDrop: onDropInternal,
-    noClick,
+    noClick: noClick,
+    onError(err) {
+      console.error(err);
+    },
   });
 
   return (
