@@ -49,11 +49,13 @@ export const ListService = (db: Database) => {
 
   const getUserLists = async ({
     userId,
+    state,
   }: {
     userId: string | Schema.Types.ObjectId;
+    state?: ListState;
   }) => {
     return await db.List.find(
-      { author: userId },
+      { author: userId, ...(state ? { state } : {}) },
       {},
       { sort: { updatedAt: -1, createdAt: -1 } }
     )

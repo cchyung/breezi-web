@@ -225,15 +225,16 @@ export const GetListFeed = queryField("listFeed", {
 export const GetUserLists = queryField("userLists", {
   type: list(List),
   args: {
-    userId: stringArg(),
+    userId: nonNull(stringArg()),
   },
   resolve: async (_, { userId }, ctx) => {
-    if (userId) {
-      const lists = await listService.getUserLists({ userId });
-      return lists;
+    if (ctx?.user?._id?.toString() === userId) {
+      return await listService.getUserLists({ userId });
     } else {
-      const lists = await listService.getUserLists({ userId: ctx.user._id });
-      return lists;
+      return await listService.getUserLists({
+        userId: userId,
+        state: ListStateEnum.published,
+      });
     }
   },
 });

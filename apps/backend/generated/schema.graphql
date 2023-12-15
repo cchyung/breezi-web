@@ -114,7 +114,7 @@ type Query {
   uploadUserProfileImageURL: SignedURL
   user(authToken: String, id: String): User
   userLikes(userId: String): [ListLike]
-  userLists(userId: String): [List]
+  userLists(userId: String!): [List]
   verifySMSVerificationToken(code: String!, phone: String!): Ok
 }
 

@@ -390,7 +390,7 @@ export interface NexusGenArgTypes {
       userId?: string | null; // String
     }
     userLists: { // args
-      userId?: string | null; // String
+      userId: string; // String!
     }
     verifySMSVerificationToken: { // args
       code: string; // String!

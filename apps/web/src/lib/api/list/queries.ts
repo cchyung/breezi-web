@@ -29,7 +29,7 @@ export const GET_LIST_FEED = gql`
 `;
 
 export const GET_USER_LISTS = gql`
-  query GetUserLists($userId: String) {
+  query GetUserLists($userId: String!) {
     userLists(userId: $userId) {
       ...list
     }

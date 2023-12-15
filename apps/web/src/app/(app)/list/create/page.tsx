@@ -11,9 +11,9 @@ const CreateListPage = () => {
   const { user } = useContext(UserContext);
 
   return (
-    <div className="absolute top-0 h-screen w-screen pt-8 md:py-4 md:px-2 flex flex-col gap-8 items-center justify-center bg-gray-100 pb-10">
+    <div className="absolute top-0 h-screen w-screen md:py-4 md:px-2 flex flex-col gap-8 items-center justify-center bg-gray-100 pb-10">
       {searchParams.get("firstList") === "true" && (
-        <h1 className="text-[32px] md:text-[48px] max-w-xl px-12">
+        <h1 className="text-[32px] md:text-[48px] max-w-xl px-12 pt-8">
           Let's create your first list on Breezi!
         </h1>
       )}
