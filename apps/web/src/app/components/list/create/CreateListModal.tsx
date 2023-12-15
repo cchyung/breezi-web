@@ -19,13 +19,7 @@ const CreateListModal = ({
   list?: List;
 }) => {
   return (
-    <Dialog
-      className="z-50 relative"
-      open={isOpen}
-      onClose={() => {
-        setIsOpen(false);
-      }}
-    >
+    <Dialog className="z-50 relative" open={isOpen} onClose={() => {}}>
       <div className="fixed inset-0 flex w-screen">
         <Dialog.Panel className="relative max-w-auto md:max-w-md md:h-auto h-screen w-full m-auto">
           <div className="w-full h-full">
