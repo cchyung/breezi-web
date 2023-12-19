@@ -64,8 +64,9 @@ const ListCardComments = ({
         ?.slice(0, expanded ? list.comments.length : 5)
         .map((comment) => (
           <div key={comment._id} className="flex flex-row gap-1">
-            <Username user={comment.author} />
-            <p className="overflow-clip">{comment.text}</p>
+            <p className="overflow-clip">
+              <Username user={comment.author} /> {comment.text}
+            </p>
           </div>
         ))}
 

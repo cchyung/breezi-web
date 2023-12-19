@@ -17,7 +17,7 @@ const Username = ({
 
   return (
     <a href={`/user/${user._id}`} className={className}>
-      <span className={sizeStyles[size]}>@{user.username}</span>
+      <span className={sizeStyles[size]}>{user.username}</span>
     </a>
   );
 };

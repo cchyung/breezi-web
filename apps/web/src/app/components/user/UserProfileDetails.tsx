@@ -173,7 +173,7 @@ const UserProfileDetails = ({
         <>
           <UserAvatar user={user} size="lg" />
 
-          <h3 className="username-lg">@{user.username}</h3>
+          <h3 className="username-lg">{user.username}</h3>
 
           {user.about && <p className="caption">{user.about}</p>}
         </>
