@@ -80,6 +80,11 @@ const UserProfileDetails = ({
       if (!loggedInUser) {
         return;
       }
+
+      if (newUsername === user.username) {
+        return;
+      }
+
       try {
         await updateUser({
           variables: {
@@ -87,6 +92,13 @@ const UserProfileDetails = ({
             user: {
               username: newUsername,
             },
+          },
+          onError(error) {
+            const graphQLError = error.graphQLErrors?.[0];
+            if (graphQLError?.extensions?.code === "USERNAME_TAKEN") {
+              alert("Username taken. Please select a different one");
+            }
+            throw error;
           },
         });
 

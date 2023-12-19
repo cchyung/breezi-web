@@ -15,6 +15,7 @@ import {
   verifyTwilioVerificationToken,
 } from "lib/twilio";
 import { AuthService } from "@/services/auth";
+import { GraphQLError } from "graphql";
 
 const userService = UserService(db);
 const listService = ListService(db);
@@ -226,6 +227,21 @@ export const updateUser = mutationField("updateUser", {
 
     if (ctx.user._id.toString() !== id) {
       throw new Error("Must be logged in as the user you are trying to update");
+    }
+
+    // check if username is already taken
+    if (user.username) {
+      const existingUser = await userService.getUser({
+        username: user.username,
+      });
+
+      if (existingUser && existingUser._id.toString() !== id) {
+        throw new GraphQLError("username is already taken", {
+          extensions: {
+            code: "USERNAME_TAKEN",
+          },
+        });
+      }
     }
 
     // @ts-ignore

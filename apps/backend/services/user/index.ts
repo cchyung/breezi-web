@@ -7,11 +7,17 @@ import { PopulatedUserFollower } from "@/models/userFollower";
 const identityFilter = ({
   id,
   phone,
+  username,
 }: {
   id?: string | Types.ObjectId;
   phone?: string;
+  username?: string;
 }) => ({
-  $or: [...(id ? [{ _id: id }] : []), ...(phone ? [{ phone }] : [])],
+  $or: [
+    ...(id ? [{ _id: id }] : []),
+    ...(phone ? [{ phone }] : []),
+    ...(username ? [{ username }] : []),
+  ],
 });
 
 const authService = AuthService();
@@ -25,16 +31,19 @@ export const UserService = (db: Database) => {
   async function getUser({
     id,
     phone,
+    username,
   }: {
     id?: string | Types.ObjectId;
     phone?: string;
+    username?: string;
   }) {
-    if (!id && !phone) {
+    if (!id && !phone && !username) {
       throw new Error("Must provide either id, address, or phone number");
     }
     const filter = identityFilter({
       id: id?.toString(),
       phone,
+      username,
     });
     const query = db.User.findOne(filter);
     return await query.exec();

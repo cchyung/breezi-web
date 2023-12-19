@@ -14,6 +14,7 @@ const Username = () => {
 
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [updateUser] = useMutation<
     UpdateUserMutation,
     UpdateUserMutationVariables
@@ -22,6 +23,7 @@ const Username = () => {
   const onSubmit = useCallback(
     async (username: string) => {
       try {
+        setErrorMessage("");
         setLoading(true);
         if (!user) {
           console.error("No user logged in");
@@ -40,6 +42,13 @@ const Username = () => {
               username: username,
               registered: true,
             },
+          },
+          onError(error) {
+            const graphQLError = error.graphQLErrors?.[0];
+            if (graphQLError?.extensions?.code === "USERNAME_TAKEN") {
+              setErrorMessage("Username taken, please select a new one");
+            }
+            throw error;
           },
         });
 
@@ -86,6 +95,10 @@ const Username = () => {
           >
             Continue
           </Button>
+
+          {errorMessage?.length > 0 && (
+            <span className="text-red-400">{errorMessage}</span>
+          )}
         </div>
       </div>
     </>
