@@ -55,7 +55,7 @@ export type ListInput = {
   items: Array<ListItemInput>;
   state?: InputMaybe<ListState>;
   title: Scalars['String']['input'];
-  type?: InputMaybe<ListType>;
+  type: ListType;
 };
 
 export type ListItem = {

@@ -12,7 +12,7 @@ export interface CreateListInput {
   author: string;
   title: string;
   items: ListItemInput[];
-  type?: ListType | null;
+  type: ListType | null;
   state?: ListState | null;
   description?: string | null;
   coverImageURL?: string | null;

@@ -80,8 +80,8 @@ const Login = () => {
           </Button>
           {showInviteOnlyAlert && (
             <p className="text-red-500 max-w-fit text-center">
-              Breezi is currently invite only. <br />
-              You can
+              Sorry, Breezi is currently invite only! <br />
+              You can{" "}
               <a
                 href="https://tally.so/r/w4Qr4k"
                 target="_blank"

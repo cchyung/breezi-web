@@ -105,7 +105,7 @@ export const ListInput = inputObjectType({
     t.nonNull.list.field("items", { type: nonNull(ListItemInput) });
     t.string("description");
     t.string("coverImageURL");
-    t.field("type", { type: ListType });
+    t.nonNull.field("type", { type: ListType });
   },
 });
 

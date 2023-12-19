@@ -1,4 +1,4 @@
-import { List, ListItem } from "@/models/list";
+import { List, ListItem, ListType } from "@/models/list";
 import { User } from "@/models/user";
 import { ListState } from "@/models/list";
 import { CreateListInput, ListService, UserService } from "@/services";
@@ -26,6 +26,7 @@ const lists: Omit<CreateListInput, "author">[] = [
   {
     title: "My First List",
     state: ListState.published,
+    type: ListType.bulleted,
     coverImageURL:
       "https://images.pexels.com/photos/1139541/pexels-photo-1139541.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
 
@@ -38,6 +39,7 @@ const lists: Omit<CreateListInput, "author">[] = [
   {
     title: "My Second List",
     state: ListState.published,
+    type: ListType.bulleted,
     description: "This is a description of the second list",
     items: [
       {
@@ -54,6 +56,7 @@ const lists: Omit<CreateListInput, "author">[] = [
   {
     title: "My Third List",
     state: ListState.published,
+    type: ListType.bulleted,
     items: [
       {
         text: "This is an item",

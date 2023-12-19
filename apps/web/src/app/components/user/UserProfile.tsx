@@ -5,6 +5,8 @@ import {
   FollowButton,
   UserContext,
   UserProfileContent,
+  UserProfileDetails,
+  UserProfileImageUpload,
 } from "@/app/components/user";
 import {
   GetUserListsQuery,
@@ -53,11 +55,7 @@ const UserProfile = ({ initialUser }: { initialUser: User }) => {
   return (
     <div className="flex flex-col mt-10 gap-4 max-w-6xl mx-auto md:p-3 py-3">
       <div className="w-full flex flex-col items-center gap-4">
-        <UserAvatar user={user} size="lg" />
-
-        <h3 className="username-lg">@{user.username}</h3>
-
-        {user.about && <p className="caption">{user.about}</p>}
+        <UserProfileDetails user={user} refetchUser={refetchUser} />
 
         {loggedInUser?._id !== user._id && (
           <FollowButton user={user} refetchUser={refetchUser} />

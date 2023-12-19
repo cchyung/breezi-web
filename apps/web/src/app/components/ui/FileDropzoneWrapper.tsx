@@ -1,11 +1,5 @@
 "use client";
-import {
-  PropsWithChildren,
-  useCallback,
-  createContext,
-  useState,
-  useEffect,
-} from "react";
+import { PropsWithChildren, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 
 const FileDropzoneWrapper = ({
@@ -30,12 +24,14 @@ const FileDropzoneWrapper = ({
   });
 
   return (
-    <div {...getRootProps()} className="relative">
+    <div {...getRootProps()} className="relative cursor-pointer">
       {children}
 
       {isDragActive ? (
         <div className="absolute h-full w-full flex items-center justify-center top-0 bg-gray-100/80 rounded-2xl border-2 border-gray-100 border-dashed z-50">
-          <span>Upload Image</span>
+          <span className="text-xs p-2 rounded-md bg-gray-400 text-white">
+            Upload Image
+          </span>
         </div>
       ) : (
         ""

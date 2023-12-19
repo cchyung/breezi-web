@@ -42,7 +42,7 @@ input ListInput {
   items: [ListItemInput!]!
   state: ListState
   title: String!
-  type: ListType
+  type: ListType!
 }
 
 type ListItem {

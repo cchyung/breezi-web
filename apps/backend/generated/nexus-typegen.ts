@@ -55,7 +55,7 @@ export interface NexusGenInputs {
     items: NexusGenInputs['ListItemInput'][]; // [ListItemInput!]!
     state?: NexusGenEnums['ListState'] | null; // ListState
     title: string; // String!
-    type?: NexusGenEnums['ListType'] | null; // ListType
+    type: NexusGenEnums['ListType']; // ListType!
   }
   ListItemInput: { // input type
     imageURL?: string | null; // String
