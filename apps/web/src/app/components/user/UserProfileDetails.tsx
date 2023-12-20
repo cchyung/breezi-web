@@ -62,12 +62,12 @@ const UserProfileDetails = ({
             },
           });
 
+          await refetchUser();
+
           updateLocalUser({
             ...loggedInUser,
             imageURL: profileImageURL,
           });
-
-          await refetchUser();
         } else {
           console.error(new Error("Failed to get upload url"));
         }

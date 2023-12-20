@@ -33,10 +33,7 @@ import { CREATE_LIST, UPDATE_LIST } from "@/lib/api/list/queries";
 import { useApolloClient } from "@apollo/client";
 
 import FileDropzoneWrapper from "@/app/components/ui/FileDropzoneWrapper";
-import {
-  GET_UPLOAD_LIST_COVER_URL,
-  GET_UPLOAD_PROFILE_IMAGE_URL,
-} from "@/lib/api/upload/queries";
+import { GET_UPLOAD_LIST_COVER_URL } from "@/lib/api/upload/queries";
 import { getObjectURL, uploadFileToSignedURL } from "@/lib/upload";
 import { Amplitude, AmplitudeEventType } from "@/app/lib/analytics";
 
@@ -64,6 +61,8 @@ const CreateList = ({
   const client = useApolloClient();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const titleInputRef = useRef<HTMLTextAreaElement>(null);
+  const descriptionInputRef = useRef<HTMLTextAreaElement>(null);
 
   const listItemInputRefs = useMemo<RefObject<HTMLTextAreaElement>[]>(() => {
     return items.map(() => createRef<HTMLTextAreaElement>());
@@ -318,21 +317,36 @@ const CreateList = ({
         </div>
 
         <div className="p-6 pt-4 flex flex-col gap-2 overflow-hidden">
-          <input
+          <textarea
             placeholder="Title your list"
-            className="font-bold text-3xl"
+            className="resize-none font-bold text-3xl"
+            rows={1}
             value={title}
             onChange={(e) => {
               setTitle(e.target.value);
             }}
-          ></input>
-          <input
+            ref={titleInputRef}
+            onInput={() => {
+              titleInputRef.current!.style.height = "5px";
+              titleInputRef.current!.style.height =
+                titleInputRef.current!.scrollHeight + "px";
+            }}
+          ></textarea>
+          <textarea
+            className="resize-none"
             placeholder={"(Optional) write a caption for your list"}
             value={description}
             onChange={(e) => {
               setDescription(e.target.value);
             }}
-          ></input>
+            ref={descriptionInputRef}
+            onInput={() => {
+              descriptionInputRef.current!.style.height = "5px";
+              descriptionInputRef.current!.style.height =
+                descriptionInputRef.current!.scrollHeight + "px";
+            }}
+            rows={1}
+          ></textarea>
 
           <ul
             className={`flex flex-col gap-1 ml-4 list-inside flex-1 ${
