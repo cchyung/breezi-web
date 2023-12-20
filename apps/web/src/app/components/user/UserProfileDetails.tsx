@@ -36,6 +36,7 @@ const UserProfileDetails = ({
       if (!loggedInUser) {
         return;
       }
+
       if (imageFile) {
         const uploadImageURLQuery = await client.query<
           GetUploadProfileImageUrlQuery,
@@ -128,7 +129,7 @@ const UserProfileDetails = ({
           />
 
           {editUsername ? (
-            <div className="relative flex items-center">
+            <div className="relative flex items-center md:flex-row flex-col gap-2">
               <input
                 className="username-lg text-center bg-white rounded-lg"
                 value={username ?? ""}
@@ -136,9 +137,9 @@ const UserProfileDetails = ({
                   setUsername(value);
                 }}
               ></input>
-              <div className="h-full absolute left-full ml-4 flex items-center gap-3 text-sm">
+              <div className="h-full relative md:absolute md:left-full md:ml-4 flex items-center gap-3 text-sm">
                 <button
-                  className="h-full px-4 rounded-full bg-gray-600 hover:bg-black text-sm text-white"
+                  className="h-full px-4 py-2 rounded-full bg-gray-600 hover:bg-black text-sm text-white"
                   onClick={() => onUpdateUsername(username)}
                 >
                   Submit

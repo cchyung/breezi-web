@@ -24,6 +24,11 @@ const Username = () => {
     async (username: string) => {
       try {
         setErrorMessage("");
+        if (!username || username.length === 0) {
+          setErrorMessage("Please set a username");
+          return;
+        }
+
         setLoading(true);
         if (!user) {
           console.error("No user logged in");
