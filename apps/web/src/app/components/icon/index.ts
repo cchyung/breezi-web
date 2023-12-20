@@ -11,3 +11,5 @@ export { default as UpArrowIcon } from "./UpArrowIcon";
 export { default as AddIcon } from "./AddIcon";
 export { default as ProfileIcon } from "./ProfileIcon";
 export { default as HomeIcon } from "./HomeIcon";
+export { default as CheckIcon } from "./CheckIcon";
+export { default as PencilIcon } from "./PencilIcon";

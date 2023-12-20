@@ -13,6 +13,7 @@ import { GET_UPLOAD_PROFILE_IMAGE_URL } from "@/lib/api/upload/queries";
 import { getObjectURL, uploadFileToSignedURL } from "@/lib/upload";
 import { UPDATE_USER } from "@/lib/api/user/queries";
 import { UserAvatar } from "../ui";
+import { CheckIcon, CrossIcon, PencilIcon } from "../icon";
 
 const UserProfileDetails = ({
   user,
@@ -138,11 +139,8 @@ const UserProfileDetails = ({
                 }}
               ></input>
               <div className="h-full relative md:absolute md:left-full md:ml-4 flex items-center gap-3 text-sm">
-                <button
-                  className="h-full px-4 py-2 rounded-full bg-gray-600 hover:bg-black text-sm text-white"
-                  onClick={() => onUpdateUsername(username)}
-                >
-                  Submit
+                <button onClick={() => onUpdateUsername(username)}>
+                  <CheckIcon className="w-5 h-5 text-green-600" />
                 </button>
 
                 <button
@@ -150,7 +148,7 @@ const UserProfileDetails = ({
                     setEditUsername(false);
                   }}
                 >
-                  Cancel
+                  <CrossIcon className="w-4 h-4 text-gray-400" />
                 </button>
               </div>
             </div>
@@ -162,9 +160,7 @@ const UserProfileDetails = ({
               className="relative flex items-center gap-2 group"
             >
               <h3 className="username-lg">{user.username}</h3>
-              <span className="absolute text-gray-600 invisible group-hover:visible left-full ml-4 text-sm">
-                edit
-              </span>
+              <PencilIcon className="w-5 h-5 invisible group-hover:visible text-gray-400 absolute left-full ml-2" />
             </button>
           )}
 
