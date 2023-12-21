@@ -28,8 +28,8 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
   }, []);
 
   const updateLocalUser = (_user: UserData | null) => {
-    setUser(_user);
-    writeUserToLocalStorage(_user);
+    setUser({ ...user, ..._user });
+    writeUserToLocalStorage({ ...user, ..._user });
   };
 
   return (

@@ -1,4 +1,5 @@
 import { S3Service } from "@/lib/aws";
+import { generateUUID } from "@/lib/utils/uuid";
 import { objectType, queryField, nonNull, stringArg } from "nexus";
 
 export const SignedURL = objectType({
@@ -18,8 +19,10 @@ export const uploadUserProfileImageURL = queryField(
         throw new Error("must be signed in to use this function");
       }
 
-      const userProfileImageKey = `user-profile-images/${ctx.user._id.toString()}`;
+      // generate a random name for the key
+      const uuid = generateUUID();
 
+      const userProfileImageKey = `user-profile-images/${ctx.user._id.toString()}/${uuid}`;
       const signedURL = await S3Service.getPutObjectURL(userProfileImageKey);
 
       return {
@@ -37,8 +40,8 @@ export const uploadListCoverURL = queryField("uploadListCoverURL", {
       throw new Error("must be signed in to use this function");
     }
 
-    const randomHash = Math.random().toString(36).substring(7);
-    const listImageKey = `list-images/${ctx.user._id.toString()}/${randomHash}`;
+    const uuid = generateUUID()
+    const listImageKey = `list-images/${ctx.user._id.toString()}/${uuid}`;
 
     const signedURL = await S3Service.getPutObjectURL(listImageKey);
 
