@@ -22,6 +22,19 @@ const PhoneInput = ({
     }
   }, [number, countryCode]);
 
+  const getOrderedCountries = () => {
+    const countries = getCountries();
+    // remove US and CA and put them in the front
+    return [
+      "US",
+      "CA",
+      "GB",
+      ...countries.filter(
+        (country) => country !== "US" && country !== "CA" && country !== "GB"
+      ),
+    ] as ReturnType<typeof getCountries>;
+  };
+
   return (
     <div className="flex items-center gap-2">
       <select
@@ -31,7 +44,7 @@ const PhoneInput = ({
         }}
         defaultValue={"US"}
       >
-        {getCountries().map((country) => (
+        {getOrderedCountries().map((country) => (
           <option key={country} value={country}>
             {country} +{getCountryCallingCode(country)}
           </option>
