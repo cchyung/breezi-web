@@ -99,7 +99,7 @@ const ProfileImage = () => {
             className="w-full"
             loading={loading}
           >
-            Almost There!
+            Next
           </Button>
         </div>
       </div>
