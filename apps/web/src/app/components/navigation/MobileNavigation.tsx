@@ -12,6 +12,7 @@ const MobileNavigation = () => {
   const pathname = usePathname();
 
   if (pathname.includes("/login")) return null;
+  if (pathname.includes("/create")) return null;
 
   return (
     <>

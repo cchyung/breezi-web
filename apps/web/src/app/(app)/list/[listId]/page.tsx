@@ -1,11 +1,11 @@
-import { ListCard } from "@/app/components/list";
 import StatefulListCard from "@/app/components/list/listCard/StatefulListCard";
+import { Amplitude, AmplitudeEventType } from "@/app/lib/analytics";
 import { GetListQuery, GetListQueryVariables } from "@/lib/api";
 import { getClient } from "@/lib/api/client";
 import { GET_LIST } from "@/lib/api/list/queries";
-import { useQuery } from "@apollo/client";
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { URLSearchParams } from "url";
 
 const getList = async (listId: string) => {
   "use server";
@@ -40,12 +40,25 @@ export const generateMetadata = async ({
   };
 };
 
-const ListPage = async ({ params }: { params: { listId: string } }) => {
+const ListPage = async ({
+  params,
+  searchParams,
+}: {
+  params: { listId: string };
+  searchParams: Record<string, string | string[] | undefined>;
+}) => {
   let list = await getList(params.listId);
 
   if (!list) {
     // 404
     return notFound();
+  }
+
+  if (Boolean(searchParams["shared"])) {
+    console.log("tracking shared list view event")
+    Amplitude.trackEvent(AmplitudeEventType.SHARED_LIST_VIEW, {
+      listId: list._id,
+    });
   }
 
   return (
