@@ -17,9 +17,11 @@ const ListCard = ({
   onRefetch,
   showOptions = false,
   refetch,
+  onDelete,
 }: {
   list: List;
   onRefetch?: (list: List) => void;
+  onDelete?: (list: List) => void;
   showOptions?: boolean;
   refetch?: () => Promise<any>; // refetch function from parent
 }) => {
@@ -67,7 +69,11 @@ const ListCard = ({
 
           {showOptions && (
             <div className="ml-auto">
-              <ListCardOptions refetchList={refetchList} list={list} />
+              <ListCardOptions
+                refetchList={refetchList}
+                list={list}
+                onDelete={onDelete}
+              />
             </div>
           )}
         </div>

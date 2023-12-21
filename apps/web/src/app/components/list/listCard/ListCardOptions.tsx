@@ -15,9 +15,11 @@ import { DELETE_LIST } from "@/lib/api/list/queries";
 const ListCardOptions = ({
   list,
   refetchList,
+  onDelete,
 }: {
   list: List;
   refetchList: () => Promise<void>;
+  onDelete?: (list: List) => void;
 }) => {
   const { openModal } = useContext(CreateListModalContext);
   const client = useApolloClient();
@@ -29,6 +31,8 @@ const ListCardOptions = ({
         id: list._id,
       },
     });
+
+    onDelete && onDelete(list);
   };
 
   return (

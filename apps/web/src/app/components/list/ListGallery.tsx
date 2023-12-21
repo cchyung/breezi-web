@@ -17,17 +17,20 @@ const ListGallery = ({
     setLists(initialLists);
   }, [initialLists]);
 
-  const onRefetch = useCallback((updatedList: List) => {
-    setLists((currentLists) => {
-      return currentLists.map((list) => {
-        if (list._id === updatedList._id) {
-          return updatedList;
-        } else {
-          return list;
-        }
+  const onRefetch = useCallback(
+    (updatedList: List) => {
+      setLists((currentLists) => {
+        return currentLists.map((list) => {
+          if (list._id === updatedList._id) {
+            return updatedList;
+          } else {
+            return list;
+          }
+        });
       });
-    });
-  }, [lists]);
+    },
+    [lists]
+  );
 
   return (
     <div className="w-full">
@@ -41,6 +44,11 @@ const ListGallery = ({
                   key={list._id}
                   onRefetch={onRefetch}
                   showOptions={showOptions}
+                  onDelete={(deletedList) => {
+                    setLists((currentLists) =>
+                      currentLists.filter((l) => l._id !== deletedList._id)
+                    );
+                  }}
                 />
               ))
             ) : (
