@@ -204,7 +204,6 @@ const CreateList = ({
         <div className="flex items-center justify-between p-4">
           <div className="ml-auto flex items-center gap-2">
             <button
-              className="mr-4"
               onClick={() =>
                 setType((type) => {
                   return type === ListType.Bulleted
@@ -220,31 +219,37 @@ const CreateList = ({
               )}
             </button>
 
-            <button
-              disabled={
-                !title || title.length == 0 || saveDraftLoading || submitLoading
-              }
-              onClick={() => onSubmit(false)}
-              className="disabled:text-gray-300 text-black"
-            >
-              <DraftsIcon />
-            </button>
-
             {create ? (
-              <Button
-                size="sm"
-                color="primary"
-                disabled={
-                  submitLoading ||
-                  saveDraftLoading ||
-                  !title ||
-                  title.length == 0
-                }
-                loading={submitLoading}
-                onClick={() => onSubmit(true)}
-              >
-                {create ? "Share" : "Update"}
-              </Button>
+              <>
+                <Button
+                  size="sm"
+                  color="gray"
+                  disabled={
+                    saveDraftLoading ||
+                    submitLoading ||
+                    !title ||
+                    title.length == 0
+                  }
+                  loading={saveDraftLoading}
+                  onClick={() => onSubmit(true)}
+                >
+                  Save Draft
+                </Button>
+                <Button
+                  size="sm"
+                  color="primary"
+                  disabled={
+                    submitLoading ||
+                    saveDraftLoading ||
+                    !title ||
+                    title.length == 0
+                  }
+                  loading={submitLoading}
+                  onClick={() => onSubmit(true)}
+                >
+                  {create ? "Share" : "Update"}
+                </Button>
+              </>
             ) : (
               <>
                 <Button

@@ -38,7 +38,7 @@ const CreateListModal = ({
 
               <div className="absolute left-6 top-6">
                 <button onClick={() => setIsOpen(false)}>
-                  <CrossIcon />
+                  <CrossIcon className="w-4 h-4" />
                 </button>
               </div>
             </Card>

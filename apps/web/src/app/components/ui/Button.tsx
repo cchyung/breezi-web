@@ -30,7 +30,7 @@ const Button = ({
 
   const colorStyles = {
     primary: "bg-primary text-white",
-    gray: "bg-gray-400 text-white",
+    gray: "bg-gray-100 text-black",
     black: "bg-black text-white",
   };
 
