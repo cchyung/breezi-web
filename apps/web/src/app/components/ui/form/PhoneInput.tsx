@@ -36,7 +36,7 @@ const PhoneInput = ({
   };
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 w-full">
       <select
         className="border-0 bg-gray-200 px-4 py-3 rounded-2xl appearance-none"
         onChange={(e) => {

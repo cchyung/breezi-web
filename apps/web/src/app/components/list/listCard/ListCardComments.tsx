@@ -29,33 +29,45 @@ const ListCardComments = ({
 
   const [expanded, setExpanded] = useState(false);
   const [commentText, setCommentText] = useState("");
+  const [submitCommentLoading, setSubmitCommentLoading] = useState(false);
 
   const submitComment = useCallback(
     async (text: string) => {
-      if (!user) {
-        router.push("/login");
+      if (submitCommentLoading) {
         return;
       }
 
-      await client.mutate<
-        AddCommentToListMutation,
-        AddCommentToListMutationVariables
-      >({
-        mutation: ADD_COMMENT_TO_LIST,
-        variables: {
+      try {
+        setSubmitCommentLoading(true);
+
+        if (!user) {
+          router.push("/login");
+          return;
+        }
+
+        await client.mutate<
+          AddCommentToListMutation,
+          AddCommentToListMutationVariables
+        >({
+          mutation: ADD_COMMENT_TO_LIST,
+          variables: {
+            listId: list._id,
+            text: text,
+          },
+        });
+
+        Amplitude.trackEvent(AmplitudeEventType.CREATE_LIST_COMMENT, {
           listId: list._id,
-          text: text,
-        },
-      });
+        });
 
-      Amplitude.trackEvent(AmplitudeEventType.CREATE_LIST_COMMENT, {
-        listId: list._id,
-      });
-
-      setCommentText("");
-      refetchList();
+        setCommentText("");
+        refetchList();
+      } catch (error) {
+      } finally {
+        setSubmitCommentLoading(false);
+      }
     },
-    [user]
+    [user, submitCommentLoading]
   );
 
   return (
@@ -85,6 +97,7 @@ const ListCardComments = ({
         <Input
           type="text"
           placeholder="Add a Comment"
+          enterKeyHint="send"
           onChange={({ target: { value } }) => {
             setCommentText(value);
           }}
@@ -104,7 +117,7 @@ const ListCardComments = ({
             <button
               className="bg-blue-600 text-white rounded-3xl h-full px-2"
               onClick={() => submitComment(commentText)}
-              disabled={commentText.length === 0}
+              disabled={submitCommentLoading || commentText.length === 0}
             >
               <UpArrowIcon />
             </button>

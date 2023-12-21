@@ -8,6 +8,14 @@ interface InputProps {
   value?: any;
   className?: string;
   inputClassName?: string;
+  enterKeyHint?:
+    | "enter"
+    | "done"
+    | "go"
+    | "next"
+    | "previous"
+    | "search"
+    | "send";
 }
 
 const Input = ({
@@ -18,7 +26,8 @@ const Input = ({
   children,
   value,
   className,
-  inputClassName
+  inputClassName,
+  enterKeyHint,
 }: PropsWithChildren<InputProps>) => {
   return (
     <div className={`relative ${className}`}>
@@ -29,6 +38,7 @@ const Input = ({
         onChange={onChange}
         onKeyDown={onKeyDown}
         value={value}
+        enterKeyHint={enterKeyHint}
       ></input>
       {children}
     </div>
