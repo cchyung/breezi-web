@@ -212,7 +212,7 @@ const CreateList = ({
                 })
               }
             >
-              {type === ListType.Bulleted ? (
+              {type === ListType.Numbered ? (
                 <BulletedListIcon className="w-8" />
               ) : (
                 <NumberedListIcon className="w-8" />

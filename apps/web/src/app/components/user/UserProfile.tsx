@@ -14,6 +14,7 @@ import {
   GetUserQuery,
   GetUserQueryVariables,
   List,
+  ListState,
   User,
 } from "@/lib/api";
 import { GET_USER_LISTS } from "@/lib/api/list/queries";
@@ -57,14 +58,15 @@ const UserProfile = ({ initialUser }: { initialUser: User }) => {
       <div className="w-full flex flex-col items-center gap-4">
         <UserProfileDetails user={user} refetchUser={refetchUser} />
 
-        {loggedInUser?._id !== user._id && (
+        {loggedInUser && loggedInUser?._id !== user._id && (
           <FollowButton user={user} refetchUser={refetchUser} />
         )}
 
         <div className="flex flex-row items-center justify-between">
           <div className="flex flex-col gap-2 items-center px-4">
             <p className="font-bold text-[20px]">
-              {data?.userLists?.length ?? 0}
+              {data?.userLists?.filter((l) => l?.state !== ListState.Draft)
+                .length ?? 0}
             </p>
             <p className="text-gray-400 caption">Lists</p>
           </div>
