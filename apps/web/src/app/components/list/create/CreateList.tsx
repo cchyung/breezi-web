@@ -289,8 +289,11 @@ const CreateList = ({
 
         <div>
           {coverImageURL ? (
-            <div className="h-[200px] relative overflow-hidden group">
-              <img src={coverImageURL} className="w-full object-cover" />
+            <div className="relative overflow-hidden group">
+              <img
+                src={coverImageURL}
+                className="w-full h-40 object-cover overflow-hidden"
+              />
 
               <div className="group-hover:flex hidden flex-row items-center p-4 justify-end w-full absolute bottom-0">
                 <Button
