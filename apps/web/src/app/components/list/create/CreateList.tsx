@@ -231,7 +231,7 @@ const CreateList = ({
                     title.length == 0
                   }
                   loading={saveDraftLoading}
-                  onClick={() => onSubmit(true)}
+                  onClick={() => onSubmit(false)}
                 >
                   Save Draft
                 </Button>
@@ -264,7 +264,9 @@ const CreateList = ({
                   loading={saveDraftLoading}
                   onClick={() => onSubmit(false)}
                 >
-                  Update Draft
+                  {list?.state === ListState.Published
+                    ? "Move to Drafts"
+                    : "Update Draft"}
                 </Button>
                 <Button
                   size="sm"
