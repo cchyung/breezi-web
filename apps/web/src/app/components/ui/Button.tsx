@@ -30,7 +30,7 @@ const Button = ({
 
   const colorStyles = {
     primary: "bg-primary text-white",
-    gray: "bg-gray-100 text-black",
+    gray: "bg-gray-200 text-black",
     black: "bg-black text-white",
   };
 
@@ -43,7 +43,7 @@ const Button = ({
         className={`${className} ${colorStyle} ${
           disabled && disabledStyle
         } relative disabled:cursor-not-allowed rounded-2xl
-        transition-colors`}
+        transition-colors shadow-md`}
         onClick={onClick}
         onMouseOver={onMouseOver}
         disabled={loading || disabled}

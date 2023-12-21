@@ -29,6 +29,10 @@ const Username = () => {
           return;
         }
 
+        if (username.length > 25) {
+          setErrorMessage("Username must be less than than 25 characters");
+        }
+
         setLoading(true);
         if (!user) {
           console.error("No user logged in");

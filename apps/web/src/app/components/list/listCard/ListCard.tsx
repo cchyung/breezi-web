@@ -47,7 +47,7 @@ const ListCard = ({
   const { user } = useContext(UserContext);
 
   return (
-    <Card className="shadow-xl">
+    <Card className="shadow-xl overflow-hidden">
       <div className="flex flex-col gap-2">
         <div className="flex flex-row gap-1 items-center mb-2">
           <UserAvatar user={list.author} size="sm" />

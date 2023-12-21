@@ -87,6 +87,11 @@ const UserProfileDetails = ({
         return;
       }
 
+      if (newUsername.length > 25) {
+        alert("Username must be shorter than 25 characters");
+        return;
+      }
+
       try {
         await updateUser({
           variables: {
