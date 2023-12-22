@@ -7,6 +7,8 @@ import { UserContext } from "../user/UserProvider";
 import { useContext } from "react";
 
 function iOS() {
+  // if navigator is not present, we are probably in SSR
+  if (typeof navigator === "undefined") return false;
   return (
     [
       "iPad Simulator",
