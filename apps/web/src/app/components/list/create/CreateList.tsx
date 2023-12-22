@@ -476,6 +476,26 @@ const CreateList = ({
                             return line.replace(/^[0-9]+[.)]/, "").trim();
                           });
                         }
+
+                        // if line starts with - [ ] or - [x]
+                        else if (lines[0].match(/^[-][ ]?\[[x ]?]/)) {
+                          setType(ListType.Bulleted);
+
+                          // remove - [ ] or - [x] from each line
+                          formattedLines = lines.map((line) => {
+                            if (line.startsWith("- [x]")) {
+                              return line
+                                .replace(/^[-][ ]?\[[x ]?]/, "✅")
+                                .trim();
+                            } else if (line.startsWith("- [ ]")) {
+                              return line
+                                .replace(/^[-][ ]?\[[x ]?]/, "☑️")
+                                .trim();
+                            } else {
+                              return line;
+                            }
+                          });
+                        }
                         // if line starts with - or *
                         else if (lines[0].match(/^[-*]/)) {
                           setType(ListType.Bulleted);
