@@ -59,6 +59,13 @@ const CreateList = ({
   const [saveDraftLoading, setSaveDraftLoading] = useState(false);
   const [activeItemIndex, setActiveItemIndex] = useState(-1);
 
+  /*
+   * A flag to track if enter was pressed while the last item in the list was focused
+   * This is needed because when enter is pressed, a new item is added to the list but we must
+   * wait until after the item is created before being able to focus on it (i'm a god)
+   */
+  const [enterPressedOnLastItem, setEnterPressedOnLastItem] = useState(false);
+
   const client = useApolloClient();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -91,7 +98,12 @@ const CreateList = ({
     items.map((_, index) => {
       autoGrowTextArea(index);
     });
-  }, [items]);
+
+    if (enterPressedOnLastItem) {
+      setEnterPressedOnLastItem(false);
+      listItemInputRefs[items.length - 1]?.current?.focus();
+    }
+  }, [items, enterPressedOnLastItem]);
 
   const onSubmit = useCallback(
     async (publish?: boolean) => {
@@ -401,6 +413,10 @@ const CreateList = ({
                             ...prev.slice(index + 1),
                           ];
                         });
+
+                        if (index + 1 === items.length) {
+                          setEnterPressedOnLastItem(true);
+                        }
 
                         listItemInputRefs[index + 1]?.current?.focus();
                       } else if (
