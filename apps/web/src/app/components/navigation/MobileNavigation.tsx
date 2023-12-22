@@ -33,11 +33,9 @@ const MobileNavigation = () => {
 
   return (
     <>
-      <div className={`h-[52px] ${iOS() && "pb-8"}`}></div>
+      <div className={`h-[52px] pb-safe`}></div>
       <div
-        className={`fixed bottom-0 w-full bg-white md:hidden flex items-center justify-around ${
-          iOS() && "pb-8"
-        }`}
+        className={`fixed bottom-0 w-full bg-white md:hidden flex items-center justify-around pb-safe`}
       >
         <button
           className="py-2 hover:text-primary transition-colors"

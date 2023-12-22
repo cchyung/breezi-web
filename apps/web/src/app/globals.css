@@ -24,6 +24,11 @@
 }
 
 @layer utilities {
+  @layer utilities {
+    .pb-safe {
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+  }
   @layer responsive {
     /* Hide scrollbar for Chrome, Safari and Opera */
     .no-scrollbar::-webkit-scrollbar {

@@ -476,6 +476,15 @@ const CreateList = ({
                             return line.replace(/^[0-9]+[.)]/, "").trim();
                           });
                         }
+                        // if line starts with - or *
+                        else if (lines[0].match(/^[-*]/)) {
+                          setType(ListType.Bulleted);
+
+                          // remove - or * from each line
+                          formattedLines = lines.map((line) => {
+                            return line.replace(/^[-*]/, "").trim();
+                          });
+                        }
                       }
 
                       setEnterPressedOnLastItem(true);
