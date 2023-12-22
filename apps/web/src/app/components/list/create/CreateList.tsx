@@ -36,6 +36,7 @@ import FileDropzoneWrapper from "@/app/components/ui/FileDropzoneWrapper";
 import { GET_UPLOAD_LIST_COVER_URL } from "@/lib/api/upload/queries";
 import { getObjectURL, uploadFileToSignedURL } from "@/lib/upload";
 import { Amplitude, AmplitudeEventType } from "@/app/lib/analytics";
+import { set } from "animejs";
 
 const CreateList = ({
   list,
@@ -58,6 +59,8 @@ const CreateList = ({
   const [saveDraftLoading, setSaveDraftLoading] = useState(false);
   const [activeItemIndex, setActiveItemIndex] = useState(-1);
 
+  const [showScrollToTopButton, setShowScrollToTopButton] = useState(false);
+
   /*
    * A flag to track if enter was pressed while the last item in the list was focused
    * This is needed because when enter is pressed, a new item is added to the list but we must
@@ -71,6 +74,17 @@ const CreateList = ({
   const titleInputRef = useRef<HTMLTextAreaElement>(null);
   const descriptionInputRef = useRef<HTMLTextAreaElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (
+      containerRef?.current &&
+      containerRef?.current?.scrollHeight > containerRef?.current?.clientHeight
+    ) {
+      setShowScrollToTopButton(true);
+    } else {
+      setShowScrollToTopButton(false);
+    }
+  }, [containerRef]);
 
   const listItemInputRefs = useMemo<RefObject<HTMLTextAreaElement>[]>(() => {
     return items.map(() => createRef<HTMLTextAreaElement>());
@@ -534,9 +548,7 @@ const CreateList = ({
       </div>
       {
         // if container ref needs to scroll and is not at the top
-        containerRef?.current &&
-        containerRef?.current?.scrollHeight >
-          containerRef?.current?.clientHeight ? (
+        showScrollToTopButton ? (
           <div className="absolute bottom-6 right-6">
             <button
               className="bg-white rounded-full p-2 shadow-md hover:bg-primary hover:-translate-y-2 transition-all"
