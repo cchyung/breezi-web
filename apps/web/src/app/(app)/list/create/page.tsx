@@ -1,4 +1,5 @@
 "use client";
+import { CrossIcon } from "@/app/components/icon";
 import { CreateList } from "@/app/components/list";
 import { Card } from "@/app/components/ui";
 import { UserContext } from "@/app/components/user/UserProvider";
@@ -19,7 +20,7 @@ const CreateListPage = () => {
       )}
 
       <Card
-        className="shadow-xl md:max-w-md md:h-auto w-full h-full"
+        className="shadow-xl md:max-w-md md:h-auto w-full h-full relative"
         tight={true}
       >
         <CreateList
@@ -28,6 +29,10 @@ const CreateListPage = () => {
           }}
           create={true}
         />
+
+        <button className="absolute top-7 left-6" onClick={router.back}>
+          <CrossIcon className="w-4 h-4" />
+        </button>
       </Card>
     </div>
   );

@@ -6,9 +6,11 @@ import { CreateListModalProvider } from "./components/list/create/CreateListModa
 import { UserProvider } from "@/app/components/user/UserProvider";
 import AmplitudeProvider from "./lib/analytics/AmplitudeProvider";
 
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  manifest: "/manifest.json", // we are accessing our manifest file here
   title: "Breezi",
   description: "Welcome to Breezi. Sign up today!",
 };

@@ -6,6 +6,21 @@ import { AddIcon, HomeIcon, ProfileIcon } from "../icon";
 import { UserContext } from "../user/UserProvider";
 import { useContext } from "react";
 
+function iOS() {
+  return (
+    [
+      "iPad Simulator",
+      "iPhone Simulator",
+      "iPod Simulator",
+      "iPad",
+      "iPhone",
+      "iPod",
+    ].includes(navigator.platform) ||
+    // iPad on iOS 13 detection
+    (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+  );
+}
+
 const MobileNavigation = () => {
   const router = useRouter();
   const { user: userData } = useContext(UserContext);
@@ -16,8 +31,12 @@ const MobileNavigation = () => {
 
   return (
     <>
-      <div className="h-[52px]"></div>
-      <div className="fixed bottom-0 w-full bg-white md:hidden flex items-center justify-around">
+      <div className={`h-[52px] ${iOS() && "pb-8"}`}></div>
+      <div
+        className={`fixed bottom-0 w-full bg-white md:hidden flex items-center justify-around ${
+          iOS() && "pb-8"
+        }`}
+      >
         <button
           className="py-2 hover:text-primary transition-colors"
           onClick={() => {

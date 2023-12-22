@@ -28,6 +28,7 @@ import {
   DraftsIcon,
   BulletedListIcon,
   NumberedListIcon,
+  CrossIcon,
 } from "@/app/components/icon";
 import { CREATE_LIST, UPDATE_LIST } from "@/lib/api/list/queries";
 import { useApolloClient } from "@apollo/client";
