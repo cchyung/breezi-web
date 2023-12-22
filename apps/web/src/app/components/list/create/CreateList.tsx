@@ -15,6 +15,7 @@ import {
   UpdateListMutationVariables,
 } from "@/lib/api";
 import {
+  ClipboardEvent,
   RefObject,
   createRef,
   useCallback,
@@ -209,6 +210,14 @@ const CreateList = ({
         },
       ]);
     }
+
+    titleInputRef.current!.style.height = "5px";
+    titleInputRef.current!.style.height =
+      titleInputRef.current!.scrollHeight + "px";
+
+    descriptionInputRef.current!.style.height = "5px";
+    descriptionInputRef.current!.style.height =
+      descriptionInputRef.current!.scrollHeight + "px";
   }, []);
 
   return (
@@ -349,7 +358,8 @@ const CreateList = ({
               setTitle(e.target.value);
             }}
             ref={titleInputRef}
-            onInput={() => {
+            onInput={() => {}}
+            onLoad={() => {
               titleInputRef.current!.style.height = "5px";
               titleInputRef.current!.style.height =
                 titleInputRef.current!.scrollHeight + "px";
@@ -449,6 +459,38 @@ const CreateList = ({
                           listItemInputRefs[index + 1]?.current?.focus();
                         }
                       }
+                    }}
+                    onPaste={(e) => {
+                      e.preventDefault();
+                      const text = e.clipboardData.getData("text/plain");
+                      const lines = text.split("\n");
+
+                      let formattedLines = lines;
+                      if (lines.length > 0) {
+                        // if line starts with a number and . or )
+                        if (lines[0].match(/^[0-9]+[.)]/)) {
+                          setType(ListType.Numbered);
+
+                          // remove number and period from each line
+                          formattedLines = lines.map((line) => {
+                            return line.replace(/^[0-9]+[.)]/, "").trim();
+                          });
+                        }
+                      }
+
+                      setEnterPressedOnLastItem(true);
+
+                      setItems((prev) => {
+                        return [
+                          ...prev.slice(0, index),
+                          ...formattedLines.map((line) => {
+                            return {
+                              text: line,
+                            };
+                          }),
+                          ...prev.slice(index + 1),
+                        ];
+                      });
                     }}
                   />
                 </li>
