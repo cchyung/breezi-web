@@ -30,6 +30,7 @@ import {
   BulletedListIcon,
   NumberedListIcon,
   CrossIcon,
+  UpArrowIcon,
 } from "@/app/components/icon";
 import { CREATE_LIST, UPDATE_LIST } from "@/lib/api/list/queries";
 import { useApolloClient } from "@apollo/client";
@@ -72,6 +73,7 @@ const CreateList = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const titleInputRef = useRef<HTMLTextAreaElement>(null);
   const descriptionInputRef = useRef<HTMLTextAreaElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const listItemInputRefs = useMemo<RefObject<HTMLTextAreaElement>[]>(() => {
     return items.map(() => createRef<HTMLTextAreaElement>());
@@ -221,7 +223,10 @@ const CreateList = ({
   }, []);
 
   return (
-    <div className="flex flex-col gap-4 overflow-auto">
+    <div
+      className="flex flex-col gap-4 overflow-auto relative"
+      ref={containerRef}
+    >
       <FileDropzoneWrapper onDrop={onFileDrop}>
         <div className="flex items-center justify-between p-4">
           <div className="ml-auto flex items-center gap-2">
@@ -528,6 +533,26 @@ const CreateList = ({
           </ul>
         </div>
       </FileDropzoneWrapper>
+      {
+        // if container ref needs to scroll and is not at the top
+        containerRef?.current &&
+        containerRef?.current?.scrollHeight >
+          containerRef?.current?.clientHeight ? (
+          <div className="fixed bottom-6 right-6">
+            <button
+              className="bg-white rounded-full p-2 shadow-md hover:bg-primary hover:-translate-y-2 transition-all"
+              onClick={() => {
+                containerRef?.current?.scrollTo({
+                  top: 0,
+                  behavior: "smooth",
+                });
+              }}
+            >
+              <UpArrowIcon className="text-black" />
+            </button>
+          </div>
+        ) : null
+      }
     </div>
   );
 };
