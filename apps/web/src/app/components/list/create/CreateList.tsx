@@ -15,7 +15,6 @@ import {
   UpdateListMutationVariables,
 } from "@/lib/api";
 import {
-  ClipboardEvent,
   RefObject,
   createRef,
   useCallback,
@@ -26,10 +25,8 @@ import {
 } from "react";
 import {
   ImageIcon,
-  DraftsIcon,
   BulletedListIcon,
   NumberedListIcon,
-  CrossIcon,
   UpArrowIcon,
 } from "@/app/components/icon";
 import { CREATE_LIST, UPDATE_LIST } from "@/lib/api/list/queries";
@@ -223,322 +220,324 @@ const CreateList = ({
   }, []);
 
   return (
-    <div
-      className="flex flex-col gap-4 overflow-auto relative"
-      ref={containerRef}
-    >
-      <FileDropzoneWrapper onDrop={onFileDrop}>
-        <div className="flex items-center justify-between p-4">
-          <div className="ml-auto flex items-center gap-2">
-            <button
-              onClick={() =>
-                setType((type) => {
-                  return type === ListType.Bulleted
-                    ? ListType.Numbered
-                    : ListType.Bulleted;
-                })
-              }
-            >
-              {type === ListType.Numbered ? (
-                <BulletedListIcon className="w-8" />
+    <>
+      <div
+        className="flex flex-col gap-4 overflow-auto relative"
+        ref={containerRef}
+      >
+        <FileDropzoneWrapper onDrop={onFileDrop}>
+          <div className="flex items-center justify-between p-4">
+            <div className="ml-auto flex items-center gap-2">
+              <button
+                onClick={() =>
+                  setType((type) => {
+                    return type === ListType.Bulleted
+                      ? ListType.Numbered
+                      : ListType.Bulleted;
+                  })
+                }
+              >
+                {type === ListType.Numbered ? (
+                  <BulletedListIcon className="w-8" />
+                ) : (
+                  <NumberedListIcon className="w-8" />
+                )}
+              </button>
+
+              {create ? (
+                <>
+                  <Button
+                    size="sm"
+                    color="gray"
+                    disabled={
+                      saveDraftLoading ||
+                      submitLoading ||
+                      !title ||
+                      title.length == 0
+                    }
+                    loading={saveDraftLoading}
+                    onClick={() => onSubmit(false)}
+                  >
+                    Save Draft
+                  </Button>
+                  <Button
+                    size="sm"
+                    color="primary"
+                    disabled={
+                      submitLoading ||
+                      saveDraftLoading ||
+                      !title ||
+                      title.length == 0
+                    }
+                    loading={submitLoading}
+                    onClick={() => onSubmit(true)}
+                  >
+                    {create ? "Share" : "Update"}
+                  </Button>
+                </>
               ) : (
-                <NumberedListIcon className="w-8" />
+                <>
+                  <Button
+                    size="sm"
+                    color="gray"
+                    disabled={
+                      saveDraftLoading ||
+                      submitLoading ||
+                      !title ||
+                      title.length == 0
+                    }
+                    loading={saveDraftLoading}
+                    onClick={() => onSubmit(false)}
+                  >
+                    {list?.state === ListState.Published
+                      ? "Move to Drafts"
+                      : "Update Draft"}
+                  </Button>
+                  <Button
+                    size="sm"
+                    color="primary"
+                    disabled={
+                      saveDraftLoading ||
+                      submitLoading ||
+                      !title ||
+                      title.length == 0
+                    }
+                    loading={submitLoading}
+                    onClick={() => onSubmit(true)}
+                  >
+                    Publish
+                  </Button>
+                </>
               )}
-            </button>
-
-            {create ? (
-              <>
-                <Button
-                  size="sm"
-                  color="gray"
-                  disabled={
-                    saveDraftLoading ||
-                    submitLoading ||
-                    !title ||
-                    title.length == 0
-                  }
-                  loading={saveDraftLoading}
-                  onClick={() => onSubmit(false)}
-                >
-                  Save Draft
-                </Button>
-                <Button
-                  size="sm"
-                  color="primary"
-                  disabled={
-                    submitLoading ||
-                    saveDraftLoading ||
-                    !title ||
-                    title.length == 0
-                  }
-                  loading={submitLoading}
-                  onClick={() => onSubmit(true)}
-                >
-                  {create ? "Share" : "Update"}
-                </Button>
-              </>
-            ) : (
-              <>
-                <Button
-                  size="sm"
-                  color="gray"
-                  disabled={
-                    saveDraftLoading ||
-                    submitLoading ||
-                    !title ||
-                    title.length == 0
-                  }
-                  loading={saveDraftLoading}
-                  onClick={() => onSubmit(false)}
-                >
-                  {list?.state === ListState.Published
-                    ? "Move to Drafts"
-                    : "Update Draft"}
-                </Button>
-                <Button
-                  size="sm"
-                  color="primary"
-                  disabled={
-                    saveDraftLoading ||
-                    submitLoading ||
-                    !title ||
-                    title.length == 0
-                  }
-                  loading={submitLoading}
-                  onClick={() => onSubmit(true)}
-                >
-                  Publish
-                </Button>
-              </>
-            )}
-          </div>
-        </div>
-
-        <div>
-          {coverImageURL ? (
-            <div className="relative overflow-hidden group">
-              <img
-                src={coverImageURL}
-                className="w-full h-40 object-cover overflow-hidden"
-              />
-
-              <div className="group-hover:flex hidden flex-row items-center p-4 justify-end w-full absolute bottom-0">
-                <Button
-                  color="gray"
-                  size="sm"
-                  onClick={() => {
-                    setCoverImageURL(undefined);
-                  }}
-                >
-                  Change Image
-                </Button>
-              </div>
             </div>
-          ) : (
-            <button onClick={() => fileInputRef.current?.click()}>
-              <div className="flex items-center gap-2 px-6 text-gray-400 text-[14px]">
-                <ImageIcon /> Add Cover Image
+          </div>
+
+          <div>
+            {coverImageURL ? (
+              <div className="relative overflow-hidden group">
+                <img
+                  src={coverImageURL}
+                  className="w-full h-40 object-cover overflow-hidden"
+                />
+
+                <div className="group-hover:flex hidden flex-row items-center p-4 justify-end w-full absolute bottom-0">
+                  <Button
+                    color="gray"
+                    size="sm"
+                    onClick={() => {
+                      setCoverImageURL(undefined);
+                    }}
+                  >
+                    Change Image
+                  </Button>
+                </div>
               </div>
-            </button>
-          )}
-          <input
-            type="file"
-            className="hidden"
-            ref={fileInputRef}
-            onChange={(e) => {
-              if (e.target.files) {
-                onFileDrop([e.target.files[0]]);
-              }
-            }}
-          />
-        </div>
+            ) : (
+              <button onClick={() => fileInputRef.current?.click()}>
+                <div className="flex items-center gap-2 px-6 text-gray-400 text-[14px]">
+                  <ImageIcon /> Add Cover Image
+                </div>
+              </button>
+            )}
+            <input
+              type="file"
+              className="hidden"
+              ref={fileInputRef}
+              onChange={(e) => {
+                if (e.target.files) {
+                  onFileDrop([e.target.files[0]]);
+                }
+              }}
+            />
+          </div>
 
-        <div className="p-6 pt-4 flex flex-col gap-2 overflow-hidden">
-          <textarea
-            placeholder="Title your list"
-            className="resize-none font-bold text-3xl"
-            rows={1}
-            value={title}
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
-            ref={titleInputRef}
-            onInput={() => {}}
-            onLoad={() => {
-              titleInputRef.current!.style.height = "5px";
-              titleInputRef.current!.style.height =
-                titleInputRef.current!.scrollHeight + "px";
-            }}
-          ></textarea>
-          <textarea
-            className="resize-none"
-            placeholder={"(Optional) write a caption for your list"}
-            value={description}
-            onChange={(e) => {
-              setDescription(e.target.value);
-            }}
-            ref={descriptionInputRef}
-            onInput={() => {
-              descriptionInputRef.current!.style.height = "5px";
-              descriptionInputRef.current!.style.height =
-                descriptionInputRef.current!.scrollHeight + "px";
-            }}
-            rows={1}
-          ></textarea>
+          <div className="p-6 pt-4 flex flex-col gap-2 overflow-hidden">
+            <textarea
+              placeholder="Title your list"
+              className="resize-none font-bold text-3xl"
+              rows={1}
+              value={title}
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
+              ref={titleInputRef}
+              onInput={() => {}}
+              onLoad={() => {
+                titleInputRef.current!.style.height = "5px";
+                titleInputRef.current!.style.height =
+                  titleInputRef.current!.scrollHeight + "px";
+              }}
+            ></textarea>
+            <textarea
+              className="resize-none"
+              placeholder={"(Optional) write a caption for your list"}
+              value={description}
+              onChange={(e) => {
+                setDescription(e.target.value);
+              }}
+              ref={descriptionInputRef}
+              onInput={() => {
+                descriptionInputRef.current!.style.height = "5px";
+                descriptionInputRef.current!.style.height =
+                  descriptionInputRef.current!.scrollHeight + "px";
+              }}
+              rows={1}
+            ></textarea>
 
-          <ul
-            className={`flex flex-col gap-1 ml-4 list-inside flex-1 ${
-              type === ListType.Bulleted ? "list-disc" : "list-decimal"
-            }`}
-          >
-            {items.map((item, index) => {
-              return (
-                <li key={index}>
-                  <textarea
-                    ref={listItemInputRefs[index]}
-                    value={item.text}
-                    onInput={() => {
-                      autoGrowTextArea(index);
-                    }}
-                    className="resize-none flex-1 align-top w-[90%] active:outline-none focus:outline-none"
-                    placeholder={`Item ${index + 1}`}
-                    rows={1}
-                    onChange={(e) => {
-                      setItems((prev) => {
-                        return [
-                          ...prev.slice(0, index),
-                          { ...prev[index], text: e.target.value },
-                          ...prev.slice(index + 1),
-                        ];
-                      });
-                    }}
-                    onFocus={() => {
-                      setActiveItemIndex(index);
-                    }}
-                    onBlur={() => {
-                      setActiveItemIndex(-1);
-                    }}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        e.preventDefault();
+            <ul
+              className={`flex flex-col gap-1 ml-4 list-inside flex-1 relative ${
+                type === ListType.Bulleted ? "list-disc" : "list-decimal"
+              }`}
+            >
+              {items.map((item, index) => {
+                return (
+                  <li key={index}>
+                    <textarea
+                      ref={listItemInputRefs[index]}
+                      value={item.text}
+                      onInput={() => {
+                        autoGrowTextArea(index);
+                      }}
+                      className="resize-none flex-1 align-top w-[90%] active:outline-none focus:outline-none"
+                      placeholder={`Item ${index + 1}`}
+                      rows={1}
+                      onChange={(e) => {
                         setItems((prev) => {
                           return [
-                            ...prev.slice(0, index + 1),
-                            { text: "" },
+                            ...prev.slice(0, index),
+                            { ...prev[index], text: e.target.value },
                             ...prev.slice(index + 1),
                           ];
                         });
-
-                        if (index + 1 === items.length) {
-                          setEnterPressedOnLastItem(true);
-                        }
-
-                        listItemInputRefs[index + 1]?.current?.focus();
-                      } else if (
-                        items[index].text === "" &&
-                        e.key === "Backspace" &&
-                        items.length > 1
-                      ) {
-                        e.preventDefault();
-                        // remove item at index
-                        setItems((prev) => {
-                          if (prev.length > 1) {
+                      }}
+                      onFocus={() => {
+                        setActiveItemIndex(index);
+                      }}
+                      onBlur={() => {
+                        setActiveItemIndex(-1);
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          setItems((prev) => {
                             return [
-                              ...prev.slice(0, index),
+                              ...prev.slice(0, index + 1),
+                              { text: "" },
                               ...prev.slice(index + 1),
                             ];
-                          } else {
-                            return prev;
-                          }
-                        });
-
-                        if (index - 1 >= 0) {
-                          listItemInputRefs[index - 1]?.current?.focus();
-                        }
-                      } else if (e.key === "ArrowUp") {
-                        if (index - 1 >= 0) {
-                          listItemInputRefs[index - 1]?.current?.focus();
-                        }
-                      } else if (e.key === "ArrowDown") {
-                        if (index + 1 < items.length) {
-                          listItemInputRefs[index + 1]?.current?.focus();
-                        }
-                      }
-                    }}
-                    onPaste={(e) => {
-                      e.preventDefault();
-                      const text = e.clipboardData.getData("text/plain");
-                      const lines = text.split("\n");
-
-                      let formattedLines = lines;
-                      if (lines.length > 0) {
-                        // if line starts with a number and . or )
-                        if (lines[0].match(/^[0-9]+[.)]/)) {
-                          setType(ListType.Numbered);
-
-                          // remove number and period from each line
-                          formattedLines = lines.map((line) => {
-                            return line.replace(/^[0-9]+[.)]/, "").trim();
                           });
-                        }
 
-                        // if line starts with - [ ] or - [x]
-                        else if (lines[0].match(/^[-][ ]?\[[x ]?]/)) {
-                          setType(ListType.Bulleted);
+                          if (index + 1 === items.length) {
+                            setEnterPressedOnLastItem(true);
+                          }
 
-                          // remove - [ ] or - [x] from each line
-                          formattedLines = lines.map((line) => {
-                            if (line.startsWith("- [x]")) {
-                              return line
-                                .replace(/^[-][ ]?\[[x ]?]/, "✅")
-                                .trim();
-                            } else if (line.startsWith("- [ ]")) {
-                              return line
-                                .replace(/^[-][ ]?\[[x ]?]/, "☑️")
-                                .trim();
+                          listItemInputRefs[index + 1]?.current?.focus();
+                        } else if (
+                          items[index].text === "" &&
+                          e.key === "Backspace" &&
+                          items.length > 1
+                        ) {
+                          e.preventDefault();
+                          // remove item at index
+                          setItems((prev) => {
+                            if (prev.length > 1) {
+                              return [
+                                ...prev.slice(0, index),
+                                ...prev.slice(index + 1),
+                              ];
                             } else {
-                              return line;
+                              return prev;
                             }
                           });
+
+                          if (index - 1 >= 0) {
+                            listItemInputRefs[index - 1]?.current?.focus();
+                          }
+                        } else if (e.key === "ArrowUp") {
+                          if (index - 1 >= 0) {
+                            listItemInputRefs[index - 1]?.current?.focus();
+                          }
+                        } else if (e.key === "ArrowDown") {
+                          if (index + 1 < items.length) {
+                            listItemInputRefs[index + 1]?.current?.focus();
+                          }
                         }
-                        // if line starts with - or *
-                        else if (lines[0].match(/^[-*]/)) {
-                          setType(ListType.Bulleted);
+                      }}
+                      onPaste={(e) => {
+                        e.preventDefault();
+                        const text = e.clipboardData.getData("text/plain");
+                        const lines = text.split("\n");
 
-                          // remove - or * from each line
-                          formattedLines = lines.map((line) => {
-                            return line.replace(/^[-*]/, "").trim();
-                          });
+                        let formattedLines = lines;
+                        if (lines.length > 0) {
+                          // if line starts with a number and . or )
+                          if (lines[0].match(/^[0-9]+[.)]/)) {
+                            setType(ListType.Numbered);
+
+                            // remove number and period from each line
+                            formattedLines = lines.map((line) => {
+                              return line.replace(/^[0-9]+[.)]/, "").trim();
+                            });
+                          }
+
+                          // if line starts with - [ ] or - [x]
+                          else if (lines[0].match(/^[-][ ]?\[[x ]?]/)) {
+                            setType(ListType.Bulleted);
+
+                            // remove - [ ] or - [x] from each line
+                            formattedLines = lines.map((line) => {
+                              if (line.startsWith("- [x]")) {
+                                return line
+                                  .replace(/^[-][ ]?\[[x ]?]/, "✅")
+                                  .trim();
+                              } else if (line.startsWith("- [ ]")) {
+                                return line
+                                  .replace(/^[-][ ]?\[[x ]?]/, "☑️")
+                                  .trim();
+                              } else {
+                                return line;
+                              }
+                            });
+                          }
+                          // if line starts with - or *
+                          else if (lines[0].match(/^[-*]/)) {
+                            setType(ListType.Bulleted);
+
+                            // remove - or * from each line
+                            formattedLines = lines.map((line) => {
+                              return line.replace(/^[-*]/, "").trim();
+                            });
+                          }
                         }
-                      }
 
-                      setEnterPressedOnLastItem(true);
+                        setEnterPressedOnLastItem(true);
 
-                      setItems((prev) => {
-                        return [
-                          ...prev.slice(0, index),
-                          ...formattedLines.map((line) => {
-                            return {
-                              text: line,
-                            };
-                          }),
-                          ...prev.slice(index + 1),
-                        ];
-                      });
-                    }}
-                  />
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </FileDropzoneWrapper>
+                        setItems((prev) => {
+                          return [
+                            ...prev.slice(0, index),
+                            ...formattedLines.map((line) => {
+                              return {
+                                text: line,
+                              };
+                            }),
+                            ...prev.slice(index + 1),
+                          ];
+                        });
+                      }}
+                    />
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </FileDropzoneWrapper>
+      </div>
       {
         // if container ref needs to scroll and is not at the top
         containerRef?.current &&
         containerRef?.current?.scrollHeight >
           containerRef?.current?.clientHeight ? (
-          <div className="fixed bottom-6 right-6">
+          <div className="absolute bottom-6 right-6">
             <button
               className="bg-white rounded-full p-2 shadow-md hover:bg-primary hover:-translate-y-2 transition-all"
               onClick={() => {
@@ -553,7 +552,7 @@ const CreateList = ({
           </div>
         ) : null
       }
-    </div>
+    </>
   );
 };
 
