@@ -375,7 +375,11 @@ const CreateList = ({
                 setTitle(e.target.value);
               }}
               ref={titleInputRef}
-              onInput={() => {}}
+              onInput={() => {
+                titleInputRef.current!.style.height = "5px";
+                titleInputRef.current!.style.height =
+                  titleInputRef.current!.scrollHeight + "px";
+              }}
               onLoad={() => {
                 titleInputRef.current!.style.height = "5px";
                 titleInputRef.current!.style.height =
