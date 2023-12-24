@@ -64,12 +64,7 @@ function makeClient() {
             listFeed: {
               keyArgs: false,
               merge(existing: List[] = [], incoming: List[]) {
-                return [
-                  ...existing,
-                  ...incoming.filter((l) => {
-                    return !existing.some((el) => el._id === l._id);
-                  }),
-                ];
+                return [...existing, ...incoming];
               },
             },
           },
