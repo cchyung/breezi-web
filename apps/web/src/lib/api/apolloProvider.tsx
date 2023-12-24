@@ -17,6 +17,7 @@ import {
 } from "@apollo/experimental-nextjs-app-support/ssr";
 import { setContext } from "@apollo/client/link/context";
 import { getUserFromLocalStorage } from "@/app/lib/auth";
+import { List } from "@/lib/api";
 
 // have a function to create a client for you
 function makeClient() {
@@ -62,8 +63,13 @@ function makeClient() {
           fields: {
             listFeed: {
               keyArgs: false,
-              merge(existing = [], incoming) {
-                return [...existing, ...incoming];
+              merge(existing: List[] = [], incoming: List[]) {
+                return [
+                  ...existing,
+                  ...incoming.filter((l) => {
+                    return !existing.some((el) => el._id === l._id);
+                  }),
+                ];
               },
             },
           },
