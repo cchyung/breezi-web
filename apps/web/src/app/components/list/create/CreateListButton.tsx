@@ -17,7 +17,7 @@ const CreateListButton = ({ onCreation }: { onCreation: () => void }) => {
         if (!user) {
           router.push("/login");
         } else {
-          openModal(true, undefined, onCreation);
+          openModal({ create: true, onCreation });
         }
       }}
     >

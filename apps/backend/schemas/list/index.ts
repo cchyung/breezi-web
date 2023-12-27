@@ -106,6 +106,7 @@ export const ListInput = inputObjectType({
     t.string("description");
     t.string("coverImageURL");
     t.nonNull.field("type", { type: ListType });
+    t.string("topic");
   },
 });
 
@@ -133,6 +134,7 @@ export const CreateList = mutationField("createList", {
       coverImageURL: list.coverImageURL,
       description: list.description ? list.description : undefined,
       type: list.type,
+      topic: list.topic,
     });
   },
 });
@@ -185,14 +187,16 @@ export const GetLists = queryField("lists", {
   type: list(List),
   args: {
     state: arg({ type: ListState }),
+    topic: stringArg(),
     cursor: intArg(),
     pageSize: intArg(),
   },
-  resolve: async (_, { cursor, pageSize, state }, __) => {
+  resolve: async (_, { cursor, pageSize, state, topic }, __) => {
     const lists = listService.getLists({
       state: state as ListStateEnum | undefined,
       cursor: cursor as number | undefined,
       pageSize: pageSize as number | undefined,
+      topic: topic as string | undefined,
     });
 
     return lists;

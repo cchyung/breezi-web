@@ -5,6 +5,7 @@
 
 import type * as List from "./../models/list/index"
 import type * as ListLike from "./../models/listLike/index"
+import type * as Topic from "./../models/topic/index"
 import type * as User from "./../models/user/index"
 import type * as UserFollower from "./../models/userFollower/index"
 import type { AuthenticatedContext } from "./../lib/context/index"
@@ -55,12 +56,20 @@ export interface NexusGenInputs {
     items: NexusGenInputs['ListItemInput'][]; // [ListItemInput!]!
     state?: NexusGenEnums['ListState'] | null; // ListState
     title: string; // String!
+    topic?: string | null; // String
     type: NexusGenEnums['ListType']; // ListType!
   }
   ListItemInput: { // input type
     imageURL?: string | null; // String
     parent?: string | null; // String
     text: string; // String!
+  }
+  TopicInput: { // input type
+    description?: string | null; // String
+    end?: NexusGenScalars['DateTime'] | null; // DateTime
+    start?: NexusGenScalars['DateTime'] | null; // DateTime
+    state?: NexusGenEnums['TopicState'] | null; // TopicState
+    title: string; // String!
   }
   UpdateUserInput: { // input type
     about?: string | null; // String
@@ -80,6 +89,7 @@ export interface NexusGenInputs {
 export interface NexusGenEnums {
   ListState: List.ListState
   ListType: List.ListType
+  TopicState: Topic.TopicState
 }
 
 export interface NexusGenScalars {
@@ -113,6 +123,7 @@ export interface NexusGenObjects {
     key: string; // String!
     url: string; // String!
   }
+  Topic: Topic.Topic;
   User: User.User;
   UserFollower: UserFollower.UserFollower;
 }
@@ -169,6 +180,7 @@ export interface NexusGenFieldTypes {
   Mutation: { // field return type
     addCommentToList: NexusGenRootTypes['List'] | null; // List
     createList: NexusGenRootTypes['List'] | null; // List
+    createTopic: NexusGenRootTypes['Topic'] | null; // Topic
     deleteList: boolean | null; // Boolean
     followUser: NexusGenRootTypes['User'] | null; // User
     likeList: NexusGenRootTypes['ListLike'] | null; // ListLike
@@ -176,6 +188,7 @@ export interface NexusGenFieldTypes {
     unfollowUser: NexusGenRootTypes['User'] | null; // User
     unlikeList: boolean | null; // Boolean
     updateList: NexusGenRootTypes['List'] | null; // List
+    updateTopic: NexusGenRootTypes['Topic'] | null; // Topic
     updateUser: NexusGenRootTypes['User'] | null; // User
   }
   Ok: { // field return type
@@ -190,6 +203,8 @@ export interface NexusGenFieldTypes {
     lists: Array<NexusGenRootTypes['List'] | null> | null; // [List]
     loginUser: NexusGenRootTypes['LoginObject'] | null; // LoginObject
     sendSMSVerificationToken: NexusGenRootTypes['Ok'] | null; // Ok
+    topic: NexusGenRootTypes['Topic'] | null; // Topic
+    topics: Array<NexusGenRootTypes['Topic'] | null> | null; // [Topic]
     uploadListCoverURL: NexusGenRootTypes['SignedURL'] | null; // SignedURL
     uploadUserProfileImageURL: NexusGenRootTypes['SignedURL'] | null; // SignedURL
     user: NexusGenRootTypes['User'] | null; // User
@@ -200,6 +215,16 @@ export interface NexusGenFieldTypes {
   SignedURL: { // field return type
     key: string; // String!
     url: string; // String!
+  }
+  Topic: { // field return type
+    _id: string; // ID!
+    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
+    description: string | null; // String
+    end: NexusGenScalars['DateTime'] | null; // DateTime
+    start: NexusGenScalars['DateTime'] | null; // DateTime
+    state: NexusGenEnums['TopicState'] | null; // TopicState
+    title: string | null; // String
+    updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
   }
   User: { // field return type
     _id: string; // String!
@@ -264,6 +289,7 @@ export interface NexusGenFieldTypeNames {
   Mutation: { // field return type name
     addCommentToList: 'List'
     createList: 'List'
+    createTopic: 'Topic'
     deleteList: 'Boolean'
     followUser: 'User'
     likeList: 'ListLike'
@@ -271,6 +297,7 @@ export interface NexusGenFieldTypeNames {
     unfollowUser: 'User'
     unlikeList: 'Boolean'
     updateList: 'List'
+    updateTopic: 'Topic'
     updateUser: 'User'
   }
   Ok: { // field return type name
@@ -285,6 +312,8 @@ export interface NexusGenFieldTypeNames {
     lists: 'List'
     loginUser: 'LoginObject'
     sendSMSVerificationToken: 'Ok'
+    topic: 'Topic'
+    topics: 'Topic'
     uploadListCoverURL: 'SignedURL'
     uploadUserProfileImageURL: 'SignedURL'
     user: 'User'
@@ -295,6 +324,16 @@ export interface NexusGenFieldTypeNames {
   SignedURL: { // field return type name
     key: 'String'
     url: 'String'
+  }
+  Topic: { // field return type name
+    _id: 'ID'
+    createdAt: 'DateTime'
+    description: 'String'
+    end: 'DateTime'
+    start: 'DateTime'
+    state: 'TopicState'
+    title: 'String'
+    updatedAt: 'DateTime'
   }
   User: { // field return type name
     _id: 'String'
@@ -326,6 +365,9 @@ export interface NexusGenArgTypes {
     createList: { // args
       list: NexusGenInputs['ListInput']; // ListInput!
     }
+    createTopic: { // args
+      topic: NexusGenInputs['TopicInput']; // TopicInput!
+    }
     deleteList: { // args
       id: string; // String!
     }
@@ -348,6 +390,10 @@ export interface NexusGenArgTypes {
     updateList: { // args
       id: string; // String!
       list: NexusGenInputs['ListInput']; // ListInput!
+    }
+    updateTopic: { // args
+      id: string; // ID!
+      topic: NexusGenInputs['TopicInput']; // TopicInput!
     }
     updateUser: { // args
       id: string; // String!
@@ -372,6 +418,7 @@ export interface NexusGenArgTypes {
       cursor?: number | null; // Int
       pageSize?: number | null; // Int
       state?: NexusGenEnums['ListState'] | null; // ListState
+      topic?: string | null; // String
     }
     loginUser: { // args
       invitedBy?: string | null; // String
@@ -381,6 +428,12 @@ export interface NexusGenArgTypes {
     sendSMSVerificationToken: { // args
       invitedBy?: string | null; // String
       phone: string; // String!
+    }
+    topic: { // args
+      id: string; // ID!
+    }
+    topics: { // args
+      state?: NexusGenEnums['TopicState'] | null; // TopicState
     }
     user: { // args
       authToken?: string | null; // String

@@ -21,6 +21,7 @@ export interface List {
   type: ListType;
   comments: ListComment[];
   coverImageURL?: string;
+  topic?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -123,6 +124,9 @@ export const ListSchema = new Schema(
       required: true,
       enum: Object.values(ListType),
       default: ListType.bulleted,
+    },
+    topic: {
+      type: String,
     },
   },
   { timestamps: {} }

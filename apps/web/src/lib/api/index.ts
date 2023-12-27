@@ -55,6 +55,7 @@ export type ListInput = {
   items: Array<ListItemInput>;
   state?: InputMaybe<ListState>;
   title: Scalars['String']['input'];
+  topic?: InputMaybe<Scalars['String']['input']>;
   type: ListType;
 };
 
@@ -100,6 +101,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   addCommentToList?: Maybe<List>;
   createList?: Maybe<List>;
+  createTopic?: Maybe<Topic>;
   deleteList?: Maybe<Scalars['Boolean']['output']>;
   followUser?: Maybe<User>;
   likeList?: Maybe<ListLike>;
@@ -107,6 +109,7 @@ export type Mutation = {
   unfollowUser?: Maybe<User>;
   unlikeList?: Maybe<Scalars['Boolean']['output']>;
   updateList?: Maybe<List>;
+  updateTopic?: Maybe<Topic>;
   updateUser?: Maybe<User>;
 };
 
@@ -119,6 +122,11 @@ export type MutationAddCommentToListArgs = {
 
 export type MutationCreateListArgs = {
   list: ListInput;
+};
+
+
+export type MutationCreateTopicArgs = {
+  topic: TopicInput;
 };
 
 
@@ -159,6 +167,12 @@ export type MutationUpdateListArgs = {
 };
 
 
+export type MutationUpdateTopicArgs = {
+  id: Scalars['ID']['input'];
+  topic: TopicInput;
+};
+
+
 export type MutationUpdateUserArgs = {
   id: Scalars['String']['input'];
   user: UpdateUserInput;
@@ -180,6 +194,8 @@ export type Query = {
   /** Logs in the user based on the supplied number and verification code.  If the user doesn't exist, a new user will be created */
   loginUser?: Maybe<LoginObject>;
   sendSMSVerificationToken?: Maybe<Ok>;
+  topic?: Maybe<Topic>;
+  topics?: Maybe<Array<Maybe<Topic>>>;
   uploadListCoverURL?: Maybe<SignedUrl>;
   uploadUserProfileImageURL?: Maybe<SignedUrl>;
   user?: Maybe<User>;
@@ -214,6 +230,7 @@ export type QueryListsArgs = {
   cursor?: InputMaybe<Scalars['Int']['input']>;
   pageSize?: InputMaybe<Scalars['Int']['input']>;
   state?: InputMaybe<ListState>;
+  topic?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -227,6 +244,16 @@ export type QueryLoginUserArgs = {
 export type QuerySendSmsVerificationTokenArgs = {
   invitedBy?: InputMaybe<Scalars['String']['input']>;
   phone: Scalars['String']['input'];
+};
+
+
+export type QueryTopicArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryTopicsArgs = {
+  state?: InputMaybe<TopicState>;
 };
 
 
@@ -256,6 +283,32 @@ export type SignedUrl = {
   key: Scalars['String']['output'];
   url: Scalars['String']['output'];
 };
+
+export type Topic = {
+  __typename?: 'Topic';
+  _id: Scalars['ID']['output'];
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  end?: Maybe<Scalars['DateTime']['output']>;
+  start?: Maybe<Scalars['DateTime']['output']>;
+  state?: Maybe<TopicState>;
+  title?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type TopicInput = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  end?: InputMaybe<Scalars['DateTime']['input']>;
+  start?: InputMaybe<Scalars['DateTime']['input']>;
+  state?: InputMaybe<TopicState>;
+  title: Scalars['String']['input'];
+};
+
+export enum TopicState {
+  Ended = 'ENDED',
+  Live = 'LIVE',
+  Pending = 'PENDING'
+}
 
 export type UpdateUserInput = {
   about?: InputMaybe<Scalars['String']['input']>;

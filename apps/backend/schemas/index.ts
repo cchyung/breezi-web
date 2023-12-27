@@ -4,7 +4,8 @@ import { asNexusMethod } from "nexus";
 export * from "./list";
 export * from "./listLike";
 export * from "./user";
-export * from "./upload"
+export * from "./upload";
+export * from "./topic";
 
 // @ts-ignore
 export const GQLDate = asNexusMethod(GraphQLDate, "date");

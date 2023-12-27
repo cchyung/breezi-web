@@ -42,6 +42,7 @@ input ListInput {
   items: [ListItemInput!]!
   state: ListState
   title: String!
+  topic: String
   type: ListType!
 }
 
@@ -83,6 +84,7 @@ type LoginObject {
 type Mutation {
   addCommentToList(listId: String!, text: String!): List
   createList(list: ListInput!): List
+  createTopic(topic: TopicInput!): Topic
   deleteList(id: String!): Boolean
   followUser(userId: String!): User
   likeList(listId: String!): ListLike
@@ -90,6 +92,7 @@ type Mutation {
   unfollowUser(userId: String!): User
   unlikeList(listId: String!): Boolean
   updateList(id: String!, list: ListInput!): List
+  updateTopic(id: ID!, topic: TopicInput!): Topic
   updateUser(id: String!, user: UpdateUserInput!): User
 }
 
@@ -103,13 +106,15 @@ type Query {
   listFeed(cursor: Int! = 0, pageSize: Int! = 20): [List]
   listLikeCount(listId: String!): Int
   listLikes(listId: String!): [ListLike]
-  lists(cursor: Int, pageSize: Int, state: ListState): [List]
+  lists(cursor: Int, pageSize: Int, state: ListState, topic: String): [List]
 
   """
   Logs in the user based on the supplied number and verification code.  If the user doesn't exist, a new user will be created
   """
   loginUser(invitedBy: String, phone: String!, verificationCode: String!): LoginObject
   sendSMSVerificationToken(invitedBy: String, phone: String!): Ok
+  topic(id: ID!): Topic
+  topics(state: TopicState): [Topic]
   uploadListCoverURL: SignedURL
   uploadUserProfileImageURL: SignedURL
   user(authToken: String, id: String): User
@@ -127,6 +132,31 @@ type SignedURL {
 A time string at UTC, such as 10:15:30Z, compliant with the `full-time` format outlined in section 5.6 of the RFC 3339profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
 """
 scalar Time
+
+type Topic {
+  _id: ID!
+  createdAt: DateTime
+  description: String
+  end: DateTime
+  start: DateTime
+  state: TopicState
+  title: String
+  updatedAt: DateTime
+}
+
+input TopicInput {
+  description: String
+  end: DateTime
+  start: DateTime
+  state: TopicState
+  title: String!
+}
+
+enum TopicState {
+  ENDED
+  LIVE
+  PENDING
+}
 
 input UpdateUserInput {
   about: String

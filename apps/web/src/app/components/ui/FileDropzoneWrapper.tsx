@@ -24,7 +24,10 @@ const FileDropzoneWrapper = ({
   });
 
   return (
-    <div {...getRootProps()} className="relative cursor-pointer">
+    <div
+      {...getRootProps()}
+      className={`relative ${!noClick && "cursor-pointer"}`}
+    >
       {children}
 
       {isDragActive ? (
