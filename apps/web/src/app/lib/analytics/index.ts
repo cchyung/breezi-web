@@ -8,6 +8,7 @@ export enum AmplitudeEventType {
   SHARE_LIST = "share_list",
   SHARED_LIST_VIEW = "shared_list_view",
   CREATE_LIST_COMMENT = "create_list_comment",
+  SIGN_UP = "sign_up",
 }
 
 export const Amplitude = (() => {

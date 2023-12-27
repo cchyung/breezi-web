@@ -87,14 +87,17 @@ export const UpdateTopic = mutationField("updateTopic", {
   },
 });
 
-extendType({
+export const ListWithTopic = extendType({
   type: "List",
   definition(t) {
     t.field("topic", {
       type: Topic,
       resolve: async (parent) => {
         if (parent.topic) {
-          return await topicService.getTopic(parent.topic);
+          const topic = await topicService.getTopic(parent.topic);
+          return topic;
+        } else {
+          return null;
         }
       },
     });

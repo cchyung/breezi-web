@@ -151,6 +151,7 @@ export interface NexusGenFieldTypes {
     likes: Array<NexusGenRootTypes['ListLike'] | null>; // [ListLike]!
     state: NexusGenEnums['ListState'] | null; // ListState
     title: string; // String!
+    topic: NexusGenRootTypes['Topic'] | null; // Topic
     type: NexusGenEnums['ListType']; // ListType!
     updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
   }
@@ -260,6 +261,7 @@ export interface NexusGenFieldTypeNames {
     likes: 'ListLike'
     state: 'ListState'
     title: 'String'
+    topic: 'Topic'
     type: 'ListType'
     updatedAt: 'DateTime'
   }

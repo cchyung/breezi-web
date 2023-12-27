@@ -12,7 +12,6 @@ import { AuthenticatedContext, UnauthenticatedContext } from "lib/context";
 import { verifyAuthToken } from "lib/auth";
 import { BaseError } from "lib/errors";
 import { db } from "models";
-import { UploadRouter } from "../../api";
 
 const loggingPlugin: ApolloServerPlugin = {
   async requestDidStart(requestContext) {
@@ -178,9 +177,6 @@ export const startServer = async () => {
 
   await server.start();
   server.applyMiddleware({ app });
-
-  // REST API for other stuff
-  app.use("/uploads", UploadRouter);
 
   httpServer.listen(process.env.PORT ?? 4000, () => {
     logger.info(`🗿 Server ready 🎉`);

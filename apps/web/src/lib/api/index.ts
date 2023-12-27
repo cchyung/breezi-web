@@ -36,6 +36,7 @@ export type List = {
   likes: Array<Maybe<ListLike>>;
   state?: Maybe<ListState>;
   title: Scalars['String']['output'];
+  topic?: Maybe<Topic>;
   type: ListType;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
@@ -348,14 +349,14 @@ export type UserInput = {
   username?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type ListFragment = { __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null> };
+export type ListFragment = { __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null>, topic?: { __typename?: 'Topic', _id: string, title?: string | null, description?: string | null } | null };
 
 export type GetListQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type GetListQuery = { __typename?: 'Query', list?: { __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null> } | null };
+export type GetListQuery = { __typename?: 'Query', list?: { __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null>, topic?: { __typename?: 'Topic', _id: string, title?: string | null, description?: string | null } | null } | null };
 
 export type GetListsQueryVariables = Exact<{
   cursor?: InputMaybe<Scalars['Int']['input']>;
@@ -364,7 +365,7 @@ export type GetListsQueryVariables = Exact<{
 }>;
 
 
-export type GetListsQuery = { __typename?: 'Query', lists?: Array<{ __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null> } | null> | null };
+export type GetListsQuery = { __typename?: 'Query', lists?: Array<{ __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null>, topic?: { __typename?: 'Topic', _id: string, title?: string | null, description?: string | null } | null } | null> | null };
 
 export type GetListFeedQueryVariables = Exact<{
   cursor?: InputMaybe<Scalars['Int']['input']>;
@@ -372,21 +373,21 @@ export type GetListFeedQueryVariables = Exact<{
 }>;
 
 
-export type GetListFeedQuery = { __typename?: 'Query', listFeed?: Array<{ __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null> } | null> | null };
+export type GetListFeedQuery = { __typename?: 'Query', listFeed?: Array<{ __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null>, topic?: { __typename?: 'Topic', _id: string, title?: string | null, description?: string | null } | null } | null> | null };
 
 export type GetUserListsQueryVariables = Exact<{
   userId: Scalars['String']['input'];
 }>;
 
 
-export type GetUserListsQuery = { __typename?: 'Query', userLists?: Array<{ __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null> } | null> | null };
+export type GetUserListsQuery = { __typename?: 'Query', userLists?: Array<{ __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null>, topic?: { __typename?: 'Topic', _id: string, title?: string | null, description?: string | null } | null } | null> | null };
 
 export type CreateListMutationVariables = Exact<{
   list: ListInput;
 }>;
 
 
-export type CreateListMutation = { __typename?: 'Mutation', createList?: { __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null> } | null };
+export type CreateListMutation = { __typename?: 'Mutation', createList?: { __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null>, topic?: { __typename?: 'Topic', _id: string, title?: string | null, description?: string | null } | null } | null };
 
 export type GetLikeCountQueryVariables = Exact<{
   listId: Scalars['String']['input'];
@@ -415,7 +416,7 @@ export type UpdateListMutationVariables = Exact<{
 }>;
 
 
-export type UpdateListMutation = { __typename?: 'Mutation', updateList?: { __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null> } | null };
+export type UpdateListMutation = { __typename?: 'Mutation', updateList?: { __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null>, topic?: { __typename?: 'Topic', _id: string, title?: string | null, description?: string | null } | null } | null };
 
 export type DeleteListMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -430,7 +431,7 @@ export type AddCommentToListMutationVariables = Exact<{
 }>;
 
 
-export type AddCommentToListMutation = { __typename?: 'Mutation', addCommentToList?: { __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null> } | null };
+export type AddCommentToListMutation = { __typename?: 'Mutation', addCommentToList?: { __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null>, topic?: { __typename?: 'Topic', _id: string, title?: string | null, description?: string | null } | null } | null };
 
 export type GetUploadProfileImageUrlQueryVariables = Exact<{ [key: string]: never; }>;
 
