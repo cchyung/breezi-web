@@ -433,6 +433,18 @@ export type AddCommentToListMutationVariables = Exact<{
 
 export type AddCommentToListMutation = { __typename?: 'Mutation', addCommentToList?: { __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null>, topic?: { __typename?: 'Topic', _id: string, title?: string | null, description?: string | null } | null } | null };
 
+export type GetTopicsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetTopicsQuery = { __typename?: 'Query', topics?: Array<{ __typename?: 'Topic', _id: string, title?: string | null, description?: string | null, state?: TopicState | null, start?: any | null, end?: any | null } | null> | null };
+
+export type GetTopicQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type GetTopicQuery = { __typename?: 'Query', topic?: { __typename?: 'Topic', _id: string, title?: string | null, description?: string | null, state?: TopicState | null, start?: any | null, end?: any | null } | null };
+
 export type GetUploadProfileImageUrlQueryVariables = Exact<{ [key: string]: never; }>;
 
 
