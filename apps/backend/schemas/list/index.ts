@@ -208,19 +208,22 @@ export const GetListFeed = queryField("listFeed", {
   args: {
     cursor: nonNull(intArg({ default: 0 })),
     pageSize: nonNull(intArg({ default: 20 })),
+    topic: stringArg(),
   },
-  resolve: async (_, { cursor, pageSize }, ctx) => {
+  resolve: async (_, { cursor, pageSize, topic }, ctx) => {
     if (!ctx.user) {
       return listService.getLists({
         state: ListStateEnum.published,
         cursor: cursor,
         pageSize: pageSize,
+        topic,
       });
     } else {
       return listService.getListFeed({
         userId: ctx.user._id,
         cursor: cursor,
         pageSize: pageSize,
+        topic,
       });
     }
   },

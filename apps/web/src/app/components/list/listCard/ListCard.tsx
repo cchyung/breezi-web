@@ -11,6 +11,7 @@ import ListCardOptions from "./ListCardOptions";
 import { formatTime } from "@/app/lib/utils/formatting";
 import ListCardComments from "./ListCardComments";
 import { Username } from "@/app/components/user";
+import TopicChip from "../../topic/TopicChip";
 
 const ListCard = ({
   list,
@@ -67,15 +68,16 @@ const ListCard = ({
                 )}`}
           </p>
 
-          {showOptions && (
-            <div className="ml-auto">
+          <div className="ml-auto">
+            {list.topic && <TopicChip topic={list.topic} />}
+            {showOptions && (
               <ListCardOptions
                 refetchList={refetchList}
                 list={list}
                 onDelete={onDelete}
               />
-            </div>
-          )}
+            )}
+          </div>
         </div>
 
         {list.coverImageURL && (

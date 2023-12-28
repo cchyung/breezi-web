@@ -40,7 +40,7 @@ const CreateListModalProvider = ({ children }: PropsWithChildren) => {
       setTopic(undefined);
     }
 
-    if (onCreation) {
+    if (options.onCreation) {
       setOnCreation(() => options.onCreation);
     }
   };
@@ -49,7 +49,7 @@ const CreateListModalProvider = ({ children }: PropsWithChildren) => {
     <CreateListModalContext.Provider value={{ isOpen, openModal }}>
       {children}
       <CreateListModal
-      topic={topic}
+        topic={topic}
         isOpen={isOpen}
         create={create}
         setIsOpen={setIsOpen}

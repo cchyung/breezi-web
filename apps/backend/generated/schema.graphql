@@ -104,7 +104,7 @@ type Ok {
 
 type Query {
   list(id: String!): List
-  listFeed(cursor: Int! = 0, pageSize: Int! = 20): [List]
+  listFeed(cursor: Int! = 0, pageSize: Int! = 20, topic: String): [List]
   listLikeCount(listId: String!): Int
   listLikes(listId: String!): [ListLike]
   lists(cursor: Int, pageSize: Int, state: ListState, topic: String): [List]
@@ -141,6 +141,7 @@ type Topic {
   end: DateTime
   start: DateTime
   state: TopicState
+  style: TopicStyle
   title: String
   updatedAt: DateTime
 }
@@ -150,6 +151,7 @@ input TopicInput {
   end: DateTime
   start: DateTime
   state: TopicState
+  style: TopicStyleInput
   title: String!
 }
 
@@ -157,6 +159,18 @@ enum TopicState {
   ENDED
   LIVE
   PENDING
+}
+
+type TopicStyle {
+  backgroundColor: String
+  backgroundImageURL: String
+  color: String
+}
+
+input TopicStyleInput {
+  backgroundColor: String
+  backgroundImageURL: String
+  color: String
 }
 
 input UpdateUserInput {

@@ -37,7 +37,7 @@ export const ListService = (db: Database) => {
     cursor?: number;
     pageSize?: number;
     state?: ListState;
-    topic?: string;
+    topic?: string | null;
   }) => {
     return await db.List.find(
       {
@@ -184,19 +184,22 @@ export const ListService = (db: Database) => {
     userId,
     cursor = 0,
     pageSize = 15,
+    topic,
   }: {
     userId: string | ObjectId;
     cursor: number;
     pageSize: number;
+    topic?: string | null;
   }) => {
     const listFeed = await db.List.aggregate([
       {
-        $sort: { createdAt: -1 },
-      },
-      {
         $match: {
           state: ListState.published,
+          ...(topic && { topic }),
         },
+      },
+      {
+        $sort: { createdAt: -1 },
       },
       { $skip: cursor },
       {
@@ -289,7 +292,6 @@ export const ListService = (db: Database) => {
     if (listFeed.length === 0) {
       return [];
     }
-
     const populatedLists = await db.List.populate<PopulatedList>(
       listFeed,
       populateList

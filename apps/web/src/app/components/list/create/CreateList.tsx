@@ -35,6 +35,7 @@ import { useApolloClient } from "@apollo/client";
 import { GET_UPLOAD_LIST_COVER_URL } from "@/lib/api/upload/queries";
 import { getObjectURL, uploadFileToSignedURL } from "@/lib/upload";
 import { Amplitude, AmplitudeEventType } from "@/app/lib/analytics";
+import TopicChip from "../../topic/TopicChip";
 
 const CreateList = ({
   list,
@@ -556,9 +557,7 @@ const CreateList = ({
             </ul>
             {topic && (
               <div className="flex flex-grow gap-2 flex-wrap mt-4">
-                <div className="px-4 py-1 rounded-full bg-blue-600 text-white">
-                  {topic.title}
-                </div>
+                <TopicChip topic={topic} />
               </div>
             )}
           </div>

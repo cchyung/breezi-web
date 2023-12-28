@@ -9,6 +9,11 @@ export const GET_TOPICS = gql`
       state
       start
       end
+      style {
+        color
+        backgroundImageURL
+        backgroundColor
+      }
     }
   }
 `;
@@ -22,6 +27,11 @@ export const GET_TOPIC = gql`
       state
       start
       end
+      style {
+        color
+        backgroundImageURL
+        backgroundColor
+      }
     }
   }
 `;

@@ -86,3 +86,18 @@ h2 {
 input:focus {
   outline: none;
 }
+
+.border-gradient {
+  border-style: solid;
+  border: double 4px transparent;
+  /* border-radius: 1rem; */
+  background-image: linear-gradient(white, white),
+    linear-gradient(89deg, #ff83ff80 0%, #ffffff30 90%),
+    linear-gradient(0deg, #fff0cb 11%, #ffffff33 94%),
+    linear-gradient(312deg, #ffd254 0%, #ffffff50 100%),
+    linear-gradient(0deg, #ffffff 0%, #ffffff 100%);
+  background-position: center;
+  background-size: cover;
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}

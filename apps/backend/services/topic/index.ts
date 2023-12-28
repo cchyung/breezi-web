@@ -8,6 +8,11 @@ export interface CreateTopicInput {
   state?: TopicState | null;
   start?: Date | null;
   end?: Date | null;
+  style?: {
+    color?: string | null;
+    backgroundImageURL?: string | null;
+    backgroundColor?: string | null;
+  } | null;
 }
 
 export interface UpdateTopicInput {
@@ -16,6 +21,11 @@ export interface UpdateTopicInput {
   state?: TopicState | null;
   start?: Date | null;
   end?: Date | null;
+  style?: {
+    color?: string | null;
+    backgroundImageURL?: string | null;
+    backgroundColor?: string | null;
+  } | null;
 }
 
 export const TopicService = (db: Database) => {

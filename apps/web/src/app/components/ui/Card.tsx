@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "react";
+import { CSSProperties, PropsWithChildren } from "react";
 
 const Card = ({
   color,
@@ -6,11 +6,13 @@ const Card = ({
   children,
   className,
   overrideBgStyle = false,
+  style,
 }: PropsWithChildren<{
   color?: "white";
   className?: string;
   tight?: boolean;
   overrideBgStyle?: boolean;
+  style?: CSSProperties;
 }>) => {
   const bgStyles = {
     white: "bg-white",
@@ -27,6 +29,7 @@ const Card = ({
   return (
     <div
       className={`flex flex-col rounded-2xl ${paddingStyle} ${bgStyle} ${className}`}
+      style={style}
     >
       {children}
     </div>

@@ -62,7 +62,7 @@ function makeClient() {
         Query: {
           fields: {
             listFeed: {
-              keyArgs: ["_id"],
+              keyArgs: ["topic", "_id"],
               merge(existing: List[] = [], incoming: List[]) {
                 return [...existing, ...incoming];
               },

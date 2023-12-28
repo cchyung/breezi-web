@@ -69,7 +69,13 @@ export interface NexusGenInputs {
     end?: NexusGenScalars['DateTime'] | null; // DateTime
     start?: NexusGenScalars['DateTime'] | null; // DateTime
     state?: NexusGenEnums['TopicState'] | null; // TopicState
+    style?: NexusGenInputs['TopicStyleInput'] | null; // TopicStyleInput
     title: string; // String!
+  }
+  TopicStyleInput: { // input type
+    backgroundColor?: string | null; // String
+    backgroundImageURL?: string | null; // String
+    color?: string | null; // String
   }
   UpdateUserInput: { // input type
     about?: string | null; // String
@@ -124,6 +130,11 @@ export interface NexusGenObjects {
     url: string; // String!
   }
   Topic: Topic.Topic;
+  TopicStyle: { // root type
+    backgroundColor?: string | null; // String
+    backgroundImageURL?: string | null; // String
+    color?: string | null; // String
+  }
   User: User.User;
   UserFollower: UserFollower.UserFollower;
 }
@@ -224,8 +235,14 @@ export interface NexusGenFieldTypes {
     end: NexusGenScalars['DateTime'] | null; // DateTime
     start: NexusGenScalars['DateTime'] | null; // DateTime
     state: NexusGenEnums['TopicState'] | null; // TopicState
+    style: NexusGenRootTypes['TopicStyle'] | null; // TopicStyle
     title: string | null; // String
     updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
+  }
+  TopicStyle: { // field return type
+    backgroundColor: string | null; // String
+    backgroundImageURL: string | null; // String
+    color: string | null; // String
   }
   User: { // field return type
     _id: string; // String!
@@ -334,8 +351,14 @@ export interface NexusGenFieldTypeNames {
     end: 'DateTime'
     start: 'DateTime'
     state: 'TopicState'
+    style: 'TopicStyle'
     title: 'String'
     updatedAt: 'DateTime'
+  }
+  TopicStyle: { // field return type name
+    backgroundColor: 'String'
+    backgroundImageURL: 'String'
+    color: 'String'
   }
   User: { // field return type name
     _id: 'String'
@@ -409,6 +432,7 @@ export interface NexusGenArgTypes {
     listFeed: { // args
       cursor: number; // Int!
       pageSize: number; // Int!
+      topic?: string | null; // String
     }
     listLikeCount: { // args
       listId: string; // String!

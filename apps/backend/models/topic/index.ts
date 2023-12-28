@@ -15,6 +15,11 @@ export interface Topic {
   end?: Date;
   createdAt: Date;
   updatedAt: Date;
+  style?: {
+    color?: string;
+    backgroundImageURL?: string;
+    backgroundColor?: string;
+  };
 }
 
 export const TopicSchema = new Schema(
@@ -32,6 +37,11 @@ export const TopicSchema = new Schema(
     },
     end: {
       type: Schema.Types.Date,
+    },
+    style: {
+      color: { type: String },
+      backgroundImageURL: { type: String },
+      backgroundColor: { type: String },
     },
   },
   { timestamps: true }

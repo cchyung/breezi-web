@@ -27,6 +27,16 @@ export const Topic = objectType({
     t.datetime("end");
     t.datetime("createdAt");
     t.datetime("updatedAt");
+    t.field("style", { type: TopicStyle });
+  },
+});
+
+export const TopicStyle = objectType({
+  name: "TopicStyle",
+  definition(t) {
+    t.string("color");
+    t.string("backgroundImageURL");
+    t.string("backgroundColor");
   },
 });
 
@@ -43,6 +53,16 @@ export const TopicInput = inputObjectType({
     t.field("state", { type: TopicState });
     t.datetime("start");
     t.datetime("end");
+    t.field("style", { type: TopicStyleInput });
+  },
+});
+
+export const TopicStyleInput = inputObjectType({
+  name: "TopicStyleInput",
+  definition(t) {
+    t.string("color");
+    t.string("backgroundImageURL");
+    t.string("backgroundColor");
   },
 });
 

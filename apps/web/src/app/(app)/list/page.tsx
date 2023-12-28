@@ -24,12 +24,14 @@ export default function Home() {
       cursor: 0,
       pageSize: 10,
     },
-    nextFetchPolicy: "cache-and-network",
+    nextFetchPolicy: "network-only",
   });
 
   const { data: topicData } = useQuery<GetTopicsQuery, GetTopicsQueryVariables>(
     GET_TOPICS
   );
+
+  const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
 
   // track scroll and determine if user has scrolled past bottom spinner to fetch more
   const [hasMore, setHasMore] = useState(true);
@@ -39,6 +41,20 @@ export default function Home() {
   const [prevScrollDirection, setPrevScrollDirection] = useState("down");
 
   const listContainerRef = useRef<HTMLDivElement>(null);
+
+  const onTopicSelect = useCallback(
+    async (topic: string | null) => {
+      try {
+        refetch({
+          topic,
+        });
+        setSelectedTopic(topic);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [selectedTopic, refetch]
+  );
 
   const handleScroll = useCallback(() => {
     const position = window.scrollY + window.innerHeight;
@@ -110,7 +126,12 @@ export default function Home() {
         {loading ? (
           <></>
         ) : (
-          <ListGallery initialLists={data?.listFeed as List[]} />
+          <ListGallery
+            initialLists={data?.listFeed as List[]}
+            topics={topicData?.topics as Topic[]}
+            selectedTopic={selectedTopic}
+            setSelectedTopic={onTopicSelect}
+          />
         )}
 
         {loadingMore && (

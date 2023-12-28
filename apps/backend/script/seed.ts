@@ -106,6 +106,10 @@ const seed = async () => {
     title: "New Year, Same You",
     description: "Share some of your New Year's resolutions",
     state: TopicState.LIVE,
+    style: {
+      backgroundImageURL: "https://i.imgur.com/3ZtJ4vX.jpg",
+      color: "white",
+    },
   });
 
   console.log("seeded successfully");
