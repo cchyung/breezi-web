@@ -31,12 +31,10 @@ import {
 } from "@/app/components/icon";
 import { CREATE_LIST, UPDATE_LIST } from "@/lib/api/list/queries";
 import { useApolloClient } from "@apollo/client";
-
-import FileDropzoneWrapper from "@/app/components/ui/FileDropzoneWrapper";
+import { FileDropzoneWrapper } from "@/app/components/ui";
 import { GET_UPLOAD_LIST_COVER_URL } from "@/lib/api/upload/queries";
 import { getObjectURL, uploadFileToSignedURL } from "@/lib/upload";
 import { Amplitude, AmplitudeEventType } from "@/app/lib/analytics";
-import { set } from "animejs";
 
 const CreateList = ({
   list,
@@ -482,8 +480,14 @@ const CreateList = ({
                         }
                       }}
                       onPaste={(e) => {
-                        e.preventDefault();
                         const text = e.clipboardData.getData("text/plain");
+
+                        if (!text.includes("\n") && !text.includes("\r")) {
+                          return;
+                        }
+
+                        e.preventDefault();
+
                         const lines = text.split("\n");
 
                         let formattedLines = lines;
