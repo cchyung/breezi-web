@@ -370,7 +370,7 @@ const CreateList = ({
           <div className="p-6 pt-4 flex flex-col gap-2 overflow-hidden">
             <textarea
               placeholder="Title your list"
-              className="resize-none font-bold text-3xl"
+              className="font-uxum-grotesque resize-none text-3xl"
               rows={1}
               value={title}
               onChange={(e) => {
