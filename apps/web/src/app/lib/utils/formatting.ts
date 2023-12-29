@@ -40,12 +40,11 @@ export const formatTime = (start: Date, end: Date, shorten = false) => {
   }
   if (remainingTime.minutes > 0) {
     let label = shorten ? "m" : "m";
-    if (remainingTime.minutes > 1) label = `${label}s`;
+
     return `${remainingTime.minutes} ${label}`;
   }
   if (remainingTime.seconds >= 0) {
     let label = shorten ? "s" : " s";
-    if (remainingTime.seconds > 1 && !shorten) label = `${label}s`;
     return `${remainingTime.seconds}${label}`;
   }
   return null;
