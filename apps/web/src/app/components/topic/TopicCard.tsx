@@ -19,8 +19,6 @@ export default ({
   const { user } = useContext(UserContext);
   const router = useRouter();
 
-  console.log(getTopicStyle(topic))
-
   return (
     <Card
       className="bg-blue-700 text-white"

@@ -134,17 +134,13 @@ export default function Home() {
           />
         )}
 
-        {loadingMore && (
-          <>
-            <div className="w-full flex justify-center mt-6">
-              <Spinner />
-            </div>
-          </>
-        )}
+        <>
+          <div className="w-full flex justify-center mt-6 h-12">
+            {loadingMore && <Spinner />}
+          </div>
+        </>
       </div>
       <CreateListButton onCreation={refetch} />
-
-      {!loadingMore && hasMore ? <div className="h-12" /> : ""}
     </>
   );
 }

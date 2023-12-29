@@ -3,7 +3,6 @@ import { CSSProperties } from "react";
 
 /** returns CSSProperties object based on topic styling */
 export const getTopicStyle = (topic: Topic): CSSProperties => {
-  console.log(topic)
   return topic.style
     ? {
         ...(topic.style?.backgroundImageURL
