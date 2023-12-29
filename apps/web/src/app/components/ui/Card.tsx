@@ -18,7 +18,7 @@ const Card = ({
     white: "bg-white",
   };
 
-  const paddingStyle = tight ? "p-0" : "p-5";
+  const paddingStyle = tight ? "p-0" : "p-4 md:p-5";
 
   const bgStyle = !overrideBgStyle
     ? color
