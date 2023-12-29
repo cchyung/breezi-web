@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/app/components/ui";
+import { Button, FileDropzoneWrapper } from "@/app/components/ui";
 import {
   CreateListMutation,
   CreateListMutationVariables,
@@ -11,6 +11,7 @@ import {
   ListItemInput,
   ListState,
   ListType,
+  Topic,
   UpdateListMutation,
   UpdateListMutationVariables,
 } from "@/lib/api";
@@ -31,17 +32,19 @@ import {
 } from "@/app/components/icon";
 import { CREATE_LIST, UPDATE_LIST } from "@/lib/api/list/queries";
 import { useApolloClient } from "@apollo/client";
-import { FileDropzoneWrapper } from "@/app/components/ui";
 import { GET_UPLOAD_LIST_COVER_URL } from "@/lib/api/upload/queries";
 import { getObjectURL, uploadFileToSignedURL } from "@/lib/upload";
 import { Amplitude, AmplitudeEventType } from "@/app/lib/analytics";
+import TopicChip from "../../topic/TopicChip";
 
 const CreateList = ({
   list,
+  topic,
   create,
   onCreation,
 }: {
   list?: List;
+  topic?: Topic;
   create?: boolean;
   onCreation: (list?: List | null) => void;
 }) => {
@@ -161,6 +164,7 @@ const CreateList = ({
             }),
           coverImageURL: coverImageURLInput,
           state: publish ? ListState.Published : ListState.Draft,
+          topic: topic?._id,
           type,
         };
 
@@ -551,6 +555,11 @@ const CreateList = ({
                 );
               })}
             </ul>
+            {topic && (
+              <div className="flex flex-grow gap-2 flex-wrap mt-4">
+                <TopicChip topic={topic} />
+              </div>
+            )}
           </div>
         </FileDropzoneWrapper>
       </div>

@@ -18,8 +18,6 @@ export const decodeJWTAuthToken = (token: string) => {
   return jwt.decode(token) as { phone: string };
 };
 
-const userService = UserService(db);
-
 export const isOwner = ({
   user,
   _id,

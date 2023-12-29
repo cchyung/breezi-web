@@ -20,8 +20,8 @@ export const GET_LISTS = gql`
 `;
 
 export const GET_LIST_FEED = gql`
-  query GetListFeed($cursor: Int, $pageSize: Int) {
-    listFeed(cursor: $cursor, pageSize: $pageSize) {
+  query GetListFeed($cursor: Int, $pageSize: Int, $topic: String) {
+    listFeed(cursor: $cursor, pageSize: $pageSize, topic: $topic) {
       ...list
     }
   }

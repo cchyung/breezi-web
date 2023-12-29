@@ -1,14 +1,27 @@
 "use client";
-import { List } from "@/lib/api";
-import { ListCard } from ".";
+import {
+  GetListFeedQuery,
+  GetListFeedQueryVariables,
+  List,
+  Topic,
+} from "@/lib/api";
+import { ListCard, ListGalleryTopicFilter } from ".";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useApolloClient, useQuery } from "@apollo/client";
+import { GET_LIST_FEED } from "@/lib/api/list/queries";
 
 const ListGallery = ({
   initialLists,
+  topics,
+  selectedTopic,
+  setSelectedTopic,
   showOptions = false,
 }: {
   initialLists: List[];
+  topics?: Topic[];
+  selectedTopic?: string | null;
+  setSelectedTopic?: (topicId: string | null) => Promise<void>;
   showOptions?: boolean;
 }) => {
   const [lists, setLists] = useState<List[]>(initialLists);
@@ -34,6 +47,12 @@ const ListGallery = ({
 
   return (
     <div className="w-full">
+      {topics && topics.length > 0 ? (
+        <ListGalleryTopicFilter topics={topics} onSelect={setSelectedTopic} />
+      ) : (
+        ""
+      )}
+
       {lists?.length > 0 && (
         <ResponsiveMasonry columnsCountBreakPoints={{ 380: 1, 750: 2 }}>
           <Masonry gutter={"12px"}>

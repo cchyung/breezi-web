@@ -32,6 +32,16 @@ export const listFragment = gql`
       _id
       user
     }
+    topic {
+      _id
+      title
+      description
+      style {
+        color
+        backgroundImageURL
+        backgroundColor
+      }
+    }
     createdAt
     updatedAt
   }

@@ -43,16 +43,15 @@
   }
 }
 
+h1,
+h2,
+h3 {
+  font-family: var(--uxum-grotesque-font);
+}
+
 h1 {
   font-size: 24px;
   font-weight: 600;
-}
-
-body {
-  font-family: "Inter", sans-serif;
-  background: var(--background-color);
-  font-size: 16px;
-  color: var(--color-black);
 }
 
 h2 {
@@ -60,9 +59,20 @@ h2 {
   font-weight: 700;
 }
 
+h3 {
+  font-size: 24px;
+}
+
 .username-lg {
   font-size: 26px;
   font-weight: 700;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background: var(--background-color);
+  font-size: 16px;
+  color: var(--color-black);
 }
 
 .username-sm {
@@ -79,10 +89,29 @@ h2 {
   color: var(--color-gray);
 }
 
+.btn {
+  font-family: "uxum-grotesque";
+}
+
 .btn-small {
   font-size: 12px;
 }
 
 input:focus {
   outline: none;
+}
+
+.border-gradient {
+  border-style: solid;
+  border: double 4px transparent;
+  /* border-radius: 1rem; */
+  background-image: linear-gradient(white, white),
+    linear-gradient(89deg, #ff83ff80 0%, #ffffff30 90%),
+    linear-gradient(0deg, #fff0cb 11%, #ffffff33 94%),
+    linear-gradient(312deg, #ffd254 0%, #ffffff50 100%),
+    linear-gradient(0deg, #ffffff 0%, #ffffff 100%);
+  background-position: center;
+  background-size: cover;
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
 }

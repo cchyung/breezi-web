@@ -36,6 +36,7 @@ export type List = {
   likes: Array<Maybe<ListLike>>;
   state?: Maybe<ListState>;
   title: Scalars['String']['output'];
+  topic?: Maybe<Topic>;
   type: ListType;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
@@ -55,6 +56,7 @@ export type ListInput = {
   items: Array<ListItemInput>;
   state?: InputMaybe<ListState>;
   title: Scalars['String']['input'];
+  topic?: InputMaybe<Scalars['String']['input']>;
   type: ListType;
 };
 
@@ -100,6 +102,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   addCommentToList?: Maybe<List>;
   createList?: Maybe<List>;
+  createTopic?: Maybe<Topic>;
   deleteList?: Maybe<Scalars['Boolean']['output']>;
   followUser?: Maybe<User>;
   likeList?: Maybe<ListLike>;
@@ -107,6 +110,7 @@ export type Mutation = {
   unfollowUser?: Maybe<User>;
   unlikeList?: Maybe<Scalars['Boolean']['output']>;
   updateList?: Maybe<List>;
+  updateTopic?: Maybe<Topic>;
   updateUser?: Maybe<User>;
 };
 
@@ -119,6 +123,11 @@ export type MutationAddCommentToListArgs = {
 
 export type MutationCreateListArgs = {
   list: ListInput;
+};
+
+
+export type MutationCreateTopicArgs = {
+  topic: TopicInput;
 };
 
 
@@ -159,6 +168,12 @@ export type MutationUpdateListArgs = {
 };
 
 
+export type MutationUpdateTopicArgs = {
+  id: Scalars['ID']['input'];
+  topic: TopicInput;
+};
+
+
 export type MutationUpdateUserArgs = {
   id: Scalars['String']['input'];
   user: UpdateUserInput;
@@ -180,6 +195,8 @@ export type Query = {
   /** Logs in the user based on the supplied number and verification code.  If the user doesn't exist, a new user will be created */
   loginUser?: Maybe<LoginObject>;
   sendSMSVerificationToken?: Maybe<Ok>;
+  topic?: Maybe<Topic>;
+  topics?: Maybe<Array<Maybe<Topic>>>;
   uploadListCoverURL?: Maybe<SignedUrl>;
   uploadUserProfileImageURL?: Maybe<SignedUrl>;
   user?: Maybe<User>;
@@ -197,6 +214,7 @@ export type QueryListArgs = {
 export type QueryListFeedArgs = {
   cursor?: Scalars['Int']['input'];
   pageSize?: Scalars['Int']['input'];
+  topic?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -214,6 +232,7 @@ export type QueryListsArgs = {
   cursor?: InputMaybe<Scalars['Int']['input']>;
   pageSize?: InputMaybe<Scalars['Int']['input']>;
   state?: InputMaybe<ListState>;
+  topic?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -227,6 +246,16 @@ export type QueryLoginUserArgs = {
 export type QuerySendSmsVerificationTokenArgs = {
   invitedBy?: InputMaybe<Scalars['String']['input']>;
   phone: Scalars['String']['input'];
+};
+
+
+export type QueryTopicArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryTopicsArgs = {
+  state?: InputMaybe<TopicState>;
 };
 
 
@@ -255,6 +284,47 @@ export type SignedUrl = {
   __typename?: 'SignedURL';
   key: Scalars['String']['output'];
   url: Scalars['String']['output'];
+};
+
+export type Topic = {
+  __typename?: 'Topic';
+  _id: Scalars['ID']['output'];
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  end?: Maybe<Scalars['DateTime']['output']>;
+  start?: Maybe<Scalars['DateTime']['output']>;
+  state?: Maybe<TopicState>;
+  style?: Maybe<TopicStyle>;
+  title?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type TopicInput = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  end?: InputMaybe<Scalars['DateTime']['input']>;
+  start?: InputMaybe<Scalars['DateTime']['input']>;
+  state?: InputMaybe<TopicState>;
+  style?: InputMaybe<TopicStyleInput>;
+  title: Scalars['String']['input'];
+};
+
+export enum TopicState {
+  Ended = 'ENDED',
+  Live = 'LIVE',
+  Pending = 'PENDING'
+}
+
+export type TopicStyle = {
+  __typename?: 'TopicStyle';
+  backgroundColor?: Maybe<Scalars['String']['output']>;
+  backgroundImageURL?: Maybe<Scalars['String']['output']>;
+  color?: Maybe<Scalars['String']['output']>;
+};
+
+export type TopicStyleInput = {
+  backgroundColor?: InputMaybe<Scalars['String']['input']>;
+  backgroundImageURL?: InputMaybe<Scalars['String']['input']>;
+  color?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UpdateUserInput = {
@@ -295,14 +365,14 @@ export type UserInput = {
   username?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type ListFragment = { __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null> };
+export type ListFragment = { __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null>, topic?: { __typename?: 'Topic', _id: string, title?: string | null, description?: string | null, style?: { __typename?: 'TopicStyle', color?: string | null, backgroundImageURL?: string | null, backgroundColor?: string | null } | null } | null };
 
 export type GetListQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type GetListQuery = { __typename?: 'Query', list?: { __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null> } | null };
+export type GetListQuery = { __typename?: 'Query', list?: { __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null>, topic?: { __typename?: 'Topic', _id: string, title?: string | null, description?: string | null, style?: { __typename?: 'TopicStyle', color?: string | null, backgroundImageURL?: string | null, backgroundColor?: string | null } | null } | null } | null };
 
 export type GetListsQueryVariables = Exact<{
   cursor?: InputMaybe<Scalars['Int']['input']>;
@@ -311,29 +381,30 @@ export type GetListsQueryVariables = Exact<{
 }>;
 
 
-export type GetListsQuery = { __typename?: 'Query', lists?: Array<{ __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null> } | null> | null };
+export type GetListsQuery = { __typename?: 'Query', lists?: Array<{ __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null>, topic?: { __typename?: 'Topic', _id: string, title?: string | null, description?: string | null, style?: { __typename?: 'TopicStyle', color?: string | null, backgroundImageURL?: string | null, backgroundColor?: string | null } | null } | null } | null> | null };
 
 export type GetListFeedQueryVariables = Exact<{
   cursor?: InputMaybe<Scalars['Int']['input']>;
   pageSize?: InputMaybe<Scalars['Int']['input']>;
+  topic?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type GetListFeedQuery = { __typename?: 'Query', listFeed?: Array<{ __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null> } | null> | null };
+export type GetListFeedQuery = { __typename?: 'Query', listFeed?: Array<{ __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null>, topic?: { __typename?: 'Topic', _id: string, title?: string | null, description?: string | null, style?: { __typename?: 'TopicStyle', color?: string | null, backgroundImageURL?: string | null, backgroundColor?: string | null } | null } | null } | null> | null };
 
 export type GetUserListsQueryVariables = Exact<{
   userId: Scalars['String']['input'];
 }>;
 
 
-export type GetUserListsQuery = { __typename?: 'Query', userLists?: Array<{ __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null> } | null> | null };
+export type GetUserListsQuery = { __typename?: 'Query', userLists?: Array<{ __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null>, topic?: { __typename?: 'Topic', _id: string, title?: string | null, description?: string | null, style?: { __typename?: 'TopicStyle', color?: string | null, backgroundImageURL?: string | null, backgroundColor?: string | null } | null } | null } | null> | null };
 
 export type CreateListMutationVariables = Exact<{
   list: ListInput;
 }>;
 
 
-export type CreateListMutation = { __typename?: 'Mutation', createList?: { __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null> } | null };
+export type CreateListMutation = { __typename?: 'Mutation', createList?: { __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null>, topic?: { __typename?: 'Topic', _id: string, title?: string | null, description?: string | null, style?: { __typename?: 'TopicStyle', color?: string | null, backgroundImageURL?: string | null, backgroundColor?: string | null } | null } | null } | null };
 
 export type GetLikeCountQueryVariables = Exact<{
   listId: Scalars['String']['input'];
@@ -362,7 +433,7 @@ export type UpdateListMutationVariables = Exact<{
 }>;
 
 
-export type UpdateListMutation = { __typename?: 'Mutation', updateList?: { __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null> } | null };
+export type UpdateListMutation = { __typename?: 'Mutation', updateList?: { __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null>, topic?: { __typename?: 'Topic', _id: string, title?: string | null, description?: string | null, style?: { __typename?: 'TopicStyle', color?: string | null, backgroundImageURL?: string | null, backgroundColor?: string | null } | null } | null } | null };
 
 export type DeleteListMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -377,7 +448,19 @@ export type AddCommentToListMutationVariables = Exact<{
 }>;
 
 
-export type AddCommentToListMutation = { __typename?: 'Mutation', addCommentToList?: { __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null> } | null };
+export type AddCommentToListMutation = { __typename?: 'Mutation', addCommentToList?: { __typename?: 'List', _id: string, title: string, description?: string | null, coverImageURL?: string | null, state?: ListState | null, type: ListType, likeCount: number, createdAt?: any | null, updatedAt?: any | null, items: Array<{ __typename?: 'ListItem', _id: string, text: string, imageURL?: string | null } | null>, comments?: Array<{ __typename?: 'ListComment', _id: string, text: string, createdAt?: any | null, author: { __typename?: 'User', _id: string, username?: string | null } }> | null, author: { __typename?: 'User', _id: string, username?: string | null, imageURL?: string | null }, likes: Array<{ __typename?: 'ListLike', _id?: string | null, user?: string | null } | null>, topic?: { __typename?: 'Topic', _id: string, title?: string | null, description?: string | null, style?: { __typename?: 'TopicStyle', color?: string | null, backgroundImageURL?: string | null, backgroundColor?: string | null } | null } | null } | null };
+
+export type GetTopicsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetTopicsQuery = { __typename?: 'Query', topics?: Array<{ __typename?: 'Topic', _id: string, title?: string | null, description?: string | null, state?: TopicState | null, start?: any | null, end?: any | null, style?: { __typename?: 'TopicStyle', color?: string | null, backgroundImageURL?: string | null, backgroundColor?: string | null } | null } | null> | null };
+
+export type GetTopicQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type GetTopicQuery = { __typename?: 'Query', topic?: { __typename?: 'Topic', _id: string, title?: string | null, description?: string | null, state?: TopicState | null, start?: any | null, end?: any | null, style?: { __typename?: 'TopicStyle', color?: string | null, backgroundImageURL?: string | null, backgroundColor?: string | null } | null } | null };
 
 export type GetUploadProfileImageUrlQueryVariables = Exact<{ [key: string]: never; }>;
 

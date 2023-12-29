@@ -31,20 +31,20 @@ export const formatTime = (start: Date, end: Date, shorten = false) => {
   const remainingTime = timeDifference(start, end);
 
   if (remainingTime.days > 0) {
-    const label = remainingTime.days === 1 ? "day" : "days";
+    const label = remainingTime.days === 1 ? "d" : "d";
     return `${remainingTime.days} ${label}`;
   }
   if (remainingTime.hours > 0) {
-    const label = remainingTime.hours === 1 ? "hour" : "hours";
+    const label = remainingTime.hours === 1 ? "h" : "h";
     return `${remainingTime.hours} ${label}`;
   }
   if (remainingTime.minutes > 0) {
-    let label = shorten ? "min" : "minute";
+    let label = shorten ? "m" : "m";
     if (remainingTime.minutes > 1) label = `${label}s`;
     return `${remainingTime.minutes} ${label}`;
   }
   if (remainingTime.seconds >= 0) {
-    let label = shorten ? "s" : " second";
+    let label = shorten ? "s" : " s";
     if (remainingTime.seconds > 1 && !shorten) label = `${label}s`;
     return `${remainingTime.seconds}${label}`;
   }

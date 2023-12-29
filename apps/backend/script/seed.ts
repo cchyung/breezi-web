@@ -1,11 +1,17 @@
 import { List, ListItem, ListType } from "@/models/list";
 import { User } from "@/models/user";
 import { ListState } from "@/models/list";
-import { CreateListInput, ListService, UserService } from "@/services";
+import {
+  CreateListInput,
+  ListService,
+  TopicService,
+  UserService,
+} from "@/services";
 import { db } from "@/models";
 import { loadConfig } from "tsconfig-paths";
 import { initDatabaseConnection } from "@/lib/config/database";
 import mongoose from "mongoose";
+import { TopicState } from "@/models/topic";
 
 const users: Omit<User, "_id">[] = [
   {
@@ -77,6 +83,7 @@ const seed = async () => {
   await mongoose.connection.dropDatabase();
   const userService = UserService(db);
   const listService = ListService(db);
+  const topicService = TopicService(db);
 
   const createdUsers = await Promise.all(
     users.map(async (user) => {
@@ -94,6 +101,16 @@ const seed = async () => {
       });
     }
   }
+
+  await topicService.createTopic({
+    title: "New Year, Same You",
+    description: "Share some of your New Year's resolutions",
+    state: TopicState.LIVE,
+    style: {
+      backgroundImageURL: "https://i.imgur.com/3ZtJ4vX.jpg",
+      color: "white",
+    },
+  });
 
   console.log("seeded successfully");
 };

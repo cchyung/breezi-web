@@ -16,6 +16,7 @@ export interface CreateListInput {
   state?: ListState | null;
   description?: string | null;
   coverImageURL?: string | null;
+  topic?: string | null;
 }
 
 const populateList = [{ path: "author" }, { path: "comments.author" }];
@@ -31,14 +32,17 @@ export const ListService = (db: Database) => {
     cursor = 0,
     pageSize = 20,
     state,
+    topic,
   }: {
     cursor?: number;
     pageSize?: number;
     state?: ListState;
+    topic?: string | null;
   }) => {
     return await db.List.find(
       {
         ...(state && { state }),
+        ...(topic && { topic }),
       },
       {},
       { skip: cursor, limit: pageSize, sort: { updatedAt: -1 } }
@@ -71,6 +75,7 @@ export const ListService = (db: Database) => {
     description,
     type = ListType.bulleted,
     coverImageURL,
+    topic,
   }: CreateListInput): Promise<PopulatedList> => {
     const list = new db.List({
       author,
@@ -80,6 +85,7 @@ export const ListService = (db: Database) => {
       description,
       type,
       coverImageURL,
+      topic,
     });
     return (await list.save()).populate<PopulatedList>(populateList);
   };
@@ -96,6 +102,7 @@ export const ListService = (db: Database) => {
     description,
     coverImageURL,
     type,
+    topic,
   }: {
     id: string;
     title?: string | null;
@@ -104,6 +111,7 @@ export const ListService = (db: Database) => {
     description?: string | null;
     coverImageURL?: string | null;
     type?: ListType | null;
+    topic?: string | null;
   }) => {
     const update: Partial<CreateListInput> = {};
     if (title) update.title = title;
@@ -176,19 +184,22 @@ export const ListService = (db: Database) => {
     userId,
     cursor = 0,
     pageSize = 15,
+    topic,
   }: {
     userId: string | ObjectId;
     cursor: number;
     pageSize: number;
+    topic?: string | null;
   }) => {
     const listFeed = await db.List.aggregate([
       {
-        $sort: { createdAt: -1 },
-      },
-      {
         $match: {
           state: ListState.published,
+          ...(topic && { topic }),
         },
+      },
+      {
+        $sort: { createdAt: -1 },
       },
       { $skip: cursor },
       {
@@ -281,7 +292,6 @@ export const ListService = (db: Database) => {
     if (listFeed.length === 0) {
       return [];
     }
-
     const populatedLists = await db.List.populate<PopulatedList>(
       listFeed,
       populateList

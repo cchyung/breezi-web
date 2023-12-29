@@ -5,8 +5,27 @@ import { Inter } from "next/font/google";
 import { CreateListModalProvider } from "./components/list/create/CreateListModalProvider";
 import { UserProvider } from "@/app/components/user/UserProvider";
 import AmplitudeProvider from "./lib/analytics/AmplitudeProvider";
+import localFont from "next/font/local";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: "--inter-font" });
+
+const uxumGrotesque = localFont({
+  src: [
+    {
+      path: "./font/uxum-grotesque/UxumGrotesque-Regular.woff2",
+    },
+    {
+      path: "./font/uxum-grotesque/UxumGrotesque-Bold.woff2",
+    },
+    {
+      path: "./font/uxum-grotesque/UxumGrotesque-Light.woff2",
+    },
+    {
+      path: "./font/uxum-grotesque/UxumGrotesque-Medium.woff2",
+    },
+  ],
+  variable: "--uxum-grotesque-font",
+});
 
 export const metadata: Metadata = {
   manifest: "/manifest.json", // we are accessing our manifest file here
@@ -40,7 +59,7 @@ export default function RootLayout({
       <UserProvider>
         <ApolloWrapper>
           <AmplitudeProvider>
-            <body className={`${inter.className}`}>
+            <body className={`${inter.variable} ${uxumGrotesque.variable}`}>
               <CreateListModalProvider>{children}</CreateListModalProvider>
             </body>
           </AmplitudeProvider>

@@ -46,7 +46,7 @@ const ListCardOptions = ({
             <button
               className="px-4 pb-2 pt-4 hover:bg-gray-100 transition-colors text-left"
               onClick={() => {
-                openModal(false, list, refetchList);
+                openModal({ create: false, list, onCreation: refetchList });
               }}
             >
               Edit

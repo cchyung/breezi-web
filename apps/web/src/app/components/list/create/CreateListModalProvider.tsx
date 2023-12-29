@@ -1,15 +1,18 @@
 "use client";
-import {
-  PropsWithChildren,
-  createContext,
-  useState,
-} from "react";
+import { PropsWithChildren, createContext, useState } from "react";
 import CreateListModal from "./CreateListModal";
-import { List } from "@/lib/api";
+import { List, Topic } from "@/lib/api";
+
+export interface ListCreateOptions {
+  create: boolean;
+  list?: List;
+  topic?: Topic;
+  onCreation?: () => void;
+}
 
 let CreateListModalContext = createContext<{
   isOpen: boolean;
-  openModal: (create?: boolean, list?: List, onCreation?: () => void) => void;
+  openModal: (options: ListCreateOptions) => void;
 }>({
   isOpen: false,
   openModal: () => {},
@@ -19,23 +22,26 @@ const CreateListModalProvider = ({ children }: PropsWithChildren) => {
   const [isOpen, setIsOpen] = useState(false);
   const [create, setCreate] = useState(true);
   const [list, setList] = useState<List>();
+  const [topic, setTopic] = useState<Topic>();
   const [onCreation, setOnCreation] = useState<() => void>();
 
-  const openModal = (
-    create: boolean = true,
-    list?: List,
-    onCreation?: () => void
-  ) => {
-    setCreate(create);
+  const openModal = (options: ListCreateOptions) => {
+    setCreate(options.create);
     setIsOpen(true);
-    if (list) {
-      setList(list);
+    if (options.list) {
+      setList(options.list);
     } else {
       setList(undefined);
     }
 
-    if (onCreation) {
-      setOnCreation(() => onCreation);
+    if (options.topic) {
+      setTopic(options.topic);
+    } else {
+      setTopic(undefined);
+    }
+
+    if (options.onCreation) {
+      setOnCreation(() => options.onCreation);
     }
   };
 
@@ -43,6 +49,7 @@ const CreateListModalProvider = ({ children }: PropsWithChildren) => {
     <CreateListModalContext.Provider value={{ isOpen, openModal }}>
       {children}
       <CreateListModal
+        topic={topic}
         isOpen={isOpen}
         create={create}
         setIsOpen={setIsOpen}

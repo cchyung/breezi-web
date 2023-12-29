@@ -15,7 +15,7 @@ const Button = ({
   onClick?: MouseEventHandler<HTMLButtonElement>;
   onMouseOver?: MouseEventHandler<HTMLButtonElement>;
   size?: "sm" | "md" | "lg";
-  color?: "primary" | "gray" | "black";
+  color?: "primary" | "gray" | "black" | "white";
   disabled?: boolean;
   className?: string;
   loading?: boolean;
@@ -32,6 +32,7 @@ const Button = ({
     primary: "bg-primary text-white",
     gray: "bg-gray-200 text-black",
     black: "bg-black text-white",
+    white: "bg-white text-black",
   };
 
   const disabledStyle = "bg-gray-300 text-white";
@@ -40,7 +41,7 @@ const Button = ({
   return (
     <>
       <button
-        className={`${className} ${colorStyle} ${
+        className={`font-uxum-grotesque font-normal ${className} ${colorStyle} ${
           disabled && disabledStyle
         } relative disabled:cursor-not-allowed rounded-2xl
         transition-colors shadow-md`}

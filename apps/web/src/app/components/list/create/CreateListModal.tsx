@@ -3,7 +3,7 @@ import { Dialog } from "@headlessui/react";
 import { CreateList } from ".";
 import { CrossIcon } from "@/app/components/icon";
 import { Card } from "@/app/components/ui";
-import { List } from "@/lib/api";
+import { List, Topic } from "@/lib/api";
 
 const CreateListModal = ({
   isOpen = false,
@@ -11,12 +11,14 @@ const CreateListModal = ({
   setIsOpen,
   onCreation,
   list,
+  topic,
 }: {
   isOpen: boolean;
   create: boolean;
   setIsOpen: (_: boolean) => void;
   onCreation?: () => void;
   list?: List;
+  topic?: Topic;
 }) => {
   return (
     <Dialog className="z-50 relative" open={isOpen} onClose={() => {}}>
@@ -25,6 +27,7 @@ const CreateListModal = ({
           <div className="w-full h-full">
             <Card className="h-full md:max-h-[80vh] shadow-xl " tight={true}>
               <CreateList
+                topic={topic}
                 create={create}
                 onCreation={() => {
                   setIsOpen(false);

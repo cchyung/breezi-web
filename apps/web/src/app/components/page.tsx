@@ -1,8 +1,8 @@
 import { Button, Card, Spinner } from "@/app/components/ui";
 import { List } from "@/lib/api";
 import ListCard from "./list/listCard/ListCard";
-import { CreateList } from "./list";
 import PhoneInput from "./ui/form/PhoneInput";
+import { TopicCard } from "./topic";
 
 const demoList: List = {
   _id: "0",
@@ -45,6 +45,13 @@ const Components = () => {
       <Spinner />
 
       <PhoneInput />
+
+      <TopicCard
+        topic={{
+          title: "New Year, Same You",
+          description: "Tell me about your new years resolutions",
+        }}
+      />
     </div>
   );
 };

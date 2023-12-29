@@ -41,22 +41,26 @@ const Verify = () => {
           throw response.error;
         }
 
+        const loggedInUser = response.data?.loginUser?.user;
+        const authToken = response.data?.loginUser?.authToken;
+
         // set information in local storage
         updateLocalUser({
-          _id: response.data?.loginUser?.user?._id,
-          phone: response.data?.loginUser?.user?.phone as string,
-          authToken: response.data?.loginUser?.authToken as string,
-          imageURL: response.data?.loginUser?.user?.imageURL,
+          _id: loggedInUser?._id,
+          phone: loggedInUser?.phone as string,
+          authToken: authToken!,
+          imageURL: loggedInUser?.imageURL,
         });
 
-        Amplitude.setUser(response.data?.loginUser?.user?._id as string);
-        Amplitude.trackEvent(AmplitudeEventType.LOGIN);
+        Amplitude.setUser(loggedInUser?._id as string);
 
         // check if user is registered.  If not, show username screens
-        if (response.data?.loginUser?.user?.registered) {
-          router.push("/user/" + response.data?.loginUser?.user?._id);
+        if (loggedInUser?.registered) {
+          Amplitude.trackEvent(AmplitudeEventType.LOGIN);
+          router.push("/user/" + loggedInUser?._id);
         } else {
           // otherwise, go to home page
+          Amplitude.trackEvent(AmplitudeEventType.SIGN_UP);
           router.push("/login/onboarding/username");
         }
       }
