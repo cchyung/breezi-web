@@ -60,7 +60,7 @@ const ListCard = ({
               : `${formatTime(new Date(list.createdAt), new Date(), true)}`}
           </p>
 
-          <div className="ml-auto shrink-0">
+          <div className="ml-auto shrink-0 flex flex-row items-center gap-2">
             {list.topic && <TopicChip topic={list.topic} />}
             {showOptions && (
               <ListCardOptions

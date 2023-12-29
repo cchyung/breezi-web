@@ -38,7 +38,7 @@ const ListCardOptions = ({
   return (
     <div className="relative">
       <Menu>
-        <Menu.Button>
+        <Menu.Button className="flex flex-row items-center h-full">
           <MoreVerticalIcon />
         </Menu.Button>
         <Menu.Items className="absolute right-0 mt-2 flex flex-col w-24 bg-white shadow-xl rounded-xl overflow-hidden text-[16px] z-40">
