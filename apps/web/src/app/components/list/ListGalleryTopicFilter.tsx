@@ -1,7 +1,13 @@
 "use client";
 import { Topic } from "@/lib/api";
 import { Card } from "@/app/components/ui";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 
 export default ({
   topics,
@@ -11,17 +17,36 @@ export default ({
   onSelect?: (topicId: string | null) => Promise<void>;
 }) => {
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
+  const router = useRouter();
+  const search = useSearchParams();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const topicId = search.get("topic");
+
+    setSelectedTopic(topicId);
+
+    if (onSelect) {
+      onSelect(topicId);
+    }
+  }, [search]);
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(search);
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [search]
+  );
 
   return (
     <div className="flex flex-row gap-2 mb-4 overflow-auto">
       <button
         className="shrink-0"
         onClick={() => {
-          if (onSelect) {
-            onSelect(null);
-          }
-
-          setSelectedTopic(null);
+          router.push(pathname);
         }}
       >
         <Card
@@ -38,10 +63,13 @@ export default ({
           onClick={() => {
             // avoid retriggering if user clicks on the same topic
             if (topic._id !== selectedTopic) {
-              if (onSelect) {
-                onSelect(topic._id);
-              }
-              setSelectedTopic(topic._id);
+              // if (onSelect) {
+              //   onSelect(topic._id);
+              // }
+              // setSelectedTopic(topic._id);
+              router.push(
+                pathname + "?" + createQueryString("topic", topic._id)
+              );
             }
           }}
           key={topic._id}
