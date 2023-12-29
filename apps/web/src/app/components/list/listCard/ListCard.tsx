@@ -56,19 +56,11 @@ const ListCard = ({
           <p className="text-gray-400">·</p>
           <p className="text-gray-400">
             {list.createdAt !== list.updatedAt
-              ? `Updated ${formatTime(
-                  new Date(list.updatedAt),
-                  new Date(),
-                  true
-                )}`
-              : `Posted ${formatTime(
-                  new Date(list.createdAt),
-                  new Date(),
-                  true
-                )}`}
+              ? `${formatTime(new Date(list.updatedAt), new Date(), true)}`
+              : `${formatTime(new Date(list.createdAt), new Date(), true)}`}
           </p>
 
-          <div className="ml-auto">
+          <div className="ml-auto shrink-0">
             {list.topic && <TopicChip topic={list.topic} />}
             {showOptions && (
               <ListCardOptions
@@ -88,7 +80,7 @@ const ListCard = ({
           />
         )}
 
-        <h3 className="font-bold">{list.title}</h3>
+        <h3>{list.title}</h3>
         {list.description && <p>{list.description}</p>}
         <ul
           className={`flex flex-col gap-1 ml-4 list-inside overflow-hidden ${

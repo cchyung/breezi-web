@@ -43,16 +43,15 @@
   }
 }
 
+h1,
+h2,
+h3 {
+  font-family: var(--uxum-grotesque-font);
+}
+
 h1 {
   font-size: 24px;
   font-weight: 600;
-}
-
-body {
-  font-family: "Inter", sans-serif;
-  background: var(--background-color);
-  font-size: 16px;
-  color: var(--color-black);
 }
 
 h2 {
@@ -60,9 +59,20 @@ h2 {
   font-weight: 700;
 }
 
+h3 {
+  font-size: 24px;
+}
+
 .username-lg {
   font-size: 26px;
   font-weight: 700;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background: var(--background-color);
+  font-size: 16px;
+  color: var(--color-black);
 }
 
 .username-sm {
@@ -77,6 +87,10 @@ h2 {
 .caption-light {
   font-size: 14px;
   color: var(--color-gray);
+}
+
+.btn {
+  font-family: "uxum-grotesque";
 }
 
 .btn-small {

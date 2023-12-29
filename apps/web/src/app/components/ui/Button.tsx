@@ -41,7 +41,7 @@ const Button = ({
   return (
     <>
       <button
-        className={`${className} ${colorStyle} ${
+        className={`font-uxum-grotesque font-normal ${className} ${colorStyle} ${
           disabled && disabledStyle
         } relative disabled:cursor-not-allowed rounded-2xl
         transition-colors shadow-md`}

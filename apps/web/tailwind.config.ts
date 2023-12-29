@@ -23,6 +23,10 @@ const config: Config = {
       transitionProperty: {
         height: "height",
       },
+      fontFamily: {
+        "uxum-grotesque": "var(--uxum-grotesque-font)",
+        inter: "var(--inter-font)",
+      },
       colors: {
         primary: "var(--color-primary)",
         secondary: "var(--color-secondary)",

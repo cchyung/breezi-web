@@ -13,8 +13,9 @@ export default ({
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
 
   return (
-    <div className="flex flex-row gap-2 mb-4">
+    <div className="flex flex-row gap-2 mb-4 overflow-auto">
       <button
+        className="shrink-0"
         onClick={() => {
           if (onSelect) {
             onSelect(null);
@@ -24,15 +25,16 @@ export default ({
         }}
       >
         <Card
-          className={`py-3 px-12 ${
+          className={`py-2 px-8 ${
             selectedTopic === null ? "border-gradient" : "border-4 border-white"
           } transition-colors`}
         >
-          All
+          <span className="font-uxum-grotesque">All</span>
         </Card>
       </button>
       {topics.map((topic) => (
         <button
+          className="shrink-0"
           onClick={() => {
             // avoid retriggering if user clicks on the same topic
             if (topic._id !== selectedTopic) {
@@ -45,13 +47,13 @@ export default ({
           key={topic._id}
         >
           <Card
-            className={`py-3 px-12 ${
+            className={`py-2 px-8 ${
               selectedTopic === topic._id
                 ? "border-gradient"
                 : "border-4 border-white"
             } transition-colors`}
           >
-            {topic.title}
+            <span className="font-uxum-grotesque">{topic.title}</span>
           </Card>
         </button>
       ))}
