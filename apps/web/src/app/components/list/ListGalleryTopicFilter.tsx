@@ -3,7 +3,6 @@ import { Topic } from "@/lib/api";
 import { Card } from "@/app/components/ui";
 import { useCallback, useEffect, useState } from "react";
 import {
-  useParams,
   usePathname,
   useRouter,
   useSearchParams,

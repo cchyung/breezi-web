@@ -61,7 +61,10 @@ const ListCard = ({
           </p>
 
           <div className="ml-auto flex flex-row items-center gap-1">
-            {list.topic && <TopicChip topic={list.topic} />}
+            {list.topic && (
+              // don't make topic chip clickable if on the user page (showOptions is true)
+              <TopicChip topic={list.topic} clickable={!showOptions} />
+            )}
             {showOptions && (
               <ListCardOptions
                 refetchList={refetchList}
