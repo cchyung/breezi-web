@@ -74,13 +74,13 @@ const ListCard = ({
 
         {list.coverImageURL && (
           <img
-            className="h-40 w-full rounded-3xl object-cover"
+            className="h-40 w-full rounded-3xl object-cover mb-2"
             alt="list cover"
             src={list.coverImageURL}
           />
         )}
 
-        <h3>{list.title}</h3>
+        <h4>{list.title}</h4>
         {list.description && <p>{list.description}</p>}
         <ul
           className={`flex flex-col gap-1 ml-4 list-inside overflow-hidden ${
