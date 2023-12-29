@@ -83,6 +83,10 @@ body {
   color: var(--color-black);
 }
 
+.body {
+  font-size: 16px;
+}
+
 .username-sm {
   font-size: 16px;
   font-weight: 700;
