@@ -23,6 +23,12 @@
   --color-snow: #f9f9f9;
 }
 
+@layer {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
 @layer utilities {
   @layer utilities {
     .pb-safe {

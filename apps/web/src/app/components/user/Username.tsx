@@ -16,7 +16,10 @@ const Username = ({
   };
 
   return (
-    <a href={`/user/${user._id}`} className={className}>
+    <a
+      href={`/user/${user._id}`}
+      className={`font-uxum-grotesque ${className}`}
+    >
       <span className={sizeStyles[size]}>{user.username}</span>
     </a>
   );
