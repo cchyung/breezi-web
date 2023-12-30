@@ -2,11 +2,8 @@
 import { Topic } from "@/lib/api";
 import { Card } from "@/app/components/ui";
 import { useCallback, useEffect, useState } from "react";
-import {
-  usePathname,
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Amplitude, AmplitudeEventType } from "@/app/lib/analytics";
 
 export default ({
   topics,
@@ -66,6 +63,10 @@ export default ({
               //   onSelect(topic._id);
               // }
               // setSelectedTopic(topic._id);
+              Amplitude.trackEvent(AmplitudeEventType.HOT_TOPIC_VIEW, {
+                topicId: topic._id,
+              });
+
               router.push(
                 pathname + "?" + createQueryString("topic", topic._id)
               );

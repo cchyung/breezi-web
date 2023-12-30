@@ -182,6 +182,14 @@ const CreateList = ({
           Amplitude.trackEvent(AmplitudeEventType.CREATE_LIST, {
             listId: mutation.data?.createList?._id,
           });
+
+          if (topic) {
+            Amplitude.trackEvent(AmplitudeEventType.HOT_TOPIC_CREATE, {
+              listId: mutation.data?.createList?._id,
+              topicId: topic._id,
+            });
+          }
+
           onCreation(mutation.data?.createList);
         } else {
           const mutation = await client.mutate<

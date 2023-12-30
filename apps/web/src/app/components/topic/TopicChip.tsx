@@ -3,6 +3,7 @@ import { Topic } from "@/lib/api";
 import { getTopicStyle } from "./utils";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
+import { Amplitude, AmplitudeEventType } from "@/app/lib/analytics";
 
 export default ({
   topic,
@@ -33,6 +34,10 @@ export default ({
           style={getTopicStyle(topic)}
           onClick={() => {
             const selectedTopic = search.get("topic");
+
+            Amplitude.trackEvent(AmplitudeEventType.HOT_TOPIC_VIEW, {
+              topicId: topic._id,
+            });
 
             if (selectedTopic !== topic._id) {
               router.push(
