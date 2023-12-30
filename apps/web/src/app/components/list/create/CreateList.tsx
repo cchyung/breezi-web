@@ -164,7 +164,7 @@ const CreateList = ({
             }),
           coverImageURL: coverImageURLInput,
           state: publish ? ListState.Published : ListState.Draft,
-          topic: topic?._id,
+          topic: topic?._id ?? list?.topic?._id,
           type,
         };
 
@@ -563,10 +563,12 @@ const CreateList = ({
                 );
               })}
             </ul>
-            {topic && (
+            {topic || (list && list?.topic) ? (
               <div className="flex flex-grow gap-2 flex-wrap mt-4">
-                <TopicChip topic={topic} />
+                <TopicChip topic={(topic ? topic : list?.topic) as Topic} />
               </div>
+            ) : (
+              ""
             )}
           </div>
         </FileDropzoneWrapper>
