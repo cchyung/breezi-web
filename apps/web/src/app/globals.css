@@ -26,6 +26,7 @@
 @layer {
   html {
     -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
   }
 }
 
@@ -63,7 +64,7 @@ h1 {
 
 h2 {
   font-size: 22px;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 h3 {
@@ -79,7 +80,7 @@ h4 {
 
 .username-lg {
   font-size: 26px;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 body {

@@ -56,7 +56,7 @@ const PhoneInput = ({
         placeholder="Phone Number"
         value={number}
         onChange={(e) => {
-          if (e.target.value.length > 10) return;
+          if (e.target.value.length > 16) return;
           setNumber(e.target.value);
         }}
         className="w-full"
