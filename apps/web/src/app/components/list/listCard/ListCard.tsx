@@ -86,7 +86,7 @@ const ListCard = ({
         <h4>{list.title}</h4>
         {list.description && <p>{list.description}</p>}
         <ul
-          className={`flex flex-col gap-1 ml-4 list-inside overflow-hidden ${
+          className={`flex flex-col gap-1 ml-4 list-inside overflow-hidden break-words ${
             list.type === ListType.Bulleted ? "list-disc" : "list-decimal"
           }`}
         >
