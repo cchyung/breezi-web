@@ -49,6 +49,11 @@ const MobileNavigation = () => {
         <button
           className="bg-black rounded-full h-full p-2 border-2 border-white shadow-md hover:bg-primary hover:-translate-y-2 transition-all"
           onClick={() => {
+            if (!userData) {
+              router.push("/login");
+              return;
+            }
+
             router.push("/list/create");
           }}
         >
