@@ -59,7 +59,7 @@ export default function RootLayout({
       <UserProvider>
         <ApolloWrapper>
           <AmplitudeProvider>
-            <body className={`${inter.variable} ${uxumGrotesque.variable}`}>
+            <body className={`${inter.variable} ${uxumGrotesque.variable} pt-safe`}>
               <CreateListModalProvider>{children}</CreateListModalProvider>
             </body>
           </AmplitudeProvider>
